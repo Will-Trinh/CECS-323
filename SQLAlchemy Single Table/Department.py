@@ -22,7 +22,7 @@ class Department(Base):
     description: Mapped[str] = mapped_column('description', String(80), nullable=False)
 
 
-    __table_args__ = (UniqueConstraint("abbreviations", name="departments_uk_01"),
+    __table_args__ = (UniqueConstraint("abbreviation", name="departments_uk_01"),
                       UniqueConstraint("chair_name", name="departments_uk_02"),
                       UniqueConstraint("building", "office", name="departments_uk_03"),
                       UniqueConstraint("description", name="departments_uk_04"))
