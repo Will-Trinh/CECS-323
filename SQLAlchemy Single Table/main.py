@@ -78,7 +78,7 @@ def delete_department(session: Session):
     Prompt the user for a student by the last name and first name and delete that
     student.
     :param session: The connection to the database.
-    :return:        None
+    :return:         None
     """
     print("Deleting a department")
     oldDepartment = find_department(session)
