@@ -72,9 +72,22 @@ def create_department(session: Session):
     newDepartment = Department(name, abbreviation, chair_name, building, office, description)
     session.add(newDepartment)
 
-
-
-
+def select_department_abbreviation(sess: Session) -> Department:
+    """
+    Prompts the user to select a department by department abbreviation
+    :param sess: The connection to the database
+    :return: The selected department
+    """
+    found: bool = False
+    abbreviation: str = ""
+    while not found:
+        abbreviation = input("Enter the department abbreviation --> ")
+        id_count: int = sess.query(Department).filter(Department.abbreviation == abbreviation)
+        found = id_count = 1
+        if not found:
+            print("No department with that abbreviation. Try again.")
+    return_department: Department = sess.query(Department).filter(Department.abbreviation == abbreviation).first()
+    return return_department
 
 
 
