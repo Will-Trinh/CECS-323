@@ -7,6 +7,77 @@ from orm_base import metadata
 from Student import Student
 from Option import Option
 from Menu import Menu
+from Department import Department
+
+
+def create_department(session: Session):
+    unique_name: bool = False
+    unique_chair_name: bool = False
+    unique_location: bool = False
+    unique_description: bool = False
+
+
+    name: str = ''
+    abbreviation: str = ''
+    building: str = ''
+    chair_name: str = ''
+    office: int = 0
+    description: str = ''
+
+    while not unique_name:
+        name = input("Department name--> ")
+        name_count: int = session.query(Department).filter(Department.name == name).count()
+        if not name_count:
+            print("That department already exists. Try again.")
+        else:
+            break
+
+
+    while not unique_chair_name:
+        chair_name = input("Department chair's name--> ")
+        chair_name_count: int = session.query(Department).filter(Department.chair_name == chair_name).count()
+        if not chair_name_count:
+            print("That person is already a department chair. Try again.")
+        else:
+            break
+
+
+
+    while not unique_location:
+        building = input("Department building--> ")
+        office = int(input("Department's office number--> "))
+
+        location_count: int = session.query(Department).filter(Department.building == building,
+                                                               Department.office == office).count()
+        if not location_count:
+            print("There is already a department that occupies this room. Try again.")
+        else:
+            break
+
+
+
+    while not unique_description:
+        description = input("Department description--> ")
+        description_count: int = session.query(Department).filter(Department.description == description).count()
+        if not description_count:
+            print("There is already a department with this description. Try again.")
+        else:
+            break
+
+    # The assignment doesn't specify that abbreviation has any uniqueness constraints.
+
+    abbreviation = input("Department abbreviation--> ")
+
+
+    newDepartment = Department(name, abbreviation, chair_name, building, office, description)
+    session.add(newDepartment)
+
+
+
+
+
+
+
 
 
 def add_student(session: Session):
