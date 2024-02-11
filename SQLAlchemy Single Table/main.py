@@ -11,10 +11,11 @@ from Department import Department
 
 
 def create_department(session: Session):
-    unique_name: bool = False
+
     unique_chair_name: bool = False
     unique_location: bool = False
     unique_description: bool = False
+    unique_abbreviation: bool = False
 
 
     name: str = ''
@@ -24,19 +25,22 @@ def create_department(session: Session):
     office: int = 0
     description: str = ''
 
-    while not unique_name:
-        name = input("Department name--> ")
-        name_count: int = session.query(Department).filter(Department.name == name).count()
-        if not name_count:
-            print("That department already exists. Try again.")
+
+    name = input("Department name--> ")
+
+
+    while not unique_abbreviation:
+        abbreviation = input("Department abbreviation--> ")
+        abbreviation_count: int = session.query(Department).filter(Department.abbreviation == abbreviation).count()
+        if abbreviation_count:
+            print("There is already a department with this abbreviation. Try again.")
         else:
             break
 
-
     while not unique_chair_name:
         chair_name = input("Department chair's name--> ")
-        chair_name_count: int = session.query(Department).filter(Department.chair_name == chair_name).count()
-        if not chair_name_count:
+        chair_name_count: int = session.query(Department).filter(Department.chairName == chair_name).count()
+        if chair_name_count:
             print("That person is already a department chair. Try again.")
         else:
             break
@@ -49,7 +53,7 @@ def create_department(session: Session):
 
         location_count: int = session.query(Department).filter(Department.building == building,
                                                                Department.office == office).count()
-        if not location_count:
+        if location_count:
             print("There is already a department that occupies this room. Try again.")
         else:
             break
@@ -59,18 +63,28 @@ def create_department(session: Session):
     while not unique_description:
         description = input("Department description--> ")
         description_count: int = session.query(Department).filter(Department.description == description).count()
-        if not description_count:
+        if description_count:
             print("There is already a department with this description. Try again.")
         else:
             break
 
-    # The assignment doesn't specify that abbreviation has any uniqueness constraints
-
-    abbreviation = input("Department abbreviation--> ")
-
-
+    print(chair_name)
     newDepartment = Department(name, abbreviation, chair_name, building, office, description)
     session.add(newDepartment)
+
+
+def delete_department(session: Session):
+    """
+    Prompt the user for a student by the last name and first name and delete that
+    student.
+    :param session: The connection to the database.
+    :return:        None
+    """
+    print("Deleting a department")
+    oldDepartment = find_department(session)
+    session.delete(oldDepartment)
+
+
 
 def select_department_abbreviation(sess: Session) -> Department:
     """
@@ -89,6 +103,21 @@ def select_department_abbreviation(sess: Session) -> Department:
     return_department: Department = sess.query(Department).filter(Department.abbreviation == abbreviation).first()
     return return_department
 
+
+def select_department_chair(sess: Session) -> Department:
+    pass
+
+
+def select_department_building_office(sess: Session) -> Department:
+    pass
+
+
+def select_department_description(sess: Session) -> Department:
+    pass
+
+
+def find_department(sess: Session) -> Department:
+    pass
 
 
 

@@ -30,7 +30,7 @@ class Department(Base):
     def __init__(self, name: str, abbreviation: str, chair_name: str, building: str, office: int, description: str):
         self.name = name
         self.abbreviation = abbreviation
-        self.chair_name = chair_name
+        self.chairName = chair_name
         self.building = building
         self.office = office
         self.description = description
