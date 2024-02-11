@@ -83,11 +83,13 @@ def select_department_abbreviation(sess: Session) -> Department:
     while not found:
         abbreviation = input("Enter the department abbreviation --> ")
         id_count: int = sess.query(Department).filter(Department.abbreviation == abbreviation)
-        found = id_count = 1
+        found = id_count == 1
         if not found:
             print("No department with that abbreviation. Try again.")
     return_department: Department = sess.query(Department).filter(Department.abbreviation == abbreviation).first()
     return return_department
+
+
 
 
 
