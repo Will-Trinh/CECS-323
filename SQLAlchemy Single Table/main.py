@@ -64,7 +64,7 @@ def create_department(session: Session):
         else:
             break
 
-    # The assignment doesn't specify that abbreviation has any uniqueness constraints.
+    # The assignment doesn't specify that abbreviation has any uniqueness constraints
 
     abbreviation = input("Department abbreviation--> ")
 
