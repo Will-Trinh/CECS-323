@@ -68,7 +68,7 @@ def create_department(session: Session):
         else:
             break
 
-    print(chair_name)
+
     newDepartment = Department(name, abbreviation, chair_name, building, office, description)
     session.add(newDepartment)
 
