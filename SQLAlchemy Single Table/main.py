@@ -157,7 +157,7 @@ def select_department_description(sess: Session) -> Department:
         found = id_count == 1
         if not found:
             print("No department with that description. Try again.")
-    return_department: Department = sess.query(Department).filter(Department.description == description).count()
+    return_department: Department = sess.query(Department).filter(Department.description == description).first()
     return return_department
 
 
