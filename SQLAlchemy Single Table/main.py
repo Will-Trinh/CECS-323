@@ -95,7 +95,7 @@ def select_department_abbreviation(sess: Session) -> Department:
     abbreviation: str = ""
     while not found:
         abbreviation = input("Enter the department abbreviation --> ")
-        id_count: int = sess.query(Department).filter(Department.abbreviation == abbreviation)
+        id_count: int = sess.query(Department).filter(Department.abbreviation == abbreviation).count()
         found = id_count == 1
         if not found:
             print("No department with that abbreviation. Try again.")
@@ -133,7 +133,8 @@ def select_department_building_office(sess: Session) -> Department:
     while not found:
         building = input("Department building to delete --> ")
         office = int(input("Department office to delete -->"))
-        building_office_count: int = sess.query(Department).filter(Department.building == building, Department.office == office).count()
+        building_office_count: int = sess.query(Department).filter(Department.building == building,
+                                                                   Department.office == office).count()
 
         found = building_office_count == 1
         if not found:
