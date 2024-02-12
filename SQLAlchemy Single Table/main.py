@@ -131,8 +131,8 @@ def select_department_building_office(sess: Session) -> Department:
     building: str = ""
     office: int = -1
     while not found:
-        building = input("Department building to delete --> ")
-        office = int(input("Department office to delete -->"))
+        building = input("Department building to select --> ")
+        office = int(input("Department office to select -->"))
         building_office_count: int = sess.query(Department).filter(Department.building == building,
                                                                    Department.office == office).count()
 
