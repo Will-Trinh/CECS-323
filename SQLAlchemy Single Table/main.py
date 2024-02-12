@@ -1,5 +1,5 @@
 import logging
-from menu_definitions import menu_main, student_select, debug_select
+from menu_definitions import menu_main, student_select, department_select, debug_select
 from db_connection import engine, Session
 from orm_base import metadata
 # Note that until you import your SQLAlchemy declarative classes, such as Student, Python
@@ -78,19 +78,18 @@ def delete_department(session: Session):
     Prompt the user for a student by the last name and first name and delete that
     student.
     :param session: The connection to the database.
-    :return:         None
+    :return:        None
     """
     print("Deleting a department")
     oldDepartment = find_department(session)
     session.delete(oldDepartment)
 
 
-
 def select_department_abbreviation(sess: Session) -> Department:
     """
-    Prompts the user to select a department by department abbreviation
-    :param sess: The connection to the database
-    :return: The selected department
+    Select a department by department abbreviation.
+    :param sess:    The connection to the database
+    :return:        The selected department
     """
     found: bool = False
     abbreviation: str = ""
@@ -105,25 +104,83 @@ def select_department_abbreviation(sess: Session) -> Department:
 
 
 def select_department_chair(sess: Session) -> Department:
-    pass
+    """
+    Select a department by the chair name.
+    :param sess:    The connection to the database
+    :return:        The selected department
+    """
+    found: bool = False
+    chair_name: str = ""
+    while not found:
+        chair_name = input("Enter the department chair name --> ")
+        id_count: int = sess.query(Department).filter(Department.chairName == chair_name).count()
+        found = id_count == 1
+        if not found:
+            print("No department with that chair name. Try again")
+    return_department: Department = sess.query(Department).filter(Department.chairName == chair_name).first()
+    return return_department
 
 
 def select_department_building_office(sess: Session) -> Department:
-    pass
+    """
+    Select a department by the combination building and office.
+    :param sess:    The connection to the database
+    :return:        The selected department
+    """
+    found: bool = False
+    building: str = ""
+    office: int = -1
+    while not found:
+        building = input("Department building to delete --> ")
+        office = int(input("Department office to delete -->"))
+        building_office_count: int = sess.query(Department).filter(Department.building == building, Department.office == office).count()
+
+        found = building_office_count == 1
+        if not found:
+            print("No department by that building or office. Try again.")
+    oldDepartment = sess.query(Department).filter(Department.building == building, Department.office == office).first()
+    return oldDepartment
 
 
 def select_department_description(sess: Session) -> Department:
-    pass
+    """
+    Select a department by the department description.
+    :param sess:    The connection to the database
+    :return:        The selected department
+    """
+    found: bool = False
+    description: str = ""
+    while not found:
+        description = input("Enter the department description --> ")
+        id_count: int = sess.query(Department).filter(Department.description == description).count()
+        found = id_count == 1
+        if not found:
+            print("No department with that description. Try again.")
+    return_department: Department = sess.query(Department).filter(Department.description == description).count()
+    return return_department
 
 
 def find_department(sess: Session) -> Department:
-    pass
-
-
-
-
-
-
+    """
+    Prompt the user for attribute values to select a single department.
+    :param sess:    The connection to the database.
+    :return:        The instance of Department that the user selected.
+                    Note: there is no provision for the user to simply "give up".
+    """
+    find_department_command = department_select.menu_prompt()
+    match find_department_command:
+        case "abbreviation":
+            old_department = select_department_abbreviation(sess)
+        case "chair_name":
+            old_department = select_department_chair(sess)
+        case "building/office":
+            old_department = select_department_building_office(sess)
+        case "description":
+            old_department = select_department_description(sess)
+        case _:
+            old_department = None
+    print(old_department)
+    return old_department
 def add_student(session: Session):
     """
     Prompt the user for the information for a new student and validate

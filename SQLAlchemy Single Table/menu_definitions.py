@@ -37,3 +37,10 @@ debug_select = Menu('debug select', 'Please select a debug level:', [
     Option("Debug", "logging.DEBUG"),
     Option("Error", "logging.ERROR")
 ])
+# A menu for how the user will specify which department they want to access,
+department_select = Menu('department select', 'Please select how you want to select a department:', [
+    Option("Abbreviation", "abbreviation"),
+    Option("Chair name", "chair_name"),
+    Option("Building and office", "building/office"),
+    Option("Description", "description")
+])
