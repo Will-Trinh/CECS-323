@@ -5,6 +5,7 @@ you import this module.  In any other language, we would make a class for this
 instead, and the object that we return would be a class rather than an instance
 variable.  But Python being what it is, we can do this more simply this way.
 
+
 Note:
 To get getpass to work properly in PyCharm, you need to configure your project:
 Click on the Run Menu at the very top of your PyCharm window.
