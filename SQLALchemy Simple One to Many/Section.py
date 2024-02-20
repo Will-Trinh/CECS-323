@@ -58,7 +58,24 @@ if introspection_type == START_OVER or introspection_type == REUSE_NO_INTROSPECT
                                                [Course.departmentAbbreviation, Course.courseNumber]))
 
 
-        def __init__()
+        def __init__(self,course: Course, sectionNumber: int, semester: str, sectionYear: int,
+             building: str, room: int, schedule: str, startTime: Time, instructor: str):
+
+            self.departmentAbbreviation = course.departmentAbbreviation
+            self.course = course
+            self.courseNumber = course.courseNumber
+            self.sectionNumber = sectionNumber
+            self.semester = semester
+            self.sectionYear = sectionYear
+            self.building = building
+            self.room = room
+            self.schedule = schedule
+            self.startTime = startTime
+            self.instructor = instructor
 
 
-        def __str__
+        def __str__(self):
+            return (f"Course: {self.courseNumber} {self.course.name} {self.sectionNumber} \n"
+                    f"Semester: {self.semester} Section year: {self.sectionYear} Instructor: {self.instructor} \n" 
+                    f"Schedule: {self.schedule} at  {self.startTime} Location: {self.building} {self.room} \n")
+
