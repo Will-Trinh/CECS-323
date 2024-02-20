@@ -17,66 +17,81 @@ from sqlalchemy import inspect  # map from column name to attribute name
 from pprint import pprint
 
 
-def add_department(session):
-    """
-    Prompt the user for the information for a new department and validate
-    the input to make sure that we do not create any duplicates.
-    :param session: The connection to the database.
-    :return:        None
-    """
-    unique_name: bool = False
+
+def create_department(session: Session):
+
+    unique_chair_name: bool = False
+    unique_location: bool = False
+    unique_description: bool = False
     unique_abbreviation: bool = False
+
+
     name: str = ''
     abbreviation: str = ''
-    while not unique_abbreviation or not unique_name:
-        name = input("Department full name--> ")
+    building: str = ''
+    chair_name: str = ''
+    office: int = 0
+    description: str = ''
+
+
+    name = input("Department name--> ")
+
+
+    while not unique_abbreviation:
         abbreviation = input("Department abbreviation--> ")
-        name_count: int = session.query(Department).filter(Department.name == name).count()
-        unique_name = name_count == 0
-        if not unique_name:
-            print("We already have a department by that name.  Try again.")
-        if unique_name:
-            abbreviation_count = session.query(Department). \
-                filter(Department.abbreviation == abbreviation).count()
-            unique_abbreviation = abbreviation_count == 0
-            if not unique_abbreviation:
-                print("We already have a department with that abbreviation.  Try again.")
-    new_department = Department(abbreviation, name)
-    session.add(new_department)
+        abbreviation_count: int = session.query(Department).filter(Department.abbreviation == abbreviation).count()
+        if abbreviation_count:
+            print("There is already a department with this abbreviation. Try again.")
+        else:
+            break
+
+    while not unique_chair_name:
+        chair_name = input("Department chair's name--> ")
+        chair_name_count: int = session.query(Department).filter(Department.chairName == chair_name).count()
+        if chair_name_count:
+            print("That person is already a department chair. Try again.")
+        else:
+            break
 
 
-def add_course(session):
+
+    while not unique_location:
+        building = input("Department building--> ")
+        office = int(input("Department's office number--> "))
+
+        location_count: int = session.query(Department).filter(Department.building == building,
+                                                               Department.office == office).count()
+        if location_count:
+            print("There is already a department that occupies this room. Try again.")
+        else:
+            break
+
+
+
+    while not unique_description:
+        description = input("Department description--> ")
+        description_count: int = session.query(Department).filter(Department.description == description).count()
+        if description_count:
+            print("There is already a department with this description. Try again.")
+        else:
+            break
+
+
+    newDepartment = Department(name, abbreviation, chair_name, building, office, description)
+    session.add(newDepartment)
+
+
+def delete_department(session: Session):
     """
-    Prompt the user for the information for a new course and validate
-    the input to make sure that we do not create any duplicates.
+    Prompt the user for a student by the last name and first name and delete that
+    student.
     :param session: The connection to the database.
     :return:        None
     """
-    print("Which department offers this course?")
-    department: Department = select_department(sess)
-    unique_number: bool = False
-    unique_name: bool = False
-    number: int = -1
-    name: str = ''
-    while not unique_number or not unique_name:
-        name = input("Course full name--> ")
-        number = int(input("Course number--> "))
-        name_count: int = session.query(Course).filter(Course.departmentAbbreviation == department.abbreviation,
-                                                       Course.name == name).count()
-        unique_name = name_count == 0
-        if not unique_name:
-            print("We already have a course by that name in that department.  Try again.")
-        if unique_name:
-            number_count = session.query(Course). \
-                filter(Course.departmentAbbreviation == department.abbreviation,
-                       Course.courseNumber == number).count()
-            unique_number = number_count == 0
-            if not unique_number:
-                print("We already have a course in this department with that number.  Try again.")
-    description: str = input('Please enter the course description-->')
-    units: int = int(input('How many units for this course-->'))
-    course = Course(department, number, name, description, units)
-    session.add(course)
+    print("Deleting a department")
+    oldDepartment = find_department(session)
+    session.delete(oldDepartment)
+
 
 
 def select_department(sess) -> Department:
