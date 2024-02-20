@@ -7,3 +7,11 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship, column_property
 from sqlalchemy import Table
 from Course import Course
 from constants import START_OVER, REUSE_NO_INTROSPECTION, INTROSPECT_TABLES
+
+introspection_type = IntrospectionFactory().introspection_type
+if introspection_type == START_OVER or introspection_type == REUSE_NO_INTROSPECTION:
+    class Section(Base):
+        """
+        Description
+        """
+        __tablename__ = "sections"
