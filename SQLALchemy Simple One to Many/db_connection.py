@@ -53,7 +53,7 @@ port: str = "5432" #input('port number [5432]--> ') or "5432"
 database: str = "2024SpringS01" #input('database [postgres]--> ') or "postgres"
 # 'psycopg2' in this part of the db_url instructs SQLAlchemy that we are connecting to a PostgreSQL database.
 db_url: str = f"postgresql+psycopg2://{userID}:{password}@{host}:{port}/{database}"
-db_url_display: str = f"postgresql+psycopg2://{userID}:********@{host}:{port}/{database}"
+db_url_display: str = cf"postgresql+psycopg2://{userID}:********@{host}:{port}/{database}"
 print("DB URL: " + db_url_display)
 engine = create_engine(db_url, pool_size=5, pool_recycle=3600, echo=False)
 
