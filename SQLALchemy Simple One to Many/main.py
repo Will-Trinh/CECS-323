@@ -10,9 +10,10 @@ from Department import Department
 from Course import Course
 from Option import Option
 from Menu import Menu
+from Section import Section
 # Poor man's enumeration of the two available modes for creating the tables
 from constants import START_OVER, INTROSPECT_TABLES, REUSE_NO_INTROSPECTION
-#import IPython  # So that I can exit out to the console without leaving the application.
+import IPython  # So that I can exit out to the console without leaving the application.
 from sqlalchemy import inspect  # map from column name to attribute name
 from pprint import pprint
 
@@ -242,6 +243,55 @@ def list_department_courses(sess):
     print("Course for department: " + str(department))
     for dept_course in dept_courses:
         print(dept_course)
+
+
+def create_section(sess):
+    print("Which department offers this section?")
+    department: Department = select_department(sess)
+    unique_number: bool = False
+    unique_name: bool = False
+    number: int = -1
+    name: str = ''
+    while not unique_number or not unique_name:
+        print("which class offers this section?")
+        course: Course = select_course(sess)
+        if not unique_name:
+            print("We already have a course by that name in that department.  Try again.")
+        if unique_name:
+            number_count = session.query(Course). \
+                filter(Course.departmentAbbreviation == department.abbreviation,
+                       Course.courseNumber == number).count()
+            unique_number = number_count == 0
+            if not unique_number:
+                print("We already have a course in this department with that number.  Try again.")
+    description: str = input('Please enter the course description-->')
+    units: int = int(input('How many units for this course-->'))
+    course = Course(department, number, name, description, units)
+    session.add(course)
+
+
+def select_section(sess):
+    pass
+
+
+def list_section_in_course(sess):
+    pass
+
+
+def delete_course(sess):
+    print("Deleting a course")
+    course = select_course(sess)
+    n_sections = sess.query(Section).filter(course.course_number == Section.courseNumber).count()
+    if n_sections > 0:
+        print("You must delete all sections before deleting a course.")
+    else:
+        sess.delete(course)
+
+
+def delete_section(sess):
+    print("Deleting a section")
+    section = select_section(sess)
+    sess.delete(section)
 
 
 if __name__ == '__main__':

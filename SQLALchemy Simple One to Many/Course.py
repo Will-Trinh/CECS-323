@@ -1,7 +1,7 @@
 from orm_base import Base
 from db_connection import engine
 from IntrospectionFactory import IntrospectionFactory
-from sqlalchemy import UniqueConstraint, ForeignKeyConstraint
+from sqlalchemy import UniqueConstraint, ForeignKeyConstraint, ForeignKey
 from sqlalchemy import String, Integer
 from sqlalchemy.orm import Mapped, mapped_column, relationship, column_property
 from sqlalchemy import Table
@@ -31,7 +31,7 @@ if introspection_type == START_OVER or introspection_type == REUSE_NO_INTROSPECT
         that for the relationship from courses into sections.
         """
         departmentAbbreviation: Mapped[str] = mapped_column('department_abbreviation',
-    #                                                       ForeignKey("departments.abbreviation"),
+                                                           ForeignKey("departments.abbreviation"),
                                                             primary_key=True)
         department: Mapped["Department"] = relationship(back_populates="courses")
         courseNumber: Mapped[int] = mapped_column('course_number', Integer,
