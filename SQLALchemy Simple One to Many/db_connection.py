@@ -57,6 +57,7 @@ db_url_display: str = f"postgresql+psycopg2://{userID}:********@{host}:{port}/{d
 print("DB URL: " + db_url_display)
 engine = create_engine(db_url, pool_size=5, pool_recycle=3600, echo=False)
 
+
 session_factory = sessionmaker(bind=engine)
 # I am told that this next line contributes to making the code thread safe since the
 # scoped_session returns the same Session every time it's called for any given thread.
