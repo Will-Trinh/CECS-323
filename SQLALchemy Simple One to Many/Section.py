@@ -1,3 +1,5 @@
+from email._header_value_parser import Section
+
 from orm_base import Base
 from db_connection import engine
 from IntrospectionFactory import IntrospectionFactory
@@ -79,3 +81,5 @@ if introspection_type == START_OVER or introspection_type == REUSE_NO_INTROSPECT
                     f"Semester: {self.semester} Section year: {self.sectionYear} Instructor: {self.instructor} \n" 
                     f"Schedule: {self.schedule} at  {self.startTime} Location: {self.building} {self.room} \n")
 
+        setattr(Section, "__init__", __init__)
+        setattr(Section, "__str__", __str__)
