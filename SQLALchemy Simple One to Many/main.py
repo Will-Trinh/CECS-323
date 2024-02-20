@@ -1,6 +1,6 @@
 import logging
 # My option lists for
-from menu_definitions import menu_main, debug_select
+from menu_definitions import menu_main, debug_select, section_select, department_select, student_select
 from IntrospectionFactory import IntrospectionFactory
 from db_connection import engine, Session
 from orm_base import metadata
@@ -12,7 +12,7 @@ from Option import Option
 from Menu import Menu
 # Poor man's enumeration of the two available modes for creating the tables
 from constants import START_OVER, INTROSPECT_TABLES, REUSE_NO_INTROSPECTION
-import IPython  # So that I can exit out to the console without leaving the application.
+#import IPython  # So that I can exit out to the console without leaving the application.
 from sqlalchemy import inspect  # map from column name to attribute name
 from pprint import pprint
 

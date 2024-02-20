@@ -14,7 +14,7 @@ variables or not in Python.
 
 
 # The menu options for operating on Departments.
-course_main = Menu('Department', 'Department Options:', [
+course_menu = Menu('Department', 'Department Options:', [
     Option("Add department", "add_department(sess)"),
     Option("Delete department", "delete_department(sess)"),
     Option("Select Department", "find_department(sess)"),
@@ -25,6 +25,34 @@ course_main = Menu('Department', 'Department Options:', [
     Option("Exit", "pass")
 ])
 
+student_menu = Menu('Student', 'Student Options:', [
+    Option("Add student", "add_student(sess)"),
+    Option("Delete student", "delete_student(sess)"),
+    Option("Select student", "find_student(sess)"),
+    Option("List students", "list_students(sess)"),
+    Option("Commit", "sess.commit()"),
+    Option("Break out into shell", "IPython.embed()"),
+    Option("Exit", "pass")
+])
+
+student_select = Menu('student select', 'Please select how you want to select a student:', [
+    Option("ID", "ID"),
+    Option("First and last name", "first/last name"),
+    Option("Electronic mail", "email")
+])
+
+department_menu = Menu('department', 'Department Options:', [
+    Option("Add Department", "add_department(sess)"),
+    Option("Select Department", "find_department(sess)"),
+    Option("Delete Department", "delete_department(sess)"),
+    Option("List all departments", "list_departments(sess)"),
+    Option("List department courses", "list_department_courses(sess)"),
+    Option("Commit", "sess.commit()"),
+    Option("Break out into shell", "IPython.embed()"),
+    Option("Back", "back"),
+    Option("Exit", "pass")
+])
+
 department_select = Menu('Department select', "Please select how you want to select a department:", [
     Option("Abbreviation", "abbreviation"),
     Option("Chair Name", "chair"),
@@ -32,16 +60,34 @@ department_select = Menu('Department select', "Please select how you want to sel
     Option("Description", "description")
 ])
 
-# The menu options for operating on Courses.
-course_main = Menu('Course', 'Course Options:', [
-    Option("Add course", "add_course(sess)"),
-    Option("Delete course", "delete_course(sess)"),
-    Option("List all courses", "list_courses(sess)"),
-    Option("Move course to new department", "move_course_to_new_department(sess)"),
+section_menu = Menu('section', 'Section Options:', [
+    Option("Add section", "add_section(sess)"),
+    Option("Delete section", "delete_section(sess)"),
+    Option("Select section", "select_section(sess)"),
     Option("Commit", "sess.commit()"),
     Option("Break out into shell", "IPython.embed()"),
+    Option("Back", "back"),
     Option("Exit", "pass")
 ])
+
+section_select = Menu('section select', 'Please select how you want to select a section:', [
+    Option("Building and Room", "building/room"),
+    Option("Instructor", "instructor")
+])
+
+course_section_menu = Menu('Course and Section', 'Course and Section Options:', [
+    Option("Add course", "add_course(sess)"),
+    Option("Add section", "add_section(sess)"),
+    Option("Select section", "select_section(sess)"),
+    Option("List course sections", "list_course_sections(sess)"),
+    Option("Delete course", "delete_course(sess)"),
+    Option("Delete section", "delete_section(sess)"),
+    Option("Commit", "sess.commit()"),
+    Option("Break out into shell", "IPython.embed()"),
+    Option("Back", "back"),
+    Option("Exit", "pass")
+])
+
 
 # A menu to prompt for the amount of logging information to go to the console.
 debug_select = Menu('debug select', 'Please select a debug level:', [
@@ -55,4 +101,13 @@ introspection_select = Menu("introspection selectt", 'To introspect or not:', [
     Option('Start all over', START_OVER),
     Option("Reuse tables", INTROSPECT_TABLES),
     Option("Reuse without introspection", REUSE_NO_INTROSPECTION)
+])
+
+# main menu
+menu_main = Menu('Main', 'Main Menu:', [
+    Option("Course and Section", course_section_menu),
+    Option("Student", student_menu),
+    Option("Department", department_menu),
+    Option("Course", course_menu),
+    Option("Section", section_menu)
 ])
