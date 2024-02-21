@@ -47,7 +47,7 @@ if introspection_type == START_OVER or introspection_type == REUSE_NO_INTROSPECT
         room: Mapped[int] = mapped_column('room', Integer, nullable=False)
 
 
-        schedule: Mapped[str] = mapped_column('semester', String(6),
+        schedule: Mapped[str] = mapped_column('schedule', String(6),
                                               CheckConstraint("semester IN('MW', 'TuTh', 'MWF', 'F', 'S')",
                                               name="semester_name_value_check"), nullable=False)
 
