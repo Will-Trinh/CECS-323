@@ -2,7 +2,7 @@ import logging
 from time import time
 
 # My option lists for
-from menu_definitions import menu_main, debug_select, section_select, department_select, student_select
+from menu_definitions import menu_main, debug_select, section_select
 from IntrospectionFactory import IntrospectionFactory
 from db_connection import engine, Session
 from orm_base import metadata

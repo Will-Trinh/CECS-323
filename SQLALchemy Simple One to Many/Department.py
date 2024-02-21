@@ -42,7 +42,7 @@ if introspection_type == START_OVER or introspection_type == REUSE_NO_INTROSPECT
 
         chairName: Mapped[str] = DC.chairName
         building: Mapped[str] = DC.building
-        office: Mapped[str] = DC.office
+        office: Mapped[int] = DC.office
         description: Mapped[str] = DC.description
 
         # __table_args__ can best be viewed as directives that we ask SQLAlchemy to
@@ -54,11 +54,11 @@ if introspection_type == START_OVER or introspection_type == REUSE_NO_INTROSPECT
         leave that out when the class is initially declared, and then add it in afterwards.
         So I'm defining the exact same __init__ method both for the start over as well
         as the introspection case just to get past this interesting issue and move on."""
-        def __init__(self, abbreviation: str, name: str, department_chair: str, building: str, office: int, description: str):
+        def __init__(self, abbreviation: str, name: str, chair: str, building: str, office: int, description: str):
             self.abbreviation = abbreviation
             self.name = name
 
-            self.chairName = department_chair
+            self.chairName = chair
             self.building = building
             self.office = office
             self.description = description
@@ -84,7 +84,7 @@ elif introspection_type == INTROSPECT_TABLES:
 
         name: Mapped[str] = column_property(__table__.c.name)
         courses: Mapped[List["Course"]] = DC.courses
-        chairName: Mapped[str] = column_property(__table__.c.chair_name)
+        chairName: Mapped[str] = column_property(__table__.c.chair)
         building: Mapped[str] = column_property(__table__.c.building)
         office: Mapped[int] = column_property(__table__.c.office)
         description: Mapped[str] = column_property(__table__.c.description)
