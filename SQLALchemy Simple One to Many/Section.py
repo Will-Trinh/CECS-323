@@ -77,7 +77,7 @@ elif introspection_type == INTROSPECT_TABLES:
         sectionNumber: Mapped[int] = column_property(__table__.c.section_number)
         course: Mapped["Course"] = relationship(back_populates="sections")
         semester: Mapped[str] = column_property(__table__.c.semester)
-        sectionYear: Mapped[int] = column_property(__table__.c.setion_year)
+        sectionYear: Mapped[int] = column_property(__table__.c.section_year)
         building: Mapped[str] = column_property(__table__.c.building)
         room: Mapped[int] = column_property(__table__.c.room)
         schedule: Mapped[str] = column_property(__table__.c.schedule)
