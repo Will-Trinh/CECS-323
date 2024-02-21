@@ -29,7 +29,7 @@ if introspection_type == START_OVER or introspection_type == REUSE_NO_INTROSPECT
         courseNumber: Mapped[int] = mapped_column('course_number', Integer,
                                                   nullable=False, primary_key=True)
 
-        sectionNumber: Mapped[int] = mapped_column('course_number', Integer,
+        sectionNumber: Mapped[int] = mapped_column('section_number', Integer,
                                                   nullable=False, primary_key=True)
 
         semester: Mapped[str] = mapped_column('semester', String(10),
