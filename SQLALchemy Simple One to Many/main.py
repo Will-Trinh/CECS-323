@@ -123,7 +123,7 @@ def select_department(sess) -> Department:
     found: bool = False
     abbreviation: str = ''
     while not found:
-        abbreviation = input("Enter the department abbreviation--> ")
+        abbreviation = input("Enter the department name--> ")
         abbreviation_count: int = sess.query(Department). \
             filter(Department.abbreviation == abbreviation).count()
         found = abbreviation_count == 1
@@ -216,8 +216,7 @@ def select_course(sess) -> Course:
     while not found:
         department_abbreviation = input("Department abbreviation--> ")
         course_number = int(input("Course Number--> "))
-        name_count: int = sess.query(Course).filter(Course.departmentAbbreviation == department_abbreviation,
-                                                    Course.courseNumber == course_number).count()
+        name_count: int = sess.query(Course).filter(Course.courseNumber == course_number).count()
         found = name_count == 1
         if not found:
             print("No course by that number in that department.  Try again.")
