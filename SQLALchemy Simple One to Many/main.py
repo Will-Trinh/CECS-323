@@ -330,8 +330,12 @@ def select_section(sess):
 
 
 
-def list_section_in_course(sess):
-    pass
+def list_sections_in_course(sess):
+    course: Course = select_course(sess)
+    print(f"Sections in {course}: \n")
+    for section in course.get_sections():
+        print(f"{section}\n")
+
 
 
 def delete_section(sess):
