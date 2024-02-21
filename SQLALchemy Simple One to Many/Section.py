@@ -33,23 +33,25 @@ if introspection_type == START_OVER or introspection_type == REUSE_NO_INTROSPECT
                                                   nullable=False, primary_key=True)
 
         semester: Mapped[str] = mapped_column('semester', String(10),
-                                              CheckConstraint("semester IN('Fall', 'Spring', 'Winter', 'Summer I', 'Summer II')",
-                                              name="semester_name_value_check"), nullable=False, primary_key=True)
+                                              CheckConstraint("semester IN('Fall', 'Spring', 'Winter', '"
+                                                              "Summer I', 'Summer II')",
+                                                              name="semester_name_value_check"), nullable=False,
+                                              primary_key=True)
 
         sectionYear: Mapped[int] = mapped_column('section_year', Integer, nullable=False,
                                                   primary_key=True)
 
         building: Mapped[str] = mapped_column('building', String(6),
                                               CheckConstraint("building IN('EC', 'ECS', 'EN2', 'EN3', \
-                                                'EN4', 'ET', 'SSPA')", name="semester_name_value_check"),
+                                                'EN4', 'ET', 'SSPA')", name="building_name_value_check"),
                                               nullable=False)
 
         room: Mapped[int] = mapped_column('room', Integer, nullable=False)
 
 
         schedule: Mapped[str] = mapped_column('schedule', String(6),
-                                              CheckConstraint("semester IN('MW', 'TuTh', 'MWF', 'F', 'S')",
-                                              name="semester_name_value_check"), nullable=False)
+                                              CheckConstraint("schedule IN('MW', 'TuTh', 'MWF', 'F', 'S')",
+                                              name="schedule_name_value_check"), nullable=False)
 
         startTime: Mapped[Time] = mapped_column('start_time', Time, nullable=False)
 
