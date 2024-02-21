@@ -108,7 +108,7 @@ def helper(self, course: Course, sectionNumber: int, semester: str, sectionYear:
 
 def __str__(self):
     return (f"Course: {self.courseNumber} {self.course.name} {self.sectionNumber} \n"
-            f"Semester: {self.semester} Section year: {self.sectionYear} Instructor: {self.instructor} \n" 
+            f"Semester: {self.semester} Year: {self.sectionYear} Instructor: {self.instructor} \n" 
             f"Schedule: {self.schedule} at  {self.startTime} Location: {self.building} {self.room} \n")
 
 

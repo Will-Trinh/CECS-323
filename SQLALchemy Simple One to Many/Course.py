@@ -89,6 +89,8 @@ def set_department(self, department: Department):
     self.department = department
     self.departmentAbbreviation = department.abbreviation
 
+def get_sections(self):
+    return self.sections
 
 def __str__(self):
     return f"Department abbrev: {self.departmentAbbreviation} number: {self.courseNumber} name: {self.name} units: {self.units}"
@@ -97,3 +99,4 @@ def __str__(self):
 """Add the two instance methods to the class, regardless of whether we introspect or not."""
 setattr(Course, 'set_department', set_department)
 setattr(Course, '__str__', __str__)
+setattr(Course, 'get_sections', get_sections)

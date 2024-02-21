@@ -58,7 +58,7 @@ def add_department(session: Session):
     unique_abbreviation: bool = False
 
 
-    name: str = ''
+
     abbreviation: str = ''
     building: str = ''
     chair_name: str = ''
@@ -123,7 +123,7 @@ def select_department(sess) -> Department:
     found: bool = False
     abbreviation: str = ''
     while not found:
-        abbreviation = input("Enter the department name--> ")
+        abbreviation = input("Enter the department abbreviation--> ")
         abbreviation_count: int = sess.query(Department). \
             filter(Department.abbreviation == abbreviation).count()
         found = abbreviation_count == 1
@@ -222,12 +222,13 @@ def select_course(sess) -> Course:
             print("No course by that number in that department.  Try again.")
     course = sess.query(Course).filter(Course.departmentAbbreviation == department_abbreviation,
                                        Course.courseNumber == course_number).first()
+    print(course)
     return course
 
 def delete_course(sess):
     print("Deleting a course")
     course = select_course(sess)
-    n_sections = sess.query(Section).filter(course.course_number == Section.courseNumber).count()
+    n_sections = sess.query(Section).filter(course.courseNumber == Section.courseNumber).count()
     if n_sections > 0:
         print("You must delete all sections before deleting a course.")
     else:
@@ -344,9 +345,12 @@ def select_section(sess):
 
     while True:
         year: int = int(input("Enter section year-->  "))
-        semester: str = input("Enter section year-->  ")
+        semester: str = input("Enter section semester-->  ")
         schedule: str = input("Enter section schedule-->  ")
-        start_time: time = time(input("Enter section start time-->  "))
+        hour: int = int(input("Enter section start time for the hour (like 09 for 9:30)-->  "))
+        minutes: int = int(input("Enter section start time for the minute (like 30 for 9:30)-->  "))
+
+        start_time = time(hour, minutes, 0)
 
         if user_input == "building/room":
             building: str = input("Enter section building-->  ")
@@ -360,7 +364,7 @@ def select_section(sess):
             section: Section = sess.query(Section).filter(Section.sectionYear == year, Section.semester == semester,
                                                           Section.schedule == schedule, Section.startTime == start_time,
                                                           Section.instructor == instructor).first()
-        if section == True:
+        if section:
             print(section)
             return section
 
