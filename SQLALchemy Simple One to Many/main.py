@@ -278,6 +278,7 @@ def create_section(sess):
 
 
 
+
         while True:
             #{year, semester, schedule, start_time, instructor} – This makes sure that we never over book an instructor
             #and have them teaching two sections at the same time.
