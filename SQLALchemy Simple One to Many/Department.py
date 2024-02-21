@@ -87,7 +87,7 @@ elif introspection_type == INTROSPECT_TABLES:
         chairName: Mapped[str] = column_property(__table__.c.chair_name)
         building: Mapped[str] = column_property(__table__.c.building)
         office: Mapped[int] = column_property(__table__.c.office)
-        description: Mapped[str] = column_property(__table__.c.desciption)
+        description: Mapped[str] = column_property(__table__.c.description)
 
 
 
