@@ -97,7 +97,7 @@ debug_select = Menu('debug select', 'Please select a debug level:', [
 ])
 
 # A menu to prompt for whether to create new tables or reuse the old ones.
-introspection_select = Menu("introspection selectt", 'To introspect or not:', [
+introspection_select = Menu("introspection select", 'To introspect or not:', [
     Option('Start all over', START_OVER),
     Option("Reuse tables", INTROSPECT_TABLES),
     Option("Reuse without introspection", REUSE_NO_INTROSPECTION)
