@@ -296,7 +296,39 @@ def create_section(sess):
 
 
 def select_section(sess):
-    pass
+    user_input: str = section_select.menu_prompt()
+    section = False
+
+    while True:
+        year: int = int(input("Enter section year-->  "))
+        semester: str = input("Enter section year-->  ")
+        schedule: str = input("Enter section schedule-->  ")
+        start_time: time = time(input("Enter section start time-->  "))
+
+        if user_input == "building/room":
+            building: str = input("Enter section building-->  ")
+            room: int = int(input("Enter section room number-->  "))
+            section: Section = sess.query(Section).filter(Section.sectionYear == year, Section.semester == semester,
+                                                          Section.schedule == schedule, Section.startTime == start_time,
+                                                          Section.building == building, Section.room == room).first()
+
+        elif user_input == "instructor":
+            instructor: str = input("Enter section instructor-->  ")
+            section: Section = sess.query(Section).filter(Section.sectionYear == year, Section.semester == semester,
+                                                          Section.schedule == schedule, Section.startTime == start_time,
+                                                          Section.instructor == instructor).first()
+        if section == True:
+            print(section)
+            return section
+
+        else:
+            print("That section doesn't exist. Please try again.")
+
+
+
+
+
+
 
 def list_section_in_course(sess):
     pass
