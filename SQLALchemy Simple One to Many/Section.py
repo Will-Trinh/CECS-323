@@ -62,10 +62,8 @@ if introspection_type == START_OVER or introspection_type == REUSE_NO_INTROSPECT
                           ForeignKeyConstraint([departmentAbbreviation, courseNumber],
                                                [Course.departmentAbbreviation, Course.courseNumber]))
 
-
-        def __init__(self,course: Course, sectionNumber: int, semester: str, sectionYear: int,
-             building: str, room: int, schedule: str, startTime: Time, instructor: str):
-
+        def __init__(self, course: Course, sectionNumber: int, semester: str, sectionYear: int,
+                     building: str, room: int, schedule: str, startTime: Time, instructor: str):
             self.departmentAbbreviation = course.departmentAbbreviation
             self.course = course
             self.courseNumber = course.courseNumber
@@ -79,10 +77,40 @@ if introspection_type == START_OVER or introspection_type == REUSE_NO_INTROSPECT
             self.instructor = instructor
 
 
-        def __str__(self):
-            return (f"Course: {self.courseNumber} {self.course.name} {self.sectionNumber} \n"
-                    f"Semester: {self.semester} Section year: {self.sectionYear} Instructor: {self.instructor} \n" 
-                    f"Schedule: {self.schedule} at  {self.startTime} Location: {self.building} {self.room} \n")
+elif introspection_type == INTROSPECT_TABLES:
+    class Section(Base):
+        __table__ = Table("sections", Base.metadata, autoload_with=engine)
+        departmentAbbreviation: Mapped[str] = column_property(__table__.c.department_abbreviation)
+        courseNumber: Mapped[int] = column_property(__table__.c.course_number)
+        sectionNumber: Mapped[int] = column_property(__table__.c.section_number)
+        course: Mapped["Course"] = relationship(back_populates="sections")
+        semester: Mapped[str] = column_property(__table__.c.semester)
+        sectionYear: Mapped[int] = column_property(__table__.c.setion_year)
+        building: Mapped[str] = column_property(__table__.c.building)
+        room: Mapped[int] = column_property(__table__.c.room)
+        schedule: Mapped[str] = column_property(__table__.c.schedule)
+        startTime: Mapped[Time] = column_property(__table__.c.start_time)
+        instructor: Mapped[str] = column_property(__table__.c.instructor)
 
-        setattr(Section, "__init__", __init__)
-        setattr(Section, "__str__", __str__)
+        def __init__(self, course: Course, sectionNumber: int, semester: str, sectionYear: int,
+                     building: str, room: int, schedule: str, startTime: Time, instructor: str):
+            self.departmentAbbreviation = course.departmentAbbreviation
+            self.course = course
+            self.courseNumber = course.courseNumber
+            self.sectionNumber = sectionNumber
+            self.semester = semester
+            self.sectionYear = sectionYear
+            self.building = building
+            self.room = room
+            self.schedule = schedule
+            self.startTime = startTime
+            self.instructor = instructor
+
+
+def __str__(self):
+    return (f"Course: {self.courseNumber} {self.course.name} {self.sectionNumber} \n"
+            f"Semester: {self.semester} Section year: {self.sectionYear} Instructor: {self.instructor} \n" 
+            f"Schedule: {self.schedule} at  {self.startTime} Location: {self.building} {self.room} \n")
+
+setattr(Section, "__init__", __init__)
+setattr(Section, "__str__", __str__)
