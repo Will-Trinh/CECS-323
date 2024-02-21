@@ -33,7 +33,7 @@ if introspection_type == START_OVER or introspection_type == REUSE_NO_INTROSPECT
                                                   nullable=False, primary_key=True)
 
         semester: Mapped[str] = mapped_column('semester', String(10),
-                                              CheckConstraint("semester IN(‘Fall’, ‘Spring’, ‘Winter’, ‘Summer I’, ‘Summer II’)",
+                                              CheckConstraint("semester IN('Fall', 'Spring', 'Winter', 'Summer I', 'Summer II')",
                                               name="semester_name_value_check"), nullable=False, primary_key=True)
 
         sectionYear: Mapped[int] = mapped_column('section_year', Integer, nullable=False,
