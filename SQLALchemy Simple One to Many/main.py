@@ -284,12 +284,12 @@ def create_section(sess):
                                        Section.instructor == instructor).count())
             if teacher_booked:
                 print(f"{instructor} already has a class booked for this time. Please try again")
-                break
 
             else:
                 sess.add(Section(course, sectionNumber, semester, year, building, room, schedule, start_time, instructor))
+                valid = False
 
-        break
+
 
 
 
