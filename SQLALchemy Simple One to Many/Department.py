@@ -85,7 +85,7 @@ elif introspection_type == INTROSPECT_TABLES:
 
         name: Mapped[str] = column_property(__table__.c.name)
         courses: Mapped[List["Course"]] = DC.courses
-        chairName: Mapped[str] = column_property(__table__.c.chair)
+        chairName: Mapped[str] = column_property(__table__.c.chair_name)
         building: Mapped[str] = column_property(__table__.c.building)
         office: Mapped[int] = column_property(__table__.c.office)
         description: Mapped[str] = column_property(__table__.c.description)
