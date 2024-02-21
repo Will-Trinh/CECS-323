@@ -29,6 +29,7 @@ if introspection_type == START_OVER or introspection_type == REUSE_NO_INTROSPECT
         columns needed, but this is enough to demonstrate one-to-many relationships."""
         __tablename__ = DC.__tablename__
         abbreviation: Mapped[str] = DC.abbreviation
+
         """This is a bi-directional relationship.  The Department class manages
         a list of Courses, and the Course class manages an OO reference to the
         "owning" Department.

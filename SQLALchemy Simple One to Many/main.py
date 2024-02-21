@@ -1,5 +1,5 @@
 import logging
-from time import time
+from datetime import time
 
 # My option lists for
 from menu_definitions import menu_main, debug_select, section_select
@@ -50,32 +50,69 @@ def select_student_from_list(session):
     print("Selected student: ", returned_student)
 
 #DEPARTMENT METHODS
-def add_department(session):
-    """
-    Prompt the user for the information for a new department and validate
-    the input to make sure that we do not create any duplicates.
-    :param session: The connection to the database.
-    :return:        None
-    """
-    unique_name: bool = False
+def add_department(session: Session):
+
+    unique_chair_name: bool = False
+    unique_location: bool = False
+    unique_description: bool = False
     unique_abbreviation: bool = False
+
+
     name: str = ''
     abbreviation: str = ''
-    while not unique_abbreviation or not unique_name:
-        name = input("Department full name--> ")
+    building: str = ''
+    chair_name: str = ''
+    office: int = 0
+    description: str = ''
+
+
+    name = input("Department name--> ")
+
+
+    while not unique_abbreviation:
         abbreviation = input("Department abbreviation--> ")
-        name_count: int = session.query(Department).filter(Department.name == name).count()
-        unique_name = name_count == 0
-        if not unique_name:
-            print("We already have a department by that name.  Try again.")
-        if unique_name:
-            abbreviation_count = session.query(Department). \
-                filter(Department.abbreviation == abbreviation).count()
-            unique_abbreviation = abbreviation_count == 0
-            if not unique_abbreviation:
-                print("We already have a department with that abbreviation.  Try again.")
-    new_department = Department(abbreviation, name)
-    session.add(new_department)
+        abbreviation_count: int = session.query(Department).filter(Department.abbreviation == abbreviation).count()
+        if abbreviation_count:
+            print("There is already a department with this abbreviation. Try again.")
+        else:
+            break
+
+    while not unique_chair_name:
+        chair_name = input("Department chair's name--> ")
+        chair_name_count: int = session.query(Department).filter(Department.chairName == chair_name).count()
+        if chair_name_count:
+            print("That person is already a department chair. Try again.")
+        else:
+            break
+
+
+
+    while not unique_location:
+        building = input("Department building--> ")
+        office = int(input("Department's office number--> "))
+
+        location_count: int = session.query(Department).filter(Department.building == building,
+                                                               Department.office == office).count()
+        if location_count:
+            print("There is already a department that occupies this room. Try again.")
+        else:
+            break
+
+
+
+    while not unique_description:
+        description = input("Department description--> ")
+        description_count: int = session.query(Department).filter(Department.description == description).count()
+        if description_count:
+            print("There is already a department with this description. Try again.")
+        else:
+            break
+
+
+    newDepartment = Department(name, abbreviation, chair_name, building, office, description)
+    session.add(newDepartment)
+
+
 
 def select_department(sess) -> Department:
     """
@@ -251,7 +288,7 @@ def move_course_to_new_department(sess):
 
 
 #SECTION METHODS
-def create_section(sess):
+def add_section(sess):
     course: Course = select_course(sess)
     valid = True
     while valid:
@@ -264,7 +301,12 @@ def create_section(sess):
             year: int = int(input("Enter section year-->  "))
             semester: str = input("Enter section semester-->  ")
             schedule: str = input("Enter section schedule-->   ")
-            start_time: time = time(input("Enter section time-->  "))
+
+            hour: int = int(input("Enter section start time for the hour (like 09 for 9:30)-->  "))
+            minutes: int = int(input("Enter section start time for the minute (like 30 for 9:30)-->  "))
+
+            start_time = time(hour, minutes, 0)
+
             building: str = input("Enter section building-->  ")
             room: int = int(input("Enter section building number-->  "))
 
@@ -272,7 +314,7 @@ def create_section(sess):
                                            Section.schedule == schedule, Section.startTime == start_time,
                                            Section.building == building, Section.room == room).count())
             if room_occupied:
-                print(f" {building} {room} is already occupied by a section at {time}. Please try again.")
+                print(f" {building} {room} is already occupied by a section at {start_time}. Please try again.")
             else:
                 break
 
@@ -293,6 +335,8 @@ def create_section(sess):
             else:
                 sess.add(Section(course, sectionNumber, semester, year, building, room, schedule, start_time, instructor))
                 valid = False
+                break
+
 
 
 def select_section(sess):

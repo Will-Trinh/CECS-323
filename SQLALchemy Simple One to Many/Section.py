@@ -26,6 +26,8 @@ if introspection_type == START_OVER or introspection_type == REUSE_NO_INTROSPECT
 
         course: Mapped["Course"] = relationship(back_populates="sections")
 
+
+
         courseNumber: Mapped[int] = mapped_column('course_number', Integer,
                                                   nullable=False, primary_key=True)
 
