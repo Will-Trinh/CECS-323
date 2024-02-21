@@ -19,7 +19,37 @@ import IPython  # So that I can exit out to the console without leaving the appl
 from sqlalchemy import inspect  # map from column name to attribute name
 from pprint import pprint
 
+#STUDENT METHODS
 
+def select_student_from_list(session):
+    """
+    This is just a cute little use of the Menu object.  Basically, I create a
+    menu on the fly from data selected from the database, and then use the
+    menu_prompt method on Menu to display characteristic descriptive data, with
+    an index printed out with each entry, and prompt the user until they select
+    one of the Students.
+    :param session:     The connection to the database.
+    :return:            None
+    """
+    # query returns an iterator of Student objects, I want to put those into a list.  Technically,
+    # that was not necessary, I could have just iterated through the query output directly.
+    students: [Department] = list(sess.query(Department).order_by(Department.lastName, Department.firstName))
+    options: [Option] = []  # The list of menu options that we're constructing.
+    for student in students:
+        # Each time we construct an Option instance, we put the full name of the student into
+        # the "prompt" and then the student ID (albeit as a string) in as the "action".
+        options.append(Option(student.lastName + ', ' + student.firstName, student.studentId))
+    temp_menu = Menu('Student list', 'Select a student from this list', options)
+    # text_studentId is the "action" corresponding to the student that the user selected.
+    text_studentId: str = temp_menu.menu_prompt()
+    # get that student by selecting based on the int version of the student id corresponding
+    # to the student that the user selected.
+    returned_student = sess.query(Department).filter(Department.studentId == int(text_studentId)).first()
+    # this is really just to prove the point.  Ideally, we would return the student, but that
+    # will present challenges in the exec call, so I didn't bother.
+    print("Selected student: ", returned_student)
+
+#DEPARTMENT METHODS
 def add_department(session):
     """
     Prompt the user for the information for a new department and validate
@@ -47,7 +77,61 @@ def add_department(session):
     new_department = Department(abbreviation, name)
     session.add(new_department)
 
+def select_department(sess) -> Department:
+    """
+    Prompt the user for a specific department by the department abbreviation.
+    :param sess:    The connection to the database.
+    :return:        The selected department.
+    """
+    found: bool = False
+    abbreviation: str = ''
+    while not found:
+        abbreviation = input("Enter the department abbreviation--> ")
+        abbreviation_count: int = sess.query(Department). \
+            filter(Department.abbreviation == abbreviation).count()
+        found = abbreviation_count == 1
+        if not found:
+            print("No department with that abbreviation.  Try again.")
+    return_student: Department = sess.query(Department). \
+        filter(Department.abbreviation == abbreviation).first()
+    return return_student
 
+def delete_department(session):
+    """
+    Prompt the user for a department by the abbreviation and delete it.
+    :param session: The connection to the database.
+    :return:        None
+    """
+    print("deleting a department")
+    department = select_department(session)
+    n_courses = session.query(Course).filter(Course.departmentAbbreviation == department.abbreviation).count()
+    if n_courses > 0:
+        print(f"Sorry, there are {n_courses} courses in that department.  Delete them first, "
+              "then come back here to delete the department.")
+    else:
+        session.delete(department)
+
+def list_departments(session):
+    """
+    List all departments, sorted by the abbreviation.
+    :param session:     The connection to the database.
+    :return:            None
+    """
+    # session.query returns an iterator.  The list function converts that iterator
+    # into a list of elements.  In this case, they are instances of the Student class.
+    departments: [Department] = list(session.query(Department).order_by(Department.abbreviation))
+    for department in departments:
+        print(department)
+
+def list_department_courses(sess):
+    department = select_department(sess)
+    dept_courses: [Course] = department.get_courses()
+    print("Course for department: " + str(department))
+    for dept_course in dept_courses:
+        print(dept_course)
+
+
+#COURSE METHODS
 def add_course(session):
     """
     Prompt the user for the information for a new course and validate
@@ -81,27 +165,6 @@ def add_course(session):
     course = Course(department, number, name, description, units)
     session.add(course)
 
-
-def select_department(sess) -> Department:
-    """
-    Prompt the user for a specific department by the department abbreviation.
-    :param sess:    The connection to the database.
-    :return:        The selected department.
-    """
-    found: bool = False
-    abbreviation: str = ''
-    while not found:
-        abbreviation = input("Enter the department abbreviation--> ")
-        abbreviation_count: int = sess.query(Department). \
-            filter(Department.abbreviation == abbreviation).count()
-        found = abbreviation_count == 1
-        if not found:
-            print("No department with that abbreviation.  Try again.")
-    return_student: Department = sess.query(Department). \
-        filter(Department.abbreviation == abbreviation).first()
-    return return_student
-
-
 def select_course(sess) -> Course:
     """
     Select a course by the combination of the department abbreviation and course number.
@@ -125,36 +188,14 @@ def select_course(sess) -> Course:
                                        Course.courseNumber == course_number).first()
     return course
 
-
-def delete_department(session):
-    """
-    Prompt the user for a department by the abbreviation and delete it.
-    :param session: The connection to the database.
-    :return:        None
-    """
-    print("deleting a department")
-    department = select_department(session)
-    n_courses = session.query(Course).filter(Course.departmentAbbreviation == department.abbreviation).count()
-    if n_courses > 0:
-        print(f"Sorry, there are {n_courses} courses in that department.  Delete them first, "
-              "then come back here to delete the department.")
+def delete_course(sess):
+    print("Deleting a course")
+    course = select_course(sess)
+    n_sections = sess.query(Section).filter(course.course_number == Section.courseNumber).count()
+    if n_sections > 0:
+        print("You must delete all sections before deleting a course.")
     else:
-        session.delete(department)
-
-
-def list_departments(session):
-    """
-    List all departments, sorted by the abbreviation.
-    :param session:     The connection to the database.
-    :return:            None
-    """
-    # session.query returns an iterator.  The list function converts that iterator
-    # into a list of elements.  In this case, they are instances of the Student class.
-    departments: [Department] = list(session.query(Department).order_by(Department.abbreviation))
-    for department in departments:
-        print(department)
-
-
+        sess.delete(course)
 def list_courses(sess):
     """
     List all courses currently in the database.
@@ -166,7 +207,6 @@ def list_courses(sess):
     courses: [Course] = sess.query(Course).order_by(Course.courseNumber)
     for course in courses:
         print(course)
-
 
 def move_course_to_new_department(sess):
     """
@@ -210,43 +250,7 @@ def move_course_to_new_department(sess):
                 course.set_department(new_department)
 
 
-def select_student_from_list(session):
-    """
-    This is just a cute little use of the Menu object.  Basically, I create a
-    menu on the fly from data selected from the database, and then use the
-    menu_prompt method on Menu to display characteristic descriptive data, with
-    an index printed out with each entry, and prompt the user until they select
-    one of the Students.
-    :param session:     The connection to the database.
-    :return:            None
-    """
-    # query returns an iterator of Student objects, I want to put those into a list.  Technically,
-    # that was not necessary, I could have just iterated through the query output directly.
-    students: [Department] = list(sess.query(Department).order_by(Department.lastName, Department.firstName))
-    options: [Option] = []  # The list of menu options that we're constructing.
-    for student in students:
-        # Each time we construct an Option instance, we put the full name of the student into
-        # the "prompt" and then the student ID (albeit as a string) in as the "action".
-        options.append(Option(student.lastName + ', ' + student.firstName, student.studentId))
-    temp_menu = Menu('Student list', 'Select a student from this list', options)
-    # text_studentId is the "action" corresponding to the student that the user selected.
-    text_studentId: str = temp_menu.menu_prompt()
-    # get that student by selecting based on the int version of the student id corresponding
-    # to the student that the user selected.
-    returned_student = sess.query(Department).filter(Department.studentId == int(text_studentId)).first()
-    # this is really just to prove the point.  Ideally, we would return the student, but that
-    # will present challenges in the exec call, so I didn't bother.
-    print("Selected student: ", returned_student)
-
-
-def list_department_courses(sess):
-    department = select_department(sess)
-    dept_courses: [Course] = department.get_courses()
-    print("Course for department: " + str(department))
-    for dept_course in dept_courses:
-        print(dept_course)
-
-
+#SECTION METHODS
 def create_section(sess):
     course: Course = select_course(sess)
     valid = True
@@ -290,30 +294,11 @@ def create_section(sess):
                 valid = False
 
 
-
-
-
-
-
-
-
-
 def select_section(sess):
     pass
 
-
 def list_section_in_course(sess):
     pass
-
-
-def delete_course(sess):
-    print("Deleting a course")
-    course = select_course(sess)
-    n_sections = sess.query(Section).filter(course.course_number == Section.courseNumber).count()
-    if n_sections > 0:
-        print("You must delete all sections before deleting a course.")
-    else:
-        sess.delete(course)
 
 
 def delete_section(sess):
