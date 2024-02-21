@@ -33,7 +33,7 @@ if introspection_type == START_OVER or introspection_type == REUSE_NO_INTROSPECT
                                                   nullable=False, primary_key=True)
 
         semester: Mapped[str] = mapped_column('semester', String(10),
-                                              CheckConstraint("semester IN('MW', 'TuTh', 'MWF', 'F', 'S')",
+                                              CheckConstraint("semester IN(‘Fall’, ‘Spring’, ‘Winter’, ‘Summer I’, ‘Summer II’)",
                                               name="semester_name_value_check"), nullable=False, primary_key=True)
 
         sectionYear: Mapped[int] = mapped_column('section_year', Integer, nullable=False,
@@ -46,7 +46,10 @@ if introspection_type == START_OVER or introspection_type == REUSE_NO_INTROSPECT
 
         room: Mapped[int] = mapped_column('room', Integer, nullable=False)
 
-        schedule: Mapped[str] = mapped_column('schedule', String(6), nullable=False)
+
+        schedule: Mapped[str] = mapped_column('semester', String(6),
+                                              CheckConstraint("semester IN('MW', 'TuTh', 'MWF', 'F', 'S')",
+                                              name="semester_name_value_check"), nullable=False)
 
         startTime: Mapped[Time] = mapped_column('start_time', Time, nullable=False)
 

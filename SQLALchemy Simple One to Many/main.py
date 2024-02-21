@@ -1,4 +1,6 @@
 import logging
+from time import time
+
 # My option lists for
 from menu_definitions import menu_main, debug_select, section_select, department_select, student_select
 from IntrospectionFactory import IntrospectionFactory
@@ -246,28 +248,54 @@ def list_department_courses(sess):
 
 
 def create_section(sess):
-    print("Which department offers this section?")
-    department: Department = select_department(sess)
-    unique_number: bool = False
-    unique_name: bool = False
-    number: int = -1
-    name: str = ''
-    while not unique_number or not unique_name:
-        print("which class offers this section?")
-        course: Course = select_course(sess)
-        if not unique_name:
-            print("We already have a course by that name in that department.  Try again.")
-        if unique_name:
-            number_count = session.query(Course). \
-                filter(Course.departmentAbbreviation == department.abbreviation,
-                       Course.courseNumber == number).count()
-            unique_number = number_count == 0
-            if not unique_number:
-                print("We already have a course in this department with that number.  Try again.")
-    description: str = input('Please enter the course description-->')
-    units: int = int(input('How many units for this course-->'))
-    course = Course(department, number, name, description, units)
-    session.add(course)
+    course: Course = select_course(sess)
+    valid = True
+    while valid:
+
+        while True:
+            #{year, semester, schedule, start_time, building, room} – This makes sure that we never have more than one
+            # section meeting in the same room at the same time
+
+            sectionNumber : int = int(input("Enter section number--> "))
+            year: int = int(input("Enter section year-->  "))
+            semester: str = input("Enter section semester-->  ")
+            schedule: str = input("Enter section schedule-->   ")
+            start_time: time = time(input("Enter section time-->  "))
+            building: str = input("Enter section building-->  ")
+            room: int = int(input("Enter section building number-->  "))
+
+            room_occupied = (sess.query(Section).filter(Section.sectionYear == year, Section.semester == semester,
+                                           Section.schedule == schedule, Section.startTime == start_time,
+                                           Section.building == building, Section.room == room).count())
+            if room_occupied:
+                print(f" {building} {room} is already occupied by a section for {time}. Please try again.")
+            else:
+                break
+
+
+
+        while True:
+            #{year, semester, schedule, start_time, instructor} – This makes sure that we never over book an instructor
+            #and have them teaching two sections at the same time.
+
+            instructor: str = input("Enter section instructor--> ")
+            teacher_booked = (sess.query(Section).filter(Section.sectionYear == year, Section.semester == semester,
+                                       Section.schedule == schedule, Section.startTime == start_time,
+                                       Section.instructor == instructor).count())
+            if teacher_booked:
+                print(f"{instructor} already has a class booked for this time. Please try again")
+                break
+
+            else:
+                sess.add(Section(course, sectionNumber, semester, year, building, room, schedule, start_time, instructor))
+
+        break
+
+
+
+
+
+
 
 
 def select_section(sess):
@@ -292,6 +320,16 @@ def delete_section(sess):
     print("Deleting a section")
     section = select_section(sess)
     sess.delete(section)
+
+def check_input(prompt, table_output):
+    while True:
+        user_input = input(prompt)
+        if user_input in table_output:
+            return user_input
+        else:
+            print("Invalid input. Try again.")
+
+
 
 
 if __name__ == '__main__':
