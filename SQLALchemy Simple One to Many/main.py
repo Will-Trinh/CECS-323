@@ -272,7 +272,7 @@ def create_section(sess):
                                            Section.schedule == schedule, Section.startTime == start_time,
                                            Section.building == building, Section.room == room).count())
             if room_occupied:
-                print(f" {building} {room} is already occupied by a section for {time}. Please try again.")
+                print(f" {building} {room} is already occupied by a section at {time}. Please try again.")
             else:
                 break
 
