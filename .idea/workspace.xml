@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="d98959a8-bb1e-421e-aa5a-f29e1d13bae7" name="Changes" comment="Added class Section" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Will-Trinh&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="selectedUrlAndAccountId">
+      <UrlAndAccount>
+        <option name="accountId" value="f936675d-6496-4bf6-86f5-76faa247de5f" />
+        <option name="url" value="https://github.com/Will-Trinh/CECS-323.git" />
+      </UrlAndAccount>
+    </option>
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 8
+}</component>
+  <component name="ProjectId" id="2c6nqNwKcwsfMtuU4tnRvSviVDH" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Python.main.executor": "Run",
+    "Python.test.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Willi\PycharmProjects\CECS-323\SQLALchemy Simple One to Many" />
+    </key>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-python-sdk-5a2391486177-d3b881c8e49f-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-233.13763.11" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="d98959a8-bb1e-421e-aa5a-f29e1d13bae7" name="Changes" comment="" />
+      <created>1707441087038</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1707441087038</updated>
+    </task>
+    <task id="LOCAL-00001" summary="pycharm test">
+      <option name="closed" value="true" />
+      <created>1707441254977</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1707441254977</updated>
+    </task>
+    <task id="LOCAL-00002" summary="pycharm test">
+      <option name="closed" value="true" />
+      <created>1707441326066</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1707441326066</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Added One to Many folder">
+      <option name="closed" value="true" />
+      <created>1708385178115</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1708385178115</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Added One to Many folder">
+      <option name="closed" value="true" />
+      <created>1708385194782</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1708385194782</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Added One to Many folder">
+      <option name="closed" value="true" />
+      <created>1708385463985</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1708385463985</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Added One to Many folder">
+      <option name="closed" value="true" />
+      <created>1708385499530</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1708385499530</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Added One to Many folder">
+      <option name="closed" value="true" />
+      <created>1708385581509</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1708385581509</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Added sample code">
+      <option name="closed" value="true" />
+      <created>1708385982931</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1708385982931</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Deleted .idea">
+      <option name="closed" value="true" />
+      <created>1708386388045</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1708386388045</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Added Section.py">
+      <option name="closed" value="true" />
+      <created>1708388985053</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1708388985053</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Added Section.py Imports">
+      <option name="closed" value="true" />
+      <created>1708389775651</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1708389775651</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Added class Section">
+      <option name="closed" value="true" />
+      <created>1708389992131</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1708389992131</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="pycharm test" />
+    <MESSAGE value="Added One to Many folder" />
+    <MESSAGE value="Added sample code" />
+    <MESSAGE value="Deleted .idea" />
+    <MESSAGE value="Added Section.py" />
+    <MESSAGE value="Added Section.py Imports" />
+    <MESSAGE value="Added class Section" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added class Section" />
+  </component>
+</project>
