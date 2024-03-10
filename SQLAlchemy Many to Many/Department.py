@@ -24,11 +24,19 @@ class Department(Base):
     # __table_args__ can best be viewed as directives that we ask SQLAlchemy to
     # send to the database.  In this case, that we want two separate uniqueness
     # constraints (candidate keys).
+    chairName: Mapped[str] = mapped_column('chair_name', String(80), nullable=False)
+    building: Mapped[str] = mapped_column('building', String(10), nullable=False)
+    office: Mapped[int] = mapped_column('office', Integer, nullable=False)
+    description: Mapped[str] = mapped_column('description', String(80), nullable=False)
     __table_args__ = (UniqueConstraint("name", name="departments_uk_01"), )
 
-    def __init__(self, abbreviation: str, name: str):
+    def __init__(self, abbreviation: str, name: str, building: str, chair: str, office: int, description: str):
         self.abbreviation = abbreviation
         self.name = name
+        self.building = building
+        self.chairName = chair
+        self.office = office
+        self.description = description
 
     def add_course(self, course):
         if course not in self.courses:
