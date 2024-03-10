@@ -1,12 +1,14 @@
 from orm_base import Base
 from db_connection import engine
 from IntrospectionFactory import IntrospectionFactory
-from sqlalchemy import UniqueConstraint, ForeignKeyConstraint
+from sqlalchemy import UniqueConstraint, ForeignKeyConstraint, ForeignKey
 from sqlalchemy import String, Integer
 from sqlalchemy.orm import Mapped, mapped_column, relationship, column_property
 from sqlalchemy import Table
 from Department import Department
 from constants import START_OVER, REUSE_NO_INTROSPECTION, INTROSPECT_TABLES
+from typing import List
+
 """In this Entity, I decided to do everything in this file, even though it got a little
 busy.  So there is no CourseClass.py to go with the DepartmentClass.py file."""
 
@@ -30,12 +32,18 @@ if introspection_type == START_OVER or introspection_type == REUSE_NO_INTROSPECT
         ForeignKey.  I show you how to do it in __table_args__ because you'll need
         that for the relationship from courses into sections.
         """
+
         departmentAbbreviation: Mapped[str] = mapped_column('department_abbreviation',
-    #                                                       ForeignKey("departments.abbreviation"),
+                                                           ForeignKey("departments.abbreviation"),
                                                             primary_key=True)
+
         department: Mapped["Department"] = relationship(back_populates="courses")
+
+        sections: Mapped[List["Section"]] = relationship(back_populates="course")
+
         courseNumber: Mapped[int] = mapped_column('course_number', Integer,
                                                   nullable=False, primary_key=True)
+
         name: Mapped[str] = mapped_column('name', String(50), nullable=False)
         description: Mapped[str] = mapped_column('description', String(500), nullable=False)
         units: Mapped[int] = mapped_column('units', Integer, nullable=False)
@@ -81,6 +89,8 @@ def set_department(self, department: Department):
     self.department = department
     self.departmentAbbreviation = department.abbreviation
 
+def get_sections(self):
+    return self.sections
 
 def __str__(self):
     return f"Department abbrev: {self.departmentAbbreviation} number: {self.courseNumber} name: {self.name} units: {self.units}"
@@ -89,3 +99,4 @@ def __str__(self):
 """Add the two instance methods to the class, regardless of whether we introspect or not."""
 setattr(Course, 'set_department', set_department)
 setattr(Course, '__str__', __str__)
+setattr(Course, 'get_sections', get_sections)

@@ -1,6 +1,8 @@
 import logging
+from datetime import time
+
 # My option lists for
-from menu_definitions import menu_main, debug_select
+from menu_definitions import menu_main, debug_select, section_select
 from IntrospectionFactory import IntrospectionFactory
 from db_connection import engine, Session
 from orm_base import metadata
@@ -10,41 +12,163 @@ from Department import Department
 from Course import Course
 from Option import Option
 from Menu import Menu
+from Section import Section
 # Poor man's enumeration of the two available modes for creating the tables
 from constants import START_OVER, INTROSPECT_TABLES, REUSE_NO_INTROSPECTION
 import IPython  # So that I can exit out to the console without leaving the application.
 from sqlalchemy import inspect  # map from column name to attribute name
 from pprint import pprint
 
+#STUDENT METHODS
 
-def add_department(session):
+def select_student_from_list(session):
     """
-    Prompt the user for the information for a new department and validate
-    the input to make sure that we do not create any duplicates.
+    This is just a cute little use of the Menu object.  Basically, I create a
+    menu on the fly from data selected from the database, and then use the
+    menu_prompt method on Menu to display characteristic descriptive data, with
+    an index printed out with each entry, and prompt the user until they select
+    one of the Students.
+    :param session:     The connection to the database.
+    :return:            None
+    """
+    # query returns an iterator of Student objects, I want to put those into a list.  Technically,
+    # that was not necessary, I could have just iterated through the query output directly.
+    students: [Department] = list(sess.query(Department).order_by(Department.lastName, Department.firstName))
+    options: [Option] = []  # The list of menu options that we're constructing.
+    for student in students:
+        # Each time we construct an Option instance, we put the full name of the student into
+        # the "prompt" and then the student ID (albeit as a string) in as the "action".
+        options.append(Option(student.lastName + ', ' + student.firstName, student.studentId))
+    temp_menu = Menu('Student list', 'Select a student from this list', options)
+    # text_studentId is the "action" corresponding to the student that the user selected.
+    text_studentId: str = temp_menu.menu_prompt()
+    # get that student by selecting based on the int version of the student id corresponding
+    # to the student that the user selected.
+    returned_student = sess.query(Department).filter(Department.studentId == int(text_studentId)).first()
+    # this is really just to prove the point.  Ideally, we would return the student, but that
+    # will present challenges in the exec call, so I didn't bother.
+    print("Selected student: ", returned_student)
+
+#DEPARTMENT METHODS
+def add_department(session: Session):
+
+    unique_chair_name: bool = False
+    unique_location: bool = False
+    unique_description: bool = False
+    unique_abbreviation: bool = False
+
+
+
+    abbreviation: str = ''
+    building: str = ''
+    chair_name: str = ''
+    office: int = 0
+    description: str = ''
+
+
+    name = input("Department name--> ")
+
+
+    while not unique_abbreviation:
+        abbreviation = input("Department abbreviation--> ")
+        abbreviation_count: int = session.query(Department).filter(Department.abbreviation == abbreviation).count()
+        if abbreviation_count:
+            print("There is already a department with this abbreviation. Try again.")
+        else:
+            break
+
+    while not unique_chair_name:
+        chair_name = input("Department chair's name--> ")
+        chair_name_count: int = session.query(Department).filter(Department.chairName == chair_name).count()
+        if chair_name_count:
+            print("That person is already a department chair. Try again.")
+        else:
+            break
+
+
+
+    while not unique_location:
+        building = input("Department building--> ")
+        office = int(input("Department's office number--> "))
+
+        location_count: int = session.query(Department).filter(Department.building == building,
+                                                               Department.office == office).count()
+        if location_count:
+            print("There is already a department that occupies this room. Try again.")
+        else:
+            break
+
+
+
+    while not unique_description:
+        description = input("Department description--> ")
+        description_count: int = session.query(Department).filter(Department.description == description).count()
+        if description_count:
+            print("There is already a department with this description. Try again.")
+        else:
+            break
+
+
+    newDepartment = Department(name, abbreviation, chair_name, building, office, description)
+    session.add(newDepartment)
+
+
+
+def select_department(sess) -> Department:
+    """
+    Prompt the user for a specific department by the department abbreviation.
+    :param sess:    The connection to the database.
+    :return:        The selected department.
+    """
+    found: bool = False
+    abbreviation: str = ''
+    while not found:
+        abbreviation = input("Enter the department abbreviation--> ")
+        abbreviation_count: int = sess.query(Department). \
+            filter(Department.abbreviation == abbreviation).count()
+        found = abbreviation_count == 1
+        if not found:
+            print("No department with that abbreviation.  Try again.")
+    return_student: Department = sess.query(Department). \
+        filter(Department.abbreviation == abbreviation).first()
+    return return_student
+
+def delete_department(session):
+    """
+    Prompt the user for a department by the abbreviation and delete it.
     :param session: The connection to the database.
     :return:        None
     """
-    unique_name: bool = False
-    unique_abbreviation: bool = False
-    name: str = ''
-    abbreviation: str = ''
-    while not unique_abbreviation or not unique_name:
-        name = input("Department full name--> ")
-        abbreviation = input("Department abbreviation--> ")
-        name_count: int = session.query(Department).filter(Department.name == name).count()
-        unique_name = name_count == 0
-        if not unique_name:
-            print("We already have a department by that name.  Try again.")
-        if unique_name:
-            abbreviation_count = session.query(Department). \
-                filter(Department.abbreviation == abbreviation).count()
-            unique_abbreviation = abbreviation_count == 0
-            if not unique_abbreviation:
-                print("We already have a department with that abbreviation.  Try again.")
-    new_department = Department(abbreviation, name)
-    session.add(new_department)
+    print("deleting a department")
+    department = select_department(session)
+    n_courses = session.query(Course).filter(Course.departmentAbbreviation == department.abbreviation).count()
+    if n_courses > 0:
+        print(f"Sorry, there are {n_courses} courses in that department.  Delete them first, "
+              "then come back here to delete the department.")
+    else:
+        session.delete(department)
+
+def list_departments(session):
+    """
+    List all departments, sorted by the abbreviation.
+    :param session:     The connection to the database.
+    :return:            None
+    """
+    # session.query returns an iterator.  The list function converts that iterator
+    # into a list of elements.  In this case, they are instances of the Student class.
+    departments: [Department] = list(session.query(Department).order_by(Department.abbreviation))
+    for department in departments:
+        print(department)
+
+def list_department_courses(sess):
+    department = select_department(sess)
+    dept_courses: [Course] = department.get_courses()
+    print("Course for department: " + str(department))
+    for dept_course in dept_courses:
+        print(dept_course)
 
 
+#COURSE METHODS
 def add_course(session):
     """
     Prompt the user for the information for a new course and validate
@@ -78,27 +202,6 @@ def add_course(session):
     course = Course(department, number, name, description, units)
     session.add(course)
 
-
-def select_department(sess) -> Department:
-    """
-    Prompt the user for a specific department by the department abbreviation.
-    :param sess:    The connection to the database.
-    :return:        The selected department.
-    """
-    found: bool = False
-    abbreviation: str = ''
-    while not found:
-        abbreviation = input("Enter the department abbreviation--> ")
-        abbreviation_count: int = sess.query(Department). \
-            filter(Department.abbreviation == abbreviation).count()
-        found = abbreviation_count == 1
-        if not found:
-            print("No department with that abbreviation.  Try again.")
-    return_student: Department = sess.query(Department). \
-        filter(Department.abbreviation == abbreviation).first()
-    return return_student
-
-
 def select_course(sess) -> Course:
     """
     Select a course by the combination of the department abbreviation and course number.
@@ -113,45 +216,23 @@ def select_course(sess) -> Course:
     while not found:
         department_abbreviation = input("Department abbreviation--> ")
         course_number = int(input("Course Number--> "))
-        name_count: int = sess.query(Course).filter(Course.departmentAbbreviation == department_abbreviation,
-                                                    Course.courseNumber == course_number).count()
+        name_count: int = sess.query(Course).filter(Course.courseNumber == course_number).count()
         found = name_count == 1
         if not found:
             print("No course by that number in that department.  Try again.")
     course = sess.query(Course).filter(Course.departmentAbbreviation == department_abbreviation,
                                        Course.courseNumber == course_number).first()
+    print(course)
     return course
 
-
-def delete_department(session):
-    """
-    Prompt the user for a department by the abbreviation and delete it.
-    :param session: The connection to the database.
-    :return:        None
-    """
-    print("deleting a department")
-    department = select_department(session)
-    n_courses = session.query(Course).filter(Course.departmentAbbreviation == department.abbreviation).count()
-    if n_courses > 0:
-        print(f"Sorry, there are {n_courses} courses in that department.  Delete them first, "
-              "then come back here to delete the department.")
+def delete_course(sess):
+    print("Deleting a course")
+    course = select_course(sess)
+    n_sections = sess.query(Section).filter(course.courseNumber == Section.courseNumber).count()
+    if n_sections > 0:
+        print("You must delete all sections before deleting a course.")
     else:
-        session.delete(department)
-
-
-def list_departments(session):
-    """
-    List all departments, sorted by the abbreviation.
-    :param session:     The connection to the database.
-    :return:            None
-    """
-    # session.query returns an iterator.  The list function converts that iterator
-    # into a list of elements.  In this case, they are instances of the Student class.
-    departments: [Department] = list(session.query(Department).order_by(Department.abbreviation))
-    for department in departments:
-        print(department)
-
-
+        sess.delete(course)
 def list_courses(sess):
     """
     List all courses currently in the database.
@@ -163,7 +244,6 @@ def list_courses(sess):
     courses: [Course] = sess.query(Course).order_by(Course.courseNumber)
     for course in courses:
         print(course)
-
 
 def move_course_to_new_department(sess):
     """
@@ -207,41 +287,118 @@ def move_course_to_new_department(sess):
                 course.set_department(new_department)
 
 
-def select_student_from_list(session):
-    """
-    This is just a cute little use of the Menu object.  Basically, I create a
-    menu on the fly from data selected from the database, and then use the
-    menu_prompt method on Menu to display characteristic descriptive data, with
-    an index printed out with each entry, and prompt the user until they select
-    one of the Students.
-    :param session:     The connection to the database.
-    :return:            None
-    """
-    # query returns an iterator of Student objects, I want to put those into a list.  Technically,
-    # that was not necessary, I could have just iterated through the query output directly.
-    students: [Department] = list(sess.query(Department).order_by(Department.lastName, Department.firstName))
-    options: [Option] = []  # The list of menu options that we're constructing.
-    for student in students:
-        # Each time we construct an Option instance, we put the full name of the student into
-        # the "prompt" and then the student ID (albeit as a string) in as the "action".
-        options.append(Option(student.lastName + ', ' + student.firstName, student.studentId))
-    temp_menu = Menu('Student list', 'Select a student from this list', options)
-    # text_studentId is the "action" corresponding to the student that the user selected.
-    text_studentId: str = temp_menu.menu_prompt()
-    # get that student by selecting based on the int version of the student id corresponding
-    # to the student that the user selected.
-    returned_student = sess.query(Department).filter(Department.studentId == int(text_studentId)).first()
-    # this is really just to prove the point.  Ideally, we would return the student, but that
-    # will present challenges in the exec call, so I didn't bother.
-    print("Selected student: ", returned_student)
+#SECTION METHODS
+def add_section(sess):
+    course: Course = select_course(sess)
+    valid = True
+    while valid:
+
+        while True:
+            #{year, semester, schedule, start_time, building, room} – This makes sure that we never have more than one
+            # section meeting in the same room at the same time
+
+            sectionNumber : int = int(input("Enter section number--> "))
+            year: int = int(input("Enter section year-->  "))
+            semester: str = input("Enter section semester-->  ")
+            schedule: str = input("Enter section schedule-->   ")
+
+            hour: int = int(input("Enter section start time for the hour (like 09 for 9:30)-->  "))
+            minutes: int = int(input("Enter section start time for the minute (like 30 for 9:30)-->  "))
+
+            start_time = time(hour, minutes, 0)
+
+            building: str = input("Enter section building-->  ")
+            room: int = int(input("Enter section building number-->  "))
+
+            room_occupied = (sess.query(Section).filter(Section.sectionYear == year, Section.semester == semester,
+                                           Section.schedule == schedule, Section.startTime == start_time,
+                                           Section.building == building, Section.room == room).count())
+            if room_occupied:
+                print(f" {building} {room} is already occupied by a section at {start_time}. Please try again.")
+            else:
+                break
 
 
-def list_department_courses(sess):
-    department = select_department(sess)
-    dept_courses: [Course] = department.get_courses()
-    print("Course for department: " + str(department))
-    for dept_course in dept_courses:
-        print(dept_course)
+
+
+        while True:
+            #{year, semester, schedule, start_time, instructor} – This makes sure that we never over book an instructor
+            #and have them teaching two sections at the same time.
+
+            instructor: str = input("Enter section instructor--> ")
+            teacher_booked = (sess.query(Section).filter(Section.sectionYear == year, Section.semester == semester,
+                                       Section.schedule == schedule, Section.startTime == start_time,
+                                       Section.instructor == instructor).count())
+            if teacher_booked:
+                print(f"{instructor} already has a class booked for this time. Please try again")
+
+            else:
+                sess.add(Section(course, sectionNumber, semester, year, building, room, schedule, start_time, instructor))
+                valid = False
+                break
+
+
+
+def select_section(sess):
+    user_input: str = section_select.menu_prompt()
+    section = False
+
+    while True:
+        year: int = int(input("Enter section year-->  "))
+        semester: str = input("Enter section semester-->  ")
+        schedule: str = input("Enter section schedule-->  ")
+        hour: int = int(input("Enter section start time for the hour (like 09 for 9:30)-->  "))
+        minutes: int = int(input("Enter section start time for the minute (like 30 for 9:30)-->  "))
+
+        start_time = time(hour, minutes, 0)
+
+        if user_input == "building/room":
+            building: str = input("Enter section building-->  ")
+            room: int = int(input("Enter section room number-->  "))
+            section: Section = sess.query(Section).filter(Section.sectionYear == year, Section.semester == semester,
+                                                          Section.schedule == schedule, Section.startTime == start_time,
+                                                          Section.building == building, Section.room == room).first()
+
+        elif user_input == "instructor":
+            instructor: str = input("Enter section instructor-->  ")
+            section: Section = sess.query(Section).filter(Section.sectionYear == year, Section.semester == semester,
+                                                          Section.schedule == schedule, Section.startTime == start_time,
+                                                          Section.instructor == instructor).first()
+        if section:
+            print(section)
+            return section
+
+        else:
+            print("That section doesn't exist. Please try again.")
+
+
+
+
+
+
+
+def list_sections_in_course(sess):
+    course: Course = select_course(sess)
+    print(f"Sections in {course}: \n")
+    for section in course.get_sections():
+        print(f"{section}\n")
+
+
+
+def delete_section(sess):
+    print("Deleting a section")
+    section = select_section(sess)
+    sess.delete(section)
+
+def check_input(prompt, table_output):
+    while True:
+        user_input = input(prompt)
+        if user_input in table_output:
+            return user_input
+        else:
+            print("Invalid input. Try again.")
+
+
 
 
 if __name__ == '__main__':

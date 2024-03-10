@@ -12,20 +12,32 @@ variables are constructed.  To be honest, I'm not sure whether these are global
 variables or not in Python.
 """
 
-# The main options for operating on Departments and Courses.
+
+# The menu options for operating on Departments.
+
 menu_main = Menu('main', 'Please select one of the following options:', [
     Option("Add department", "add_department(sess)"),
     Option("Add course", "add_course(sess)"),
+    Option("Add section", "add_section(sess)"),
     Option("Delete department", "delete_department(sess)"),
     Option("Delete course", "delete_course(sess)"),
+    Option("Delete section", "delete_section(sess)"),
     Option("List all departments", "list_departments(sess)"),
     Option("List all courses", "list_courses(sess)"),
+    Option("List course sections", "list_sections_in_course(sess)"),
     Option("List department courses", "list_department_courses(sess)"),
     Option("Move course to new department", "move_course_to_new_department(sess)"),
     Option("Commit", "sess.commit()"),
     Option("Break out into shell", "IPython.embed()"),
     Option("Exit", "pass")
 ])
+
+
+section_select = Menu('section select', 'Please select how you want to select a section:', [
+    Option("Building and Room", "building/room"),
+    Option("Instructor", "instructor")
+])
+
 
 # A menu to prompt for the amount of logging information to go to the console.
 debug_select = Menu('debug select', 'Please select a debug level:', [
@@ -35,8 +47,9 @@ debug_select = Menu('debug select', 'Please select a debug level:', [
 ])
 
 # A menu to prompt for whether to create new tables or reuse the old ones.
-introspection_select = Menu("introspection selectt", 'To introspect or not:', [
+introspection_select = Menu("introspection select", 'To introspect or not:', [
     Option('Start all over', START_OVER),
     Option("Reuse tables", INTROSPECT_TABLES),
     Option("Reuse without introspection", REUSE_NO_INTROSPECTION)
 ])
+
