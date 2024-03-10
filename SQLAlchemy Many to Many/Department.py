@@ -1,8 +1,10 @@
 from orm_base import Base
-from sqlalchemy import Column, Integer, UniqueConstraint, Identity
-from sqlalchemy import String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from typing import List                 # Use this for the list of courses offered by the department
+from constants import START_OVER, REUSE_NO_INTROSPECTION
+from sqlalchemy import UniqueConstraint
+from sqlalchemy import String, Integer
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 
 class Department(Base):
