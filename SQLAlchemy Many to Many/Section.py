@@ -83,22 +83,22 @@ if introspection_type == START_OVER or introspection_type == REUSE_NO_INTROSPECT
             self.startTime = startTime
             self.instructor = instructor
 
-            def add_student(self, student):
-                if student in [student for student in self.students]:
-                    print("Provided Student already exists in this Section.")
-                    return
-                section_student = Enrollment(self, student)
-                student.sections.append(section_student)
-                self.students.append(section_student)
+        def add_student(self, student):
+            if student in [student for student in self.students]:
+                print("Provided Student already exists in this Section.")
+                return
+            section_student = Enrollment(self, student)
+            student.sections.append(section_student)
+            self.students.append(section_student)
 
-            def remove_enrollment(self, student):
-                if student not in [student.student for student in self.students]:
-                    print("Provided Student does not exist in this Section.")
-                    return
-                self.students.pop([student.student for student in self.students].index(student))
+        def remove_enrollment(self, student):
+            if student not in [student.student for student in self.students]:
+                print("Provided Student does not exist in this Section.")
+                return
+            self.students.pop([student.student for student in self.students].index(student))
 
-            def __str__(self):
-                return (f"Course number: {self.courseNumber} Course name: {self.course.name}\n"
-                        f"Section number: {self.sectionNumber} Semester: {self.semester} Section year: {self.sectionYear}\n"
-                        f"Instructor: {self.instructor} Schedule: {self.schedule} Start time: {self.startTime}\n"
-                        f"Building: {self.building} Room: {self.room}")
+        def __str__(self):
+            return (f"Course number: {self.courseNumber} Course name: {self.course.name}\n"
+                    f"Section number: {self.sectionNumber} Semester: {self.semester} Section year: {self.sectionYear}\n"
+                    f"Instructor: {self.instructor} Schedule: {self.schedule} Start time: {self.startTime}\n"
+                    f"Building: {self.building} Room: {self.room}")
