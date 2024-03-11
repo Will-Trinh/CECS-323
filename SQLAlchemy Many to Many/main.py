@@ -1,4 +1,6 @@
 import logging
+from datetime import time
+
 from constants import *
 from menu_definitions import menu_main, add_menu, delete_menu, list_menu, debug_select, introspection_select
 from IntrospectionFactory import IntrospectionFactory
@@ -15,7 +17,8 @@ from Option import Option
 from Menu import Menu
 from SQLAlchemyUtilities import check_unique
 from pprint import pprint
-
+from Section import Section
+from Enrollment import Enrollment
 
 def add(sess: Session):
     add_action: str = ''
@@ -601,3 +604,77 @@ if __name__ == '__main__':
             exec(main_action)
         sess.commit()
     print('Ending normally')
+
+
+
+############################################################## new functions
+
+def select_section(sess):
+    user_input: str = select_section.menu_prompt()
+    section = False
+
+    while True:
+        year: int = int(input("Enter section year-->  "))
+        semester: str = input("Enter section semester-->  ")
+        schedule: str = input("Enter section schedule-->  ")
+        hour: int = int(input("Enter section start time for the hour (like 09 for 9:30)-->  "))
+        minutes: int = int(input("Enter section start time for the minute (like 30 for 9:30)-->  "))
+
+        start_time = time(hour, minutes, 0)
+
+        if user_input == "building/room":
+            building: str = input("Enter section building-->  ")
+            room: int = int(input("Enter section room number-->  "))
+            section: Section = sess.query(Section).filter(Section.sectionYear == year, Section.semester == semester,
+                                                          Section.schedule == schedule, Section.startTime == start_time,
+                                                          Section.building == building, Section.room == room).first()
+
+        elif user_input == "instructor":
+            instructor: str = input("Enter section instructor-->  ")
+            section: Section = sess.query(Section).filter(Section.sectionYear == year, Section.semester == semester,
+                                                          Section.schedule == schedule, Section.startTime == start_time,
+                                                          Section.instructor == instructor).first()
+        if section:
+            print(section)
+            return section
+
+        else:
+            print("That section doesn't exist. Please try again.")
+
+
+#Another option in your menu will be to enroll by adding a Student to a Section
+
+def enroll_add_student_section(sess: Session) -> None:
+    while True:
+        student: Student = select_student(sess)
+        section: Section = select_section(sess)
+        enrollment: Enrollment = Enrollment(section, student)
+        if check_unique(sess, enrollment):
+            print("Constraints violated:")
+            print(check_unique(sess, enrollment))
+            print("Try again.")
+        else:
+            break
+    student.add_section(section)
+    sess.add(student)
+    sess.flush()
+
+
+# One option in your menu will be to enroll by adding a Section to a Student.
+
+def enroll_add_section_student(sess: Session) -> None:
+    while True:
+        student: Student = select_student(sess)
+        section: Section = select_section(sess)
+        enrollment: Enrollment = Enrollment(section, student)
+        if check_unique(sess, enrollment):
+            print("Constraints violated:")
+            print(check_unique(sess, enrollment))
+            print("Try again.")
+        else:
+            break
+    section.add_student(student)
+    sess.add(section)
+    sess.flush()
+
+

@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d98959a8-bb1e-421e-aa5a-f29e1d13bae7" name="Changes" comment="Added class Section" />
+    <list default="true" id="d98959a8-bb1e-421e-aa5a-f29e1d13bae7" name="Changes" comment="fixed indentation">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SQLAlchemy Many to Many/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/SQLAlchemy Many to Many/main.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -170,7 +173,63 @@
       <option name="project" value="LOCAL" />
       <updated>1708389992131</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="completed enrollment class. &#10;&#10;enrollment is the junction table between student and section. (Without history)">
+      <option name="closed" value="true" />
+      <created>1710115604635</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1710115604635</updated>
+    </task>
+    <task id="LOCAL-00014" summary="added connection between enrollment and student">
+      <option name="closed" value="true" />
+      <created>1710116394120</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1710116394120</updated>
+    </task>
+    <task id="LOCAL-00015" summary="added connection between enrollment and section">
+      <option name="closed" value="true" />
+      <created>1710116686375</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1710116686375</updated>
+    </task>
+    <task id="LOCAL-00016" summary="imported enrollment into section&#10;&#10;changed enrollment to take sectionID instead of all of section's primary keys">
+      <option name="closed" value="true" />
+      <created>1710117903386</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1710117903386</updated>
+    </task>
+    <task id="LOCAL-00017" summary="Added sectionID to section">
+      <option name="closed" value="true" />
+      <created>1710118099080</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1710118099080</updated>
+    </task>
+    <task id="LOCAL-00018" summary="added to student:&#10;&#10;- add section&#10;- remove enrollment">
+      <option name="closed" value="true" />
+      <created>1710119507892</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1710119507892</updated>
+    </task>
+    <task id="LOCAL-00019" summary="fixed indentation">
+      <option name="closed" value="true" />
+      <created>1710119620749</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1710119620749</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -192,6 +251,13 @@
     <MESSAGE value="Added Section.py" />
     <MESSAGE value="Added Section.py Imports" />
     <MESSAGE value="Added class Section" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added class Section" />
+    <MESSAGE value="completed enrollment class. &#10;&#10;enrollment is the junction table between student and section. (Without history)" />
+    <MESSAGE value="added connection between enrollment and student" />
+    <MESSAGE value="added connection between enrollment and section" />
+    <MESSAGE value="imported enrollment into section&#10;&#10;changed enrollment to take sectionID instead of all of section's primary keys" />
+    <MESSAGE value="Added sectionID to section" />
+    <MESSAGE value="added to student:&#10;&#10;- add section&#10;- remove enrollment" />
+    <MESSAGE value="fixed indentation" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed indentation" />
   </component>
 </project>
