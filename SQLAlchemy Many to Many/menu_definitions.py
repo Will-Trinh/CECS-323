@@ -12,7 +12,7 @@ variables are constructed.  To be honest, I'm not sure whether these are global
 variables or not in Python.
 """
 
-# The main options for operating on Departments and Courses.
+# The main options for operating on Departments and Courses
 menu_main = Menu('main', 'Please select one of the following options:', [
     Option("Add department", "add_department(sess)"),
     Option("Add course", "add_course(sess)"),
