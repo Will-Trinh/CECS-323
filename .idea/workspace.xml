@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d98959a8-bb1e-421e-aa5a-f29e1d13bae7" name="Changes" comment="Added class Section" />
+    <list default="true" id="d98959a8-bb1e-421e-aa5a-f29e1d13bae7" name="Changes" comment="added section.py">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SQLAlchemy Many to Many/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/SQLAlchemy Many to Many/main.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -33,6 +36,9 @@
         <option name="url" value="https://github.com/Will-Trinh/CECS-323.git" />
       </UrlAndAccount>
     </option>
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 8
@@ -170,7 +176,39 @@
       <option name="project" value="LOCAL" />
       <updated>1708389992131</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="added department attributevs from single table">
+      <option name="closed" value="true" />
+      <created>1710110608452</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1710110608452</updated>
+    </task>
+    <task id="LOCAL-00014" summary="added department attributes from single table">
+      <option name="closed" value="true" />
+      <created>1710111749452</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1710111749452</updated>
+    </task>
+    <task id="LOCAL-00015" summary="added Enrollment.py">
+      <option name="closed" value="true" />
+      <created>1710113086949</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1710113086949</updated>
+    </task>
+    <task id="LOCAL-00016" summary="added section.py">
+      <option name="closed" value="true" />
+      <created>1710116273988</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1710116273988</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -192,6 +230,10 @@
     <MESSAGE value="Added Section.py" />
     <MESSAGE value="Added Section.py Imports" />
     <MESSAGE value="Added class Section" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added class Section" />
+    <MESSAGE value="added department attributevs from single table" />
+    <MESSAGE value="added department attributes from single table" />
+    <MESSAGE value="added Enrollment.py" />
+    <MESSAGE value="added section.py" />
+    <option name="LAST_COMMIT_MESSAGE" value="added section.py" />
   </component>
 </project>
