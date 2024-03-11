@@ -5,6 +5,7 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from typing import List                 # Use this for the list of Majors that this student has
 from StudentMajor import StudentMajor
 from datetime import datetime
+from Enrollment import Enrollment
 
 
 class Student(Base):
@@ -17,6 +18,7 @@ class Student(Base):
     lastName: Mapped[str] = mapped_column('last_name', String(50), nullable=False, primary_key=False)
     firstName: Mapped[str] = mapped_column('first_name', String(50), nullable=False, primary_key=False)
     email: Mapped[str] = mapped_column('email', String(255), nullable=False)
+
     # A list of StudentMajor instances that connect this student to a list of majors.
     """We need to be able to delete the association class rows without using session.delete.
     The way that we will DISassociate a Major from a Student is to delete an instance
@@ -26,6 +28,9 @@ class Student(Base):
     deletion in the association table to go along with it."""
     majors: Mapped[List["StudentMajor"]] = relationship(back_populates="student",
                                                         cascade="all, save-update, delete-orphan")
+    sections: Mapped[List["Enrollment"]] = relationship(back_populates="student",
+                                                     cascade="all, save-update, delete-orphan")
+
     # __table_args__ can best be viewed as directives that we ask SQLAlchemy to
     # send to the database.  In this case, that we want two separate uniqueness
     # constraints (candidate keys).
