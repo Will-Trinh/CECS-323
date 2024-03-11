@@ -664,8 +664,8 @@ def enroll_add_student_section(sess: Session) -> None:
 
 def enroll_add_section_student(sess: Session) -> None:
     while True:
-        student: Student = select_student(sess)
         section: Section = select_section(sess)
+        student: Student = select_student(sess)
         enrollment: Enrollment = Enrollment(section, student)
         if check_unique(sess, enrollment):
             print("Constraints violated:")
@@ -677,4 +677,13 @@ def enroll_add_section_student(sess: Session) -> None:
     sess.add(section)
     sess.flush()
 
+#select the student you want to unenroll from a section -> remove section from that student
+def unenroll_delete_student_section(sess: Session):
+    print("Which student do you want to unenroll?")
+    select_student(sess).remove_enrollment(select_section(sess))
 
+
+#select the section you want to uneroll a student from -> remove the student from that section
+def unenroll_delete_section_student(sess: Session):
+    print("Which section you want to unenroll")
+    select_section(sess).remove_enrollment(select_student(sess))
