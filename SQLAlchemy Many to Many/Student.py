@@ -6,6 +6,7 @@ from typing import List                 # Use this for the list of Majors that t
 from StudentMajor import StudentMajor
 from datetime import datetime
 from Enrollment import Enrollment
+from Section import Section
 
 
 class Student(Base):
@@ -70,6 +71,23 @@ class Student(Base):
             if next_major.major == major:
                 self.majors.remove(next_major)
                 return
+
+    def add_section(self, section: Section):
+        if section in [section.section for section in self.sections]:
+            print(f"{self.firstName} {self.lastName} is already in this section.")
+            return
+        else:
+            student_section = Enrollment(section, self)
+            section.students.append(student_section)
+            self.sections.append(student_section)
+
+    def remove_enrollment(self, section):
+        if section not in [section.section for section in self.sections]:
+            print(f"{self.firstName} {self.lastName} is not in this section.")
+            return
+        else:
+            self.sections.pop([section.section for section in self.sections].index(section))
+
 
     def __str__(self):
         return f"Student ID: {self.studentID} name: {self.lastName}, {self.firstName} e-mail: {self.email}"
