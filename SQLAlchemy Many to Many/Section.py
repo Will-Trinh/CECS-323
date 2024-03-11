@@ -1,6 +1,6 @@
 from orm_base import Base
 from IntrospectionFactory import IntrospectionFactory
-from sqlalchemy import UniqueConstraint, ForeignKeyConstraint, CheckConstraint
+from sqlalchemy import UniqueConstraint, ForeignKeyConstraint, CheckConstraint, Identity
 from sqlalchemy import String, Integer, Time
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from Course import Course
@@ -59,6 +59,8 @@ if introspection_type == START_OVER or introspection_type == REUSE_NO_INTROSPECT
 
         students : Mapped[List["Enrollment"]] = relationship(back_populates="section",
                                                              cascade="all, save-update, delete-orphan")
+
+        sectionID: Mapped[int] = mapped_column('section_id', Integer, Identity(start=1, cycle=True), primary_key=True)
 
         candidate_keys = (UniqueConstraint("section_year", "semester", "schedule", "start_time",
                                            "building", "room", name="sections_uk_01"),
