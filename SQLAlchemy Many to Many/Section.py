@@ -24,6 +24,7 @@ if introspection_type == START_OVER or introspection_type == REUSE_NO_INTROSPECT
 
 
 
+
         courseNumber: Mapped[int] = mapped_column('course_number', Integer,
                                                   nullable=False, primary_key=True)
 
@@ -54,6 +55,9 @@ if introspection_type == START_OVER or introspection_type == REUSE_NO_INTROSPECT
         startTime: Mapped[Time] = mapped_column('start_time', Time, nullable=False)
 
         instructor: Mapped[str] = mapped_column('instructor', String(80), nullable=False)
+
+        students : Mapped[List["Enrollment"]] = relationship(back_populates="section",
+                                                             cascade="all, save-update, delete-orphan")
 
         candidate_keys = (UniqueConstraint("section_year", "semester", "schedule", "start_time",
                                            "building", "room", name="sections_uk_01"),
