@@ -213,6 +213,7 @@ def add_student_major(sess):
     sess.flush()
 
 
+
 def add_major_student(sess):
     major: Major = select_major(sess)
     student: Student = select_student(sess)
