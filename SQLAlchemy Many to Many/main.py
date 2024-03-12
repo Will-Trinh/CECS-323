@@ -686,7 +686,31 @@ def unenroll_delete_student_section(sess: Session):
 
 #select the section you want to uneroll a student from -> remove the student from that section
 def unenroll_delete_section_student(sess: Session):
-    print("Which section you want to unenroll")
+    print("Which section you want to unenroll?")
     select_section(sess).remove_enrollment(select_student(sess))
 
 
+#list sections a student is enrolled in
+def list_students_in_section(sess: Session) -> None:
+    [print(enrollment.section) for enrollment in select_student(sess).sections]
+
+
+#list students enrolled in a section
+def list_sections_in_student(sess: Session) -> None:
+    [print(enrollment.student) for enrollment in select_section(sess).students]
+
+def list_enrollments(sess: Session):
+
+
+    ##select student
+    student: Student = select_student(sess)
+    recs = sess.query(Student).join(Enrollment, Student.studentID == Enrollment.studentID).join(
+        Section, Enrollment.sectionID == Section.sectionID).filter(
+        Student.studentID == student.studentID).add_columns(
+        Student.lastName, Student.firstName, Section.departmentAbbreviation, Section.courseNumber, Section.sectionYear,
+        Section.semester, Section.sectionNumber).all()
+
+    for stu in recs:
+        print(f"Student name: {stu.lastName}, {stu.firstName}, Department Abbreviation: {stu.departmentAbbreviation} "
+              f"Course Number: {stu.courseNumber}, Year: {stu.sectionYear}, Semester: {stu.semester}, "
+              f"Number: {stu.number}")
