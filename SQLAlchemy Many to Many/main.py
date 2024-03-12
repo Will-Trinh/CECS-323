@@ -700,17 +700,21 @@ def list_sections_in_student(sess: Session) -> None:
     [print(enrollment.student) for enrollment in select_section(sess).students]
 
 def list_enrollments(sess: Session):
+    print("1 - List all of a student's enrollments")
+    print("2 - List all students in a section")
+    selection = int(input(""))
 
+    if selection == 1:
+        ##select student
+        student: Student = select_student(sess)
+        recs = sess.query(Student).join(Enrollment, Student.studentID == Enrollment.studentID).join(
+            Section, Enrollment.sectionID == Section.sectionID).filter(
+            Student.studentID == student.studentID).add_columns(
+            Student.lastName, Student.firstName, Section.departmentAbbreviation, Section.courseNumber, Section.sectionYear,
+            Section.semester, Section.sectionNumber).all()
 
-    ##select student
-    student: Student = select_student(sess)
-    recs = sess.query(Student).join(Enrollment, Student.studentID == Enrollment.studentID).join(
-        Section, Enrollment.sectionID == Section.sectionID).filter(
-        Student.studentID == student.studentID).add_columns(
-        Student.lastName, Student.firstName, Section.departmentAbbreviation, Section.courseNumber, Section.sectionYear,
-        Section.semester, Section.sectionNumber).all()
+        for stu in recs:
+            print(f"Student name: {stu.lastName}, {stu.firstName}, Department Abbreviation: {stu.departmentAbbreviation} "
+                  f"Course Number: {stu.courseNumber}, Year: {stu.sectionYear}, Semester: {stu.semester}, "
+                  f"Number: {stu.number}")
 
-    for stu in recs:
-        print(f"Student name: {stu.lastName}, {stu.firstName}, Department Abbreviation: {stu.departmentAbbreviation} "
-              f"Course Number: {stu.courseNumber}, Year: {stu.sectionYear}, Semester: {stu.semester}, "
-              f"Number: {stu.number}")
