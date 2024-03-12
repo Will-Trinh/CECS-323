@@ -68,6 +68,7 @@ if introspection_type == START_OVER or introspection_type == REUSE_NO_INTROSPECT
                           ForeignKeyConstraint([departmentAbbreviation, courseNumber],
                                                [Course.departmentAbbreviation, Course.courseNumber]))
 
+
         def __init__(self, course: Course, sectionNumber: int, semester: str, sectionYear: int,
                      building: str, room: int, schedule: str, startTime: Time, instructor: str):
             self.course = course
