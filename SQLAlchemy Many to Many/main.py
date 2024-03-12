@@ -48,25 +48,33 @@ def add_department(session: Session):
     :param session: The connection to the database.
     :return:        None
     """
-    unique_name: bool = False
-    unique_abbreviation: bool = False
-    name: str = ''
-    abbreviation: str = ''
-    while not unique_abbreviation or not unique_name:
+
+    while True:
         name = input("Department full name--> ")
         abbreviation = input("Department abbreviation--> ")
-        name_count: int = session.query(Department).filter(Department.name == name).count()
-        unique_name = name_count == 0
-        if not unique_name:
-            print("We already have a department by that name.  Try again.")
-        if unique_name:
-            abbreviation_count = session.query(Department). \
-                filter(Department.abbreviation == abbreviation).count()
-            unique_abbreviation = abbreviation_count == 0
-            if not unique_abbreviation:
-                print("We already have a department with that abbreviation.  Try again.")
-    new_department = Department(abbreviation, name)
-    session.add(new_department)
+        building = input("Department building --> ")
+        try:
+            office = int(input("Department office--> "))
+        except ValueError:
+            print("Input an integer: ")
+            continue
+
+        description: str = input("Department description--> ")
+        chair: str = input("Department chair--> ")
+
+        department: Department = Department(abbreviation, name, chair, building, office, description)
+
+        if check_unique(session, department):
+            print(check_unique(session, department))
+            print("Try again.")
+
+        else:
+            session.add(Department(abbreviation, name, chair, building, office, description))
+            return
+
+
+
+
 
 
 def add_course_old(session: Session):
@@ -718,3 +726,45 @@ def list_enrollments(sess: Session):
                   f"Course Number: {stu.courseNumber}, Year: {stu.sectionYear}, Semester: {stu.semester}, "
                   f"Number: {stu.number}")
 
+
+
+
+def add_section(session: Session):
+    """
+    Prompt the user for the information for a new section and validate
+    the input to make sure that we do not create any duplicates.
+    :param session: The connection to the database.
+    :return:        None
+    """
+    while True:
+
+        course: Course(select_course(sess))
+
+
+        try:
+
+            number = int(input("Section number--> "))
+            semester = input("Semester--> ")
+
+            year = int(input("Section Year --> "))
+            building = input("Section building--> ")
+            room = int(input("Room number--> "))
+            startTime = time(input("Start time--> "))
+            instructor = input("Instructor--> ")
+
+        except ValueError:
+            print("Input an integer: ")
+            continue
+
+        description: str = input("Department description--> ")
+        chair: str = input("Department chair--> ")
+
+        section: Section = Section(course, number, semester, year, building, room, startTime, instructor)
+
+        if check_unique(session, section):
+            print(check_unique(session, section))
+            print("Try again.")
+
+        else:
+            session.add(Section(course, number, semester, year, building, room, startTime, instructor)
+            return

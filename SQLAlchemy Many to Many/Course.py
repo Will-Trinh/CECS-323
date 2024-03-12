@@ -3,6 +3,7 @@ from sqlalchemy import Integer, UniqueConstraint, ForeignKeyConstraint
 from sqlalchemy import String, Integer
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from Department import Department
+from typing import List
 
 
 class Course(Base):
@@ -25,6 +26,9 @@ class Course(Base):
  #                                                       ForeignKey("departments.abbreviation"),
                                                         primary_key=True)
     department: Mapped["Department"] = relationship(back_populates="courses")
+
+    sections: Mapped[List["Section"]] = relationship(back_populates="course")
+
     courseNumber: Mapped[int] = mapped_column('course_number', Integer,
                                               nullable=False, primary_key=True)
     name: Mapped[str] = mapped_column('name', String(50), nullable=False)
