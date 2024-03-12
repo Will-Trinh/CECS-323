@@ -766,3 +766,15 @@ def add_section(sess: Session):
         else:
             sess.add(Section(course, number, semester, year, building, room, startTime, instructor))
             return
+
+
+def delete_course(sess:Session):
+    print("Deleting a course")
+    course = select_course(sess)
+    n_sections = sess.query(Section).filter(course.courseNumber == Section.courseNumber).count()
+    if n_sections > 0:
+        print("You must delete all sections before deleting a course.")
+    else:
+        sess.delete(course)
+
+
