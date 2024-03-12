@@ -5,8 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d98959a8-bb1e-421e-aa5a-f29e1d13bae7" name="Changes" comment="fixed bugs">
-      <change beforePath="$PROJECT_DIR$/SQLALchemy Simple One to Many/Department.py" beforeDir="false" afterPath="$PROJECT_DIR$/SQLALchemy Simple One to Many/Department.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SQLAlchemy Many to Many/Course.py" beforeDir="false" afterPath="$PROJECT_DIR$/SQLAlchemy Many to Many/Course.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SQLAlchemy Many to Many/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/SQLAlchemy Many to Many/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />

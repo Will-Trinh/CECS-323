@@ -386,7 +386,7 @@ def delete_major_student(sess):
     major.remove_student(student)
 
 
-def list_department(session: Session):
+def list_departments(session: Session):
     """
     List all departments, sorted by the abbreviation.
     :param session:     The connection to the database.
@@ -399,7 +399,7 @@ def list_department(session: Session):
         print(department)
 
 
-def list_course(sess: Session):
+def list_courses(sess: Session):
     """
     List all courses currently in the database.
     :param sess:    The connection to the database.
@@ -729,7 +729,7 @@ def list_enrollments(sess: Session):
 
 
 
-def add_section(session: Session):
+def add_section(sess: Session):
     """
     Prompt the user for the information for a new section and validate
     the input to make sure that we do not create any duplicates.
@@ -738,33 +738,31 @@ def add_section(session: Session):
     """
     while True:
 
-        course: Course(select_course(sess))
+        course: Course(select_course(Session))
 
 
         try:
 
-            number = int(input("Section number--> "))
-            semester = input("Semester--> ")
-
-            year = int(input("Section Year --> "))
-            building = input("Section building--> ")
-            room = int(input("Room number--> "))
-            startTime = time(input("Start time--> "))
-            instructor = input("Instructor--> ")
+            number: int = int(input("Section number--> "))
+            semester: str = input("Semester--> ")
+            year: int = int(input("Section Year --> "))
+            building: str = input("Section building--> ")
+            room: str = int(input("Room number--> "))
+            startTime: time = time(input("Start time--> "))
+            instructor: str = input("Instructor--> ")
 
         except ValueError:
-            print("Input an integer: ")
+            print("Wrong type.")
             continue
 
-        description: str = input("Department description--> ")
-        chair: str = input("Department chair--> ")
+
 
         section: Section = Section(course, number, semester, year, building, room, startTime, instructor)
 
-        if check_unique(session, section):
-            print(check_unique(session, section))
+        if check_unique(sess, section):
+            print(check_unique(sess, section))
             print("Try again.")
 
         else:
-            session.add(Section(course, number, semester, year, building, room, startTime, instructor)
+            sess.add(Section(course, number, semester, year, building, room, startTime, instructor))
             return
