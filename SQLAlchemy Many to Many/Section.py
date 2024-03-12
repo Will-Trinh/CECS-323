@@ -19,7 +19,7 @@ if introspection_type == START_OVER or introspection_type == REUSE_NO_INTROSPECT
         __tablename__ = "sections"
 
         departmentAbbreviation: Mapped[str] = mapped_column('department_abbreviation',
-                                                            String(10),nullable=False,primary_key=True)
+                                                            String(10),nullable=False)
 
         course: Mapped["Course"] = relationship(back_populates="sections")
 
@@ -27,19 +27,17 @@ if introspection_type == START_OVER or introspection_type == REUSE_NO_INTROSPECT
 
 
         courseNumber: Mapped[int] = mapped_column('course_number', Integer,
-                                                  nullable=False, primary_key=True)
+                                                  nullable=False)
 
         sectionNumber: Mapped[int] = mapped_column('section_number', Integer,
-                                                  nullable=False, primary_key=True)
+                                                  nullable=False)
 
         semester: Mapped[str] = mapped_column('semester', String(10),
                                               CheckConstraint("semester IN('Fall', 'Spring', 'Winter', '"
                                                               "Summer I', 'Summer II')",
-                                                              name="semester_name_value_check"), nullable=False,
-                                              primary_key=True)
+                                                              name="semester_name_value_check"), nullable=False)
 
-        sectionYear: Mapped[int] = mapped_column('section_year', Integer, nullable=False,
-                                                  primary_key=True)
+        sectionYear: Mapped[int] = mapped_column('section_year', Integer, nullable=False)
 
         building: Mapped[str] = mapped_column('building', String(6),
                                               CheckConstraint("building IN('EC', 'ECS', 'EN2', 'EN3', \
@@ -66,6 +64,7 @@ if introspection_type == START_OVER or introspection_type == REUSE_NO_INTROSPECT
                                            "building", "room", name="sections_uk_01"),
                           UniqueConstraint("section_year", "semester", "schedule", "start_time",
                                            "instructor", name="sections_uk_02"),
+                          UniqueConstraint("department_abbreviation", "course_number", "section_year", "semester", "section_number"),
                           ForeignKeyConstraint([departmentAbbreviation, courseNumber],
                                                [Course.departmentAbbreviation, Course.courseNumber]))
 

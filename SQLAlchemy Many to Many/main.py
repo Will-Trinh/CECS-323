@@ -687,3 +687,5 @@ def unenroll_delete_student_section(sess: Session):
 def unenroll_delete_section_student(sess: Session):
     print("Which section you want to unenroll")
     select_section(sess).remove_enrollment(select_student(sess))
+
+
