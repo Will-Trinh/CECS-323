@@ -60,7 +60,7 @@ if introspection_type == START_OVER or introspection_type == REUSE_NO_INTROSPECT
 
         sectionID: Mapped[int] = mapped_column('section_id', Integer, Identity(start=1, cycle=True), primary_key=True)
 
-        candidate_keys = (UniqueConstraint("section_year", "semester", "schedule", "start_time",
+        __table_args__ = (UniqueConstraint("section_year", "semester", "schedule", "start_time",
                                            "building", "room", name="sections_uk_01"),
                           UniqueConstraint("section_year", "semester", "schedule", "start_time",
                                            "instructor", name="sections_uk_02"),
