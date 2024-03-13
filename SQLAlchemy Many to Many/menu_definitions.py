@@ -91,8 +91,8 @@ other_options = Menu('Other options', "Please select one of the following option
     Option("Boilerplate Data", "boilerplate(sess)"),
     Option("Commit", "sess.commit()"),
     Option("Rollback", "session_rollback(sess)"),
-    Option("Exit this application", "pass"),
-    Option("Back", "back")
+    Option("Back", "back"),
+    Option("Exit this application", "pass")
 ])
 
 menu_main = Menu('main', "Please select one of the following options:", [
@@ -101,6 +101,7 @@ menu_main = Menu('main', "Please select one of the following options:", [
     Option("Delete", delete_menu),
     Option("Enrollment", enrollment_menu),
     Option("Other Options", other_options)
+
 ])
 
 
