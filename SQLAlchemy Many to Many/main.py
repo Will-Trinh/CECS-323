@@ -608,8 +608,8 @@ if __name__ == '__main__':
     Menu = menu_main.menu_prompt()
     with Session() as sess:
         main_action: str = ''
-        while main_action != menu_main.last_action():
-            main_action = menu_main.menu_prompt()
+        while main_action != Menu.last_action():
+            main_action = Menu.menu_prompt()
             print('next action: ', main_action)
             exec(main_action)
         sess.commit()
