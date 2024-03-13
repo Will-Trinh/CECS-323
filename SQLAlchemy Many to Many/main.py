@@ -669,9 +669,9 @@ def session_rollback(sess):
 def select_section(sess) -> Section:
 
     user_input: int = int(valid_input("Selecting a Section:\n"
-                                " 1 - Select by course/section number \n"
-                            " 2 - Select by building/room\n"
-                            " 3 - Select by instructor\n"
+                                "  1 - Select by course/section number \n"
+                            "  2 - Select by building/room\n"
+                            "  3 - Select by instructor\n"
                                 "--> ", ('1','2','3')))
 
 
