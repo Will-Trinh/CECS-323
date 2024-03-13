@@ -13,7 +13,7 @@ variables or not in Python.
 """
 
 # The main options for operating on Departments and Courses
-menu_main = Menu('main', 'Please select one of the following options:', [
+"""menu_main = Menu('main', 'Please select one of the following options:', [
     Option("Add department", "add_department(sess)"),
     Option("Add course", "add_course(sess)"),
     Option("Add section", "add_section(sess)"),
@@ -29,7 +29,7 @@ menu_main = Menu('main', 'Please select one of the following options:', [
     Option("Break out into shell", "IPython.embed()"),
     Option("Back", "back"),
     Option("Exit", "pass")
-])
+])"""
 
 add_menu = Menu('add', 'Please indicate what you want to add:', [
     Option("Department", "add_department(sess)"),
@@ -62,6 +62,11 @@ list_menu = Menu('list', 'Please indicate what you want to list:', [
     Option("Exit", "pass")
 ])
 
+enrollment_menu = Menu("enrollment menu", "Please indicate what you want to do:", [
+    Option("Back", "back"),
+    Option("Exit", "pass")
+])
+
 # A menu to prompt for the amount of logging information to go to the console.
 debug_select = Menu('debug select', 'Please select a debug level:', [
     Option("Informational", "logging.INFO"),
@@ -74,4 +79,15 @@ introspection_select = Menu("introspection selectt", 'To introspect or not:', [
     Option('Start all over', START_OVER),
 #   Option("Reuse tables", INTROSPECT_TABLES),
     Option("Reuse without introspection", REUSE_NO_INTROSPECTION)
+])
+
+menu_main = Menu('main', 'Please select one of the following options:', [
+    Option("Add", add_menu),
+    Option("List", list_menu),
+    Option("Delete", delete_menu),
+    Option("Enrollment", enrollment_menu),
+    Option("Boilerplate Data", "boilerplate(sess)"),
+    Option("Commit", "sess.commit()"),
+    Option("Rollback", "session_rollback(sess)"),
+    Option("Exit this application", "pass")
 ])
