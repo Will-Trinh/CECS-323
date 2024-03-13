@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d98959a8-bb1e-421e-aa5a-f29e1d13bae7" name="Changes" comment="added back option to the list, add, and delete menus&#10;&#10;The sample code works by using the last_action function in Menu.py to go back to the last menu the user was, but we can't call this if the last action we did was not accessing a menu, like &quot;back&quot; because the function gets confused when we call a string when it expects a menu. To fix this, I separated the menus in menu_definitions.py.&#10;&#10;Also, added more information to boilerplate so we can test easier">
+    <list default="true" id="d98959a8-bb1e-421e-aa5a-f29e1d13bae7" name="Changes" comment="fixed menu im dumb">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SQLAlchemy Many to Many/menu_definitions.py" beforeDir="false" afterPath="$PROJECT_DIR$/SQLAlchemy Many to Many/menu_definitions.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SQLAlchemy Many to Many/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/SQLAlchemy Many to Many/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,6 +21,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="PREVIOUS_COMMIT_AUTHORS">
+      <list>
+        <option value="ellie &lt;elinor.holt1@gmail.com&gt;" />
+      </list>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
@@ -250,7 +255,31 @@
       <option name="project" value="LOCAL" />
       <updated>1710326376491</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="fixed menu im dumb">
+      <option name="closed" value="true" />
+      <created>1710368987660</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1710368987660</updated>
+    </task>
+    <task id="LOCAL-00023" summary="fixed menu im dumb">
+      <option name="closed" value="true" />
+      <created>1710369009112</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1710369009112</updated>
+    </task>
+    <task id="LOCAL-00024" summary="fixed menu im dumb">
+      <option name="closed" value="true" />
+      <created>1710369017033</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1710369017033</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -278,6 +307,7 @@
     <MESSAGE value="added section.py" />
     <MESSAGE value="fixed bugs" />
     <MESSAGE value="added back option to the list, add, and delete menus&#10;&#10;The sample code works by using the last_action function in Menu.py to go back to the last menu the user was, but we can't call this if the last action we did was not accessing a menu, like &quot;back&quot; because the function gets confused when we call a string when it expects a menu. To fix this, I separated the menus in menu_definitions.py.&#10;&#10;Also, added more information to boilerplate so we can test easier" />
-    <option name="LAST_COMMIT_MESSAGE" value="added back option to the list, add, and delete menus&#10;&#10;The sample code works by using the last_action function in Menu.py to go back to the last menu the user was, but we can't call this if the last action we did was not accessing a menu, like &quot;back&quot; because the function gets confused when we call a string when it expects a menu. To fix this, I separated the menus in menu_definitions.py.&#10;&#10;Also, added more information to boilerplate so we can test easier" />
+    <MESSAGE value="fixed menu im dumb" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed menu im dumb" />
   </component>
 </project>

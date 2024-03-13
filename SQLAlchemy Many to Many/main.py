@@ -630,6 +630,7 @@ def boilerplate(sess):
     section2: Section = Section(course2, 1, "Spring", 2012, "ECS", 400,
                                 "TuTh", time(4, 30), "You")
 
+
     student1.add_major(major1)
     student2.add_major(major1)
     student2.add_major(major2)
@@ -666,11 +667,15 @@ def session_rollback(sess):
 ############################################################## new functions
 
 def select_section(sess) -> Section:
-    user_input: int = int(input("Selecting a Section:\n"
+
+    user_input: int = int(valid_input("Selecting a Section:\n"
                                 "   1 - Select by course/section number \n"
                             "   2 - Select by building/room\n"
-                            "   3 - Select by description\n"
-                                "--> "))
+                            "   3 - Select by instructor\n"
+                                "--> ", ('1','2','3')))
+
+
+
 
     while True:
         try:
@@ -695,15 +700,15 @@ def select_section(sess) -> Section:
             elif user_input == 2:
                 building: str = valid_input("Section building--> ",
                                                 ("VEC", "ECS", "EN2", "EN3", "EN4", "ET", "SSPA"))
-                room: int = int(input("Section room--> "))
+                room: int = int(input("Section room number--> "))
                 section: Section = sess.query(Section).filter(Section.sectionYear == year, Section.semester == semester,
-                                                              Section.schedule == schedule, Section.startTime == time,
+                                                              Section.schedule == schedule, Section.startTime == start,
                                                               Section.building == building, Section.room == room).first()
 
             elif user_input == 3:
                 instructor: str = input("Section instructor--> ")
                 section: Section = sess.query(Section).filter(Section.sectionYear == year, Section.semester == semester,
-                                                              Section.schedule == schedule, Section.startTime == time,
+                                                              Section.schedule == schedule, Section.startTime == start,
                                                               Section.instructor == instructor).first()
 
             else:
@@ -733,6 +738,23 @@ def unenroll_delete_student_section(sess: Session):
 def unenroll_delete_section_student(sess: Session):
     print("Which section you want to unenroll?")
     select_section(sess).remove_enrollment(select_student(sess))
+
+
+def delete_enrollment(sess: Session):
+
+    while True:
+        user_input: int = int(valid_input("How would you like to delete and enrollment?\n"
+                                      "    1 - Unenroll student from section\n"
+                                      "    2 - Unenroll section from student\n", ("1", "2")))
+
+        if user_input == 1:
+            unenroll_delete_student_section(sess)
+            break
+
+        elif user_input == 2:
+            unenroll_delete_section_student(sess)
+            break
+
 
 
 #list sections a student is enrolled in

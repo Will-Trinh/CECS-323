@@ -69,6 +69,7 @@ list_menu = Menu('list', "Please indicate what you want to list:", [
 enrollment_menu = Menu('enrollment menu', "Please indicate what you want to do:", [
     Option("Add Enrollment", "add_enrollment(sess)"),
     Option("List Enrollments", "list_enrollment(sess)"),
+    Option("Delete Enrollments", "delete_enrollment(sess)"),
     Option("Back", "back"),
     Option("Exit", "pass")
 ])
