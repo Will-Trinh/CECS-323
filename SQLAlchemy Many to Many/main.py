@@ -605,6 +605,7 @@ if __name__ == '__main__':
     elif introspection_mode == REUSE_NO_INTROSPECTION:
         print("Assuming tables match class definitions")
 
+    Menu = menu_main.menu_prompt()
     with Session() as sess:
         main_action: str = ''
         while main_action != menu_main.last_action():
