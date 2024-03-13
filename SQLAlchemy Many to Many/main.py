@@ -669,9 +669,9 @@ def session_rollback(sess):
 def select_section(sess) -> Section:
 
     user_input: int = int(valid_input("Selecting a Section:\n"
-                                "   1 - Select by course/section number \n"
-                            "   2 - Select by building/room\n"
-                            "   3 - Select by instructor\n"
+                                " 1 - Select by course/section number \n"
+                            " 2 - Select by building/room\n"
+                            " 3 - Select by instructor\n"
                                 "--> ", ('1','2','3')))
 
 
@@ -744,8 +744,9 @@ def delete_enrollment(sess: Session):
 
     while True:
         user_input: int = int(valid_input("How would you like to delete and enrollment?\n"
-                                      "    1 - Unenroll student from section\n"
-                                      "    2 - Unenroll section from student\n", ("1", "2")))
+                                      "  1 - Unenroll student from section\n"
+                                      "  2 - Unenroll section from student\n"
+                                          "--> ", ("1", "2")))
 
         if user_input == 1:
             unenroll_delete_student_section(sess)
@@ -767,11 +768,11 @@ def list_sections_in_student(sess: Session) -> None:
     [print(enrollment.student) for enrollment in select_section(sess).students]
 
 def list_enrollment(sess: Session):
-    print("1 - List all of a student's enrollments")
-    print("2 - List all students in a section")
+    print("  1 - List all of a student's enrollments")
+    print("  2 - List all students in a section")
 
     try:
-        selection: int = int(input("--> "))
+        selection: int = int(valid_input("--> ", ('1', '2')))
 
         if selection == 1:
             ##select student
@@ -782,6 +783,13 @@ def list_enrollment(sess: Session):
                 Student.lastName, Student.firstName, Section.departmentAbbreviation, Section.courseNumber, Section.sectionYear,
                 Section.semester, Section.sectionNumber).all()
 
+        elif selection == 2:
+            section: Section = select_section(sess)
+            recs = sess.query(Section).join(Enrollment, Section.sectionID == Enrollment.sectionID).join(
+                Student, Enrollment.studentID == Student.studentID).filter(
+                Section.sectionID == section.sectionID).add_columns(
+                Student.lastName, Student.firstName, Section.departmentAbbreviation, Section.courseNumber, Section.sectionYear,
+                Section.semester, Section.sectionNumber).all()
 
             for stu in recs:
                 print(f"Student name: {stu.lastName}, {stu.firstName}, Department Abbreviation: {stu.departmentAbbreviation} "
