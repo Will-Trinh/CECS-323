@@ -840,6 +840,7 @@ if __name__ == '__main__':
         # create the SQLAlchemy structure that contains all the metadata, regardless of the introspection choice.
         metadata.drop_all(bind=engine)  # start with a clean slate while in development
 
+
         # Create whatever tables are called for by our "Entity" classes that we have imported.
         metadata.create_all(bind=engine)
     elif introspection_mode == REUSE_NO_INTROSPECTION:
