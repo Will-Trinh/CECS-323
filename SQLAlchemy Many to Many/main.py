@@ -620,9 +620,9 @@ def boilerplate(sess):
 
     student3: Student = Student('Disposable', 'Bandit', 'disposable.bandit@gmail.com')
 
-    course1: Course = Course(department, 69, 'underwater basketweaving', 'we ball', 3)
+    course1: Course = Course(department, 101, 'underwater basketweaving', 'we ball', 3)
 
-    course2: Course = Course(department, 420, 'intro to database', 'locked in', 3)
+    course2: Course = Course(department, 299, 'intro to database', 'locked in', 3)
 
     section1: Section = Section(course1, 3, "Fall", 1989, "ECS", 200,
                                 "MW", time(2, 30), "ME!")
@@ -791,10 +791,10 @@ def list_enrollment(sess: Session):
                 Student.lastName, Student.firstName, Section.departmentAbbreviation, Section.courseNumber, Section.sectionYear,
                 Section.semester, Section.sectionNumber).all()
 
-            for stu in recs:
-                print(f"Student name: {stu.lastName}, {stu.firstName}, Department Abbreviation: {stu.departmentAbbreviation} "
-                      f"Course Number: {stu.courseNumber}, Year: {stu.sectionYear}, Semester: {stu.semester}, "
-                      f"Number: {stu.sectionNumber}")
+        for stu in recs:
+            print(f"Student name: {stu.lastName}, {stu.firstName}, Department Abbreviation: {stu.departmentAbbreviation} "
+                  f"Course Number: {stu.courseNumber}, Year: {stu.sectionYear}, Semester: {stu.semester}, "
+                  f"Number: {stu.sectionNumber}")
 
     except ValueError:
         print("Invalid input. Try again. ")
