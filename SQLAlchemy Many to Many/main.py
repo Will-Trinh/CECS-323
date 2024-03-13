@@ -20,6 +20,12 @@ from pprint import pprint
 from Section import Section
 from Enrollment import Enrollment
 
+def valid_input(prompt: str, valid_entries: tuple | list | set) -> str:
+    while True:
+        user_input = input(prompt)
+        if user_input in valid_entries:
+            return user_input
+        print(f"Invalid input. Input must only be {valid_entries}.  Try again.")
 def add(sess: Session):
     add_action: str = ''
     while add_action != add_menu.last_action():
@@ -602,7 +608,7 @@ def boilerplate(sess):
     :return:        None
     """
     department: Department = Department('CECS', 'Computer Engineering Computer Science',
-                                        'ECS', 'William Trinh' "105", "XD")
+                                        'ECS', 'William Trinh', 105, "XD")
 
     major1: Major = Major(department, 'Computer Science', 'Fun with blinking lights')
 
@@ -616,7 +622,13 @@ def boilerplate(sess):
 
     course1: Course = Course(department, 69, 'underwater basketweaving', 'we ball', 3)
 
+    course2: Course = Course(department, 420, 'intro to database', 'locked in', 3)
 
+    section1: Section = Section(course1, 3, "Fall", 1989, "ECS", 200,
+                                "MW", time(2, 30), "ME!")
+
+    section2: Section = Section(course2, 1, "Spring", 2012, "ECS", 400,
+                                "TuTh", time(4, 30), "You")
 
     student1.add_major(major1)
     student2.add_major(major1)
@@ -628,6 +640,9 @@ def boilerplate(sess):
     sess.add(student2)
     sess.add(student3)
     sess.add(course1)
+    sess.add(course2)
+    sess.add(section1)
+    sess.add(section2)
     sess.flush()                                # Force SQLAlchemy to update the database, although not commit
 
 
@@ -650,42 +665,65 @@ def session_rollback(sess):
 
 ############################################################## new functions
 
-def select_section(sess):
-    user_input: str = select_section.menu_prompt()
-    section = False
+def select_section(sess) -> Section:
+    user_input: int = int(input("Selecting a Section:\n"
+                                "   1 - Select by course/section number \n"
+                            "   2 - Select by building/room\n"
+                            "   3 - Select by description\n"
+                                "--> "))
 
     while True:
-        year: int = int(input("Enter section year-->  "))
-        semester: str = input("Enter section semester-->  ")
-        schedule: str = input("Enter section schedule-->  ")
-        hour: int = int(input("Enter section start time for the hour (like 09 for 9:30)-->  "))
-        minutes: int = int(input("Enter section start time for the minute (like 30 for 9:30)-->  "))
+        try:
+            year: int = int(input("Section year-->  "))
 
-        start_time = time(hour, minutes, 0)
+            semester: str = valid_input("Section semester-->  ", ("Fall", "Spring", "Winter", "Summer I", "Summer II"))
 
-        if user_input == "building/room":
-            building: str = input("Enter section building-->  ")
-            room: int = int(input("Enter section room number-->  "))
-            section: Section = sess.query(Section).filter(Section.sectionYear == year, Section.semester == semester,
-                                                          Section.schedule == schedule, Section.startTime == start_time,
-                                                          Section.building == building, Section.room == room).first()
+            schedule: str = valid_input("Schedule-->  ", ("MW", "TuTh", "MWF", "F", "S"))
 
-        elif user_input == "instructor":
-            instructor: str = input("Enter section instructor-->  ")
-            section: Section = sess.query(Section).filter(Section.sectionYear == year, Section.semester == semester,
-                                                          Section.schedule == schedule, Section.startTime == start_time,
-                                                          Section.instructor == instructor).first()
+            start: time = time(*[int(e) for e in input("Section time[HH:MM]--> ").split(":")])
+
+            if user_input == 1:
+                course: Course = select_course(sess)
+                section_number: int = int(input("Section number--> "))
+                section: Section = sess.query(Section).filter(Section.sectionYear == year, Section.semester == semester,
+                                                              Section.schedule == schedule,
+                                                              Section.startTime == start,
+                                                              Section.courseNumber == course.courseNumber,
+                                                              Section.departmentAbbreviation == course.departmentAbbreviation,
+                                                              Section.sectionNumber == section_number).first()
+
+            elif user_input == 2:
+                building: str = valid_input("Section building--> ",
+                                                ("VEC", "ECS", "EN2", "EN3", "EN4", "ET", "SSPA"))
+                room: int = int(input("Section room--> "))
+                section: Section = sess.query(Section).filter(Section.sectionYear == year, Section.semester == semester,
+                                                              Section.schedule == schedule, Section.startTime == time,
+                                                              Section.building == building, Section.room == room).first()
+
+            elif user_input == 3:
+                instructor: str = input("Section instructor--> ")
+                section: Section = sess.query(Section).filter(Section.sectionYear == year, Section.semester == semester,
+                                                              Section.schedule == schedule, Section.startTime == time,
+                                                              Section.instructor == instructor).first()
+
+            else:
+                print("Invalid input. Try again.")
+
+        except ValueError:
+            print("Invalid type. Try again.")
+
         if section:
             print(section)
             return section
-
-        else:
-            print("That section doesn't exist. Please try again.")
+        print("This section does not exist. Try again.")
 
 
 
 
-#select the student you want to unenroll from a section -> remove section from that student
+
+
+
+    #select the student you want to unenroll from a section -> remove section from that student
 def unenroll_delete_student_section(sess: Session):
     print("Which student do you want to unenroll?")
     select_student(sess).remove_enrollment(select_section(sess))
@@ -709,23 +747,27 @@ def list_sections_in_student(sess: Session) -> None:
 def list_enrollment(sess: Session):
     print("1 - List all of a student's enrollments")
     print("2 - List all students in a section")
-    selection = int(input(""))
 
-    if selection == 1:
-        ##select student
-        student: Student = select_student(sess)
-        recs = sess.query(Student).join(Enrollment, Student.studentID == Enrollment.studentID).join(
-            Section, Enrollment.sectionID == Section.sectionID).filter(
-            Student.studentID == student.studentID).add_columns(
-            Student.lastName, Student.firstName, Section.departmentAbbreviation, Section.courseNumber, Section.sectionYear,
-            Section.semester, Section.sectionNumber).all()
+    try:
+        selection: int = int(input("--> "))
 
-        for stu in recs:
-            print(f"Student name: {stu.lastName}, {stu.firstName}, Department Abbreviation: {stu.departmentAbbreviation} "
-                  f"Course Number: {stu.courseNumber}, Year: {stu.sectionYear}, Semester: {stu.semester}, "
-                  f"Number: {stu.number}")
+        if selection == 1:
+            ##select student
+            student: Student = select_student(sess)
+            recs = sess.query(Student).join(Enrollment, Student.studentID == Enrollment.studentID).join(
+                Section, Enrollment.sectionID == Section.sectionID).filter(
+                Student.studentID == student.studentID).add_columns(
+                Student.lastName, Student.firstName, Section.departmentAbbreviation, Section.courseNumber, Section.sectionYear,
+                Section.semester, Section.sectionNumber).all()
 
 
+            for stu in recs:
+                print(f"Student name: {stu.lastName}, {stu.firstName}, Department Abbreviation: {stu.departmentAbbreviation} "
+                      f"Course Number: {stu.courseNumber}, Year: {stu.sectionYear}, Semester: {stu.semester}, "
+                      f"Number: {stu.sectionNumber}")
+
+    except ValueError:
+        print("Invalid input. Try again. ")
 
 
 def add_section(sess: Session):
@@ -820,3 +862,7 @@ if __name__ == '__main__':
             exec(action)
         sess.commit()
     print('Ending normally')
+
+
+ #little helper
+
