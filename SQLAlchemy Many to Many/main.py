@@ -396,14 +396,11 @@ def delete_student(session: Session):
     :return:            None
     """
     student: Student = select_student(session)
-    """This is a bit ghetto.  The relationship from Student to StudentMajor has 
-    cascade delete, so this delete will work even if a student has declared one
-    or more majors.  I could write a method on Student that would return some
-    indication of whether it has any children, and use that to let the user know
-    that they cannot delete this particular student.  But I'm too lazy at this
-    point.
-    """
-    session.delete(student)
+    if student.sections:
+        print(f"The student is registered in {len(student.sections)} sections. Remove them first.")
+    else:
+        session.delete(student)
+
 
 
 def delete_department(session: Session):
@@ -840,7 +837,11 @@ def add_section(sess: Session):
             return
 
 def delete_section(sess: Session):
-    pass
+    section: Section = select_section(sess)
+    if section.students:
+        print(f"This section contains {len(section.students)} students. Remove them first to delete this section.")
+    else:
+        sess.delete(section)
 
 def delete_course(sess:Session):
     print("Deleting a course")
