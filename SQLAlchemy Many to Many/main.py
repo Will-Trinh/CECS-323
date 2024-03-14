@@ -839,6 +839,8 @@ def add_section(sess: Session):
             sess.flush()
             return
 
+def delete_section(sess: Session):
+    pass
 
 def delete_course(sess:Session):
     print("Deleting a course")
