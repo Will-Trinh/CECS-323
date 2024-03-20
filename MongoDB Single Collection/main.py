@@ -183,7 +183,35 @@ def list_student(db):
         pprint(student)
 
 def add_department(db):
-    pass
+    collection = db["departments"]
+
+    while True:
+        name = input("Department name -> ")
+        if collection.count_documents({"name": name}):
+            print("We already have a department by that name. Try again.")
+            continue
+        abbreviation = input("Department abbreviation -> ")
+        if collection.count_documents({"abbreviation": abbreviation}):
+            print("We already have a department with that abbreviation. Try again.")
+            continue
+        chair_name = input("Department chair name -> ")
+        if collection.count_documents({"chair name": chair_name}):
+            print("We already have a department with that chair. Try again.")
+            continue
+        building = input("Department building -> ")
+        try:
+            office = int(input("Department office -> "))
+        except ValueError:
+            print("Wrong input type. Try again.")
+            continue
+        if collection.count_documents({"building":building, "office":office}):
+            print("We already have a department with that office. Try again")
+            continue
+        description = input("Department description -> ")
+        if collection.count_documents({"description":description}):
+            print("We already have a department with that description. Try again.")
+            continue
+        break
 
 def select_department(db):
     pass
