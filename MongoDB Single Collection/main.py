@@ -271,6 +271,10 @@ if __name__ == '__main__':
     student_count = students.count_documents({})
     print(f"Students in the collection so far: {student_count}")
 
+    departments = db["departments"]
+    departments_count = deparments.count_documents({})
+    print(f"Departments in the collection so far: {student_count}")
+
     create_students_collection(students)
     pprint(students.index_information())
 
