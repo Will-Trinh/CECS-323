@@ -7,6 +7,24 @@ from menu_definitions import add_menu
 from menu_definitions import delete_menu
 from menu_definitions import list_menu
 
+def create_students_collection(students):
+    students_indexes = students.index_information()
+    if 'students_last_and_first_names' in students_indexes.keys():
+        print("first and last name index present.")
+    else:
+        # Create a single UNIQUE index on BOTH the last name and the first name.
+        students.create_index([('last_name', pymongo.ASCENDING), ('first_name', pymongo.ASCENDING)],
+                              unique=True,
+                              name="students_last_and_first_names")
+    if 'students_e_mail' in students_indexes.keys():
+        print("e-mail address index present.")
+    else:
+        # Create a UNIQUE index on just the e-mail address
+        students.create_index([('e_mail', pymongo.ASCENDING)], unique=True, name='students_e_mail')
+    pprint(students.index_information())
+
+def create_departments_collection(departments):
+    pass
 
 def add(db):
     """
@@ -180,21 +198,12 @@ if __name__ == '__main__':
     student_count = students.count_documents({})
     print(f"Students in the collection so far: {student_count}")
 
-    # ************************** Set up the students collection
-    students_indexes = students.index_information()
-    if 'students_last_and_first_names' in students_indexes.keys():
-        print("first and last name index present.")
-    else:
-        # Create a single UNIQUE index on BOTH the last name and the first name.
-        students.create_index([('last_name', pymongo.ASCENDING), ('first_name', pymongo.ASCENDING)],
-                              unique=True,
-                              name="students_last_and_first_names")
-    if 'students_e_mail' in students_indexes.keys():
-        print("e-mail address index present.")
-    else:
-        # Create a UNIQUE index on just the e-mail address
-        students.create_index([('e_mail', pymongo.ASCENDING)], unique=True, name='students_e_mail')
+    create_students_collection(students)
     pprint(students.index_information())
+
+    create_departments_collection(departments)
+    pprint(departments.index_information())
+
     main_action: str = ''
     while main_action != menu_main.last_action():
         main_action = menu_main.menu_prompt()
