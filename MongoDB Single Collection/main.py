@@ -225,13 +225,27 @@ def add_department(db):
     results = collection.insert_one(department)
 
 def select_department(db):
-    pass
+    collection = db["departments"]
+
+    while True:
+        name = input("Department Name--> ")
+        if not collection.count_documents({"name": name}):
+            print("No Department found by that name.  Try again.")
+        break
+    found_department = collection.find_one({"name": name})
+    return found_department
 
 def delete_department(db):
-    pass
+    department = select_department(db)
+    departments = db["departments"]
+    deleted = departments.delete_one({"_id": department["_id"]})
+    print(f"We just deleted: {deleted.deleted_count} departments.")
 
 def list_department(db):
-    pass
+    departments = db["departments"].find({}).sort([("name", pymongo.ASCENDING)])
+    for department in departments:
+        pprint(department)
+        print()
 
 
 if __name__ == '__main__':
