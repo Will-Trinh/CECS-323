@@ -24,7 +24,27 @@ def create_students_collection(students):
     pprint(students.index_information())
 
 def create_departments_collection(departments):
-    pass
+    departments_indexes = departments.index_information()
+    if 'departments_name' in departments_indexes.keys():
+        print("name index present.")
+    else:
+        departments.create_index([('name', pymongo.ASCENDING)],unique=True, name='departments_name')
+    if 'departments_abbreviation' in departments_indexes.keys():
+        print("abbreviation index present.")
+    else:
+        departments.create_index([('abbreviation', pymongo.ASCENDING)],unique=True, name='departments_abbreviation')
+    if 'departments_chair_name' in departments_indexes.keys():
+        print("chair name index present.")
+    else:
+        departments.create_index([('chair_name', pymongo.ASCENDING)],unique=True, name='departments_chair_name')
+    if 'departments_building_office' in departments_indexes.keys():
+        print("building and office index present.")
+    else:
+        departments.create_index([('building', pymongo.ASCENDING),('office', pymongo.ASCENDING)],unique=True, name='departments_building_office')
+    if 'departments_description' in departments_indexes.keys():
+        print("description index present.")
+    else:
+        departments.create_index([('description', pymongo.ASCENDING)],unique=True, name='departments_description')
 
 def add(db):
     """
