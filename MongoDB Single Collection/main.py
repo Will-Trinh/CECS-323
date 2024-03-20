@@ -144,6 +144,18 @@ def list_student(db):
     for student in students:
         pprint(student)
 
+def add_department(db):
+    pass
+
+def select_department(db):
+    pass
+
+def delete_department(db):
+    pass
+
+def list_department(db):
+    pass
+
 
 if __name__ == '__main__':
     password: str = getpass.getpass('Mongo DB password -->')
