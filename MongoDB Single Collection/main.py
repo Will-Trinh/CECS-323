@@ -213,6 +213,17 @@ def add_department(db):
             continue
         break
 
+    department = {
+        "name": name,
+        "abbreviation": abbreviation,
+        "chair_name": chair_name,
+        "building": building,
+        "office": office,
+        "description": description,
+    }
+
+    results = collection.insert_one(department)
+
 def select_department(db):
     pass
 
