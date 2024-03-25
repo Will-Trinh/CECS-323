@@ -59,6 +59,6 @@ menu_main = Menu('main', 'Please select one of the following options:', [
     Option("List", "list_objects(db)"),
     Option("Delete", "delete(db)"),
     #    Option("Boilerplate Data", "boilerplate(db)"),
-    Option("Exit this application", "pass"),
-    Option("Open Validator Menu", "")
+    Option("Open Validator Menu", ""),
+    Option("Exit this application", "pass")
 ])
