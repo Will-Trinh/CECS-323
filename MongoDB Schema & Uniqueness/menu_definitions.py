@@ -47,11 +47,11 @@ list_menu = Menu('list', 'Please indicate what you want to list:', [
     Option("Exit", "pass")
 ])
 
-validator_menu = Menu('validator', 'Please indicate what validator you want to add:'), [
+validator_menu = Menu('validator', 'Please indicate what validator you want to add:', [
     Option("Department Validator", "create_departments_validator(db)"),
     Option("Back", "back"),
     Option("Exit", "pass")
-]
+])
 
 # The main options for operating on Departments and Courses.
 menu_main = Menu('main', 'Please select one of the following options:', [
