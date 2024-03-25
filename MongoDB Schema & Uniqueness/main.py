@@ -76,7 +76,7 @@ def create_departments_validator(db):
                         'enum': ["ANAC", "CDC", "DC", "ECS", "EN2", "EN3", "EN4", "EN5", "ET", "HSCI", "NUR", "VEC"]
                     },
                     'office': {
-                        'bsonType': "double",
+                        'bsonType': "int",
                         'minimum': 0
                     },
                     'description': {
@@ -315,13 +315,9 @@ if __name__ == '__main__':
     create_departments_collection(departments)
     pprint(departments.index_information())
 
-    menu: Menu | str = menu_main.menu_prompt()
-    main_action: str = '' if isinstance(menu, Menu) else "pass"
-    while main_action != "pass":
-        action = menu_main.menu_prompt()
-        if action == "back":
-            menu = menu_main.menu_prompt()
-            continue
-        print('next action: ', action)
-        exec(action)
+    main_action: str = ''
+    while main_action != menu_main.last_action():
+        main_action = menu_main.menu_prompt()
+        print('next action: ', main_action)
+        exec(main_action)
 
