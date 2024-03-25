@@ -6,6 +6,7 @@ from menu_definitions import menu_main
 from menu_definitions import add_menu
 from menu_definitions import delete_menu
 from menu_definitions import list_menu
+from exception import print_exception
 
 def create_students_collection(students):
     students_indexes = students.index_information()
@@ -265,7 +266,12 @@ def add_department(db):
         "description": description,
     }
 
-    results = collection.insert_one(department)
+    try:
+        (collection.insert_one(department))
+        return
+    except Exception as exception:
+        print(print_exception(exception))
+
 
 def select_department(db):
     collection = db["departments"]
