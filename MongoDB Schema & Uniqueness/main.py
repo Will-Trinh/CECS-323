@@ -48,38 +48,39 @@ def create_departments_collection(departments):
 
 def create_department_validator(db):
     department_validator = {
-        "validator": {
-            "$jsonSchema": {
-                "bsonType": "object",
-                "title": "departments",
+        'validator': {
+            '$jsonSchema': {
+                'bsonType': "object",
+                'title': "departments",
                 "required": ["name", "abbreviation", "chair_name", "building", "office", "description"],
-                "properties": {
-                    "name": {
-                        "bsonType": "string",
-                        "minLength": 10,
-                        "maxLength": 50
+                'properties': {
+                    '_id': {},
+                    'name': {
+                        'bsonType': "string",
+                        'minLength': 10,
+                        'maxLength': 50
                     },
-                    "abbreviation": {
-                        "bsonType": "string",
-                        "description": "minLength: 1",
-                        "maxLength": 6
+                    'abbreviation': {
+                        'bsonType': "string",
+                        'description': "minLength: 1",
+                        'maxLength': 6
                     },
-                    "chair_name": {
-                        "bsonType": "string",
-                        "minLength": 1,
-                        "maxLength": 80
+                    'chair_name': {
+                        'bsonType': "string",
+                        'minLength': 1,
+                        'maxLength': 80
                     },
-                    "building": {
-                        "enum": ['ANAC', 'CDC', 'DC', 'ECS', 'EN2', 'EN3', 'EN4', 'EN5', 'ET', 'HSCI', 'NUR', 'VEC']
+                    'building': {
+                        'enum': ["ANAC", "CDC", "DC", "ECS", "EN2", "EN3", "EN4", "EN5", "ET", "HSCI", "NUR", "VEC"]
                     },
-                    "office": {
-                        "bsonType": "double",
-                        "minimum": 0
+                    'office': {
+                        'bsonType': "double",
+                        'minimum': 0
                     },
-                    "description": {
-                        "bsonType": "string",
-                        "minLength": 10,
-                        "maxLength": 80
+                    'description': {
+                        'bsonType': "string",
+                        'minLength': 10,
+                        'maxLength': 80
                     }
                 }
             }
