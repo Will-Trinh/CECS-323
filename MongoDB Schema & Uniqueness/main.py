@@ -46,6 +46,48 @@ def create_departments_collection(departments):
     else:
         departments.create_index([('description', pymongo.ASCENDING)],unique=True, name='departments_description')
 
+def create_department_validator(db):
+    department_validator = {
+        "validator": {
+            "$jsonSchema": {
+                "bsonType": "object",
+                "title": "departments",
+                "required": ["name", "abbreviation", "chair_name", "building", "office", "description"],
+                "properties": {
+                    "name": {
+                        "bsonType": "string",
+                        "minLength": 10,
+                        "maxLength": 50
+                    },
+                    "abbreviation": {
+                        "bsonType": "string",
+                        "description": "minLength: 1",
+                        "maxLength": 6
+                    },
+                    "chair_name": {
+                        "bsonType": "string",
+                        "minLength": 1,
+                        "maxLength": 80
+                    },
+                    "building": {
+                        "enum": ['ANAC', 'CDC', 'DC', 'ECS', 'EN2', 'EN3', 'EN4', 'EN5', 'ET', 'HSCI', 'NUR', 'VEC']
+                    },
+                    "office": {
+                        "bsonType": "double",
+                        "minimum": 0
+                    },
+                    "description": {
+                        "bsonType": "string",
+                        "minLength": 10,
+                        "maxLength": 80
+                    }
+                }
+            }
+        }
+    }
+
+    db.command("collMod", "departments", **department_validator)
+
 def add(db):
     """
     Present the add menu and execute the user's selection.
