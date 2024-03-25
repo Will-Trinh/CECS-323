@@ -2,6 +2,7 @@ import pymongo
 from pymongo import MongoClient
 from pprint import pprint
 import getpass
+from Menu import Menu
 from menu_definitions import menu_main
 from menu_definitions import add_menu
 from menu_definitions import delete_menu
@@ -47,7 +48,7 @@ def create_departments_collection(departments):
     else:
         departments.create_index([('description', pymongo.ASCENDING)],unique=True, name='departments_description')
 
-def create_department_validator(db):
+def create_departments_validator(db):
     department_validator = {
         'validator': {
             '$jsonSchema': {
@@ -314,9 +315,13 @@ if __name__ == '__main__':
     create_departments_collection(departments)
     pprint(departments.index_information())
 
-    main_action: str = ''
-    while main_action != menu_main.last_action():
-        main_action = menu_main.menu_prompt()
-        print('next action: ', main_action)
-        exec(main_action)
+    menu: Menu | str = menu_main.menu_prompt()
+    main_action: str = '' if isinstance(menu, Menu) else "pass"
+    while main_action != "pass":
+        action = menu_main.menu_prompt()
+        if action == "back":
+            menu = menu_main.menu_prompt()
+            continue
+        print('next action: ', action)
+        exec(action)
 

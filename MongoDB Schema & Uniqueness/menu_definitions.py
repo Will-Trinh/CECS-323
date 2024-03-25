@@ -12,14 +12,7 @@ variables are constructed.  To be honest, I'm not sure whether these are global
 variables or not in Python.
 """
 
-# The main options for operating on Departments and Courses.
-menu_main = Menu('main', 'Please select one of the following options:', [
-    Option("Add", "add(db)"),
-    Option("List", "list_objects(db)"),
-    Option("Delete", "delete(db)"),
-    #    Option("Boilerplate Data", "boilerplate(db)"),
-    Option("Exit this application", "pass")
-])
+
 
 add_menu = Menu('add', 'Please indicate what you want to add:', [
     Option("Department", "add_department(db)"),
@@ -28,6 +21,7 @@ add_menu = Menu('add', 'Please indicate what you want to add:', [
     Option("Student", "add_student(db)"),
     #    Option("Student to Major", "add_student_major(db)"),
     #    Option("Major to Student", "add_major_student(db)"),
+    Option("Back", "back"),
     Option("Exit", "pass")
 ])
 
@@ -38,6 +32,7 @@ delete_menu = Menu('delete', 'Please indicate what you want to delete from:', [
     Option("Student", "delete_student(db)"),
     #    Option("Student to Major", "delete_student_major(db)"),
     #    Option("Major to Student", "delete_major_student(db)"),
+    Option("Back", "back"),
     Option("Exit", "pass")
 ])
 
@@ -48,5 +43,22 @@ list_menu = Menu('list', 'Please indicate what you want to list:', [
     Option("Student", "list_student(db)"),
     #    Option("Student to Major", "list_student_major(db)"),
     #    Option("Major to Student", "list_major_student(db)"),
+    Option("Back", "back"),
     Option("Exit", "pass")
+])
+
+validator_menu = Menu('validator', 'Please indicate what validator you want to add:'), [
+    Option("Department Validator", "create_departments_validator(db)"),
+    Option("Back", "back"),
+    Option("Exit", "pass")
+]
+
+# The main options for operating on Departments and Courses.
+menu_main = Menu('main', 'Please select one of the following options:', [
+    Option("Add", "add(db)"),
+    Option("List", "list_objects(db)"),
+    Option("Delete", "delete(db)"),
+    #    Option("Boilerplate Data", "boilerplate(db)"),
+    Option("Exit this application", "pass"),
+    Option("Open Validator Menu", "")
 ])
