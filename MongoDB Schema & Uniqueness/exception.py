@@ -3,7 +3,7 @@ import pymongo
 from pymongo.errors import DuplicateKeyError
 from pymongo.errors import WriteError
 from pprint import pprint
-from Utilities import Utilities
+#from Utilities import Utilities
 from bson.objectid import ObjectId
 
 
