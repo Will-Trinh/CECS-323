@@ -8,6 +8,10 @@ from pymongo import monitoring
 from Menu import Menu
 from Option import Option
 from menu_definitions import menu_main, add_select, list_select, select_select, delete_select, update_select
+from Product import Product
+from PriceHistory import PriceHistory
+from decimal import Decimal, InvalidOperation
+from mongoengine.errors import OperationError
 
 """
 This protects Order from deletions in OrderItem of any of the objects reference by Order
@@ -200,6 +204,53 @@ def delete_order_item():
     # Update the order to no longer include that order item in its MongoDB list of order items.
     order.save()
 
+def display_order():
+    print(select_order())
+
+def add_product():
+    while True:
+        try:
+            product = Product(
+                input("Product Code: -> "),
+                input("Product Name: -> "),
+                input("Product Description: -> "),
+                int(input("Stock Quantity -> ")),
+                round(Decimal(input("Buy Price -> ")),2),
+                round(Decimal(input("MSRP -> ")),2)
+            )
+        except (ValueError, InvalidOperation):
+            print("Input is invalid. Try again.")
+            continue
+
+        invalid_constraints = unique_general(product)
+        if invalid_constraints:
+            for i in invalid_constraints:
+                print("Input violates constraint: ", i)
+            print("Try again.")
+            continue
+        break
+    product.save()
+
+
+def delete_product():
+    try:
+        select_product().delete()
+    except OperationError:
+        print("Product exists in orders. Delete them first.")
+
+
+def select_product():
+    return select_general(Product)
+
+def change_product():
+    while True:
+        product = select_product()
+        try:
+            product.change_price(PriceHistory(round(Decimal(input("Updated Price -> ")),2),prompt_for_date("Date and Time of change: ")))
+            product.save()
+            break
+        except (ValueError, InvalidOperation) as error:
+            print(f"Product update failed. Error: {error}")
 
 if __name__ == '__main__':
     print('Starting in main.')
