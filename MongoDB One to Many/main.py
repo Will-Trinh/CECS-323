@@ -123,7 +123,7 @@ def add_order_item():
         order = select_order()  # Prompt the user for an order to operate on.
         # Create a new OrderItem instance.
         new_order_item = OrderItem(order,
-                                   input('Product Name --> '),
+                                   select_product(),
                                    int(input('Quantity --> ')))
         # Make sure that this adheres to the existing uniqueness constraints.
         # I COULD use print_exception after MongoEngine detects any uniqueness constraint violations, but

@@ -88,7 +88,7 @@ class Order(Document):
                     break
 
             result += (f'\n\tItem: {orderItem.product.productName} - ${product_price}'
-                        f'{orderItem.quantity} ordered')
+                        f'\n\t\t{orderItem.quantity} ordered')
         return result
 
     def add_item(self, item):
