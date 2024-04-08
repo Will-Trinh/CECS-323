@@ -8,7 +8,7 @@ class Product(Document):
     productCode = StringField(db_field="product_code", min_Length=0, max_length=15, required=True)
     productName = StringField(db_field="product_name", min_Length=0, max_length=70, required=True)
     productDescription = StringField(db_field="product_description", min_Length=0, max_length=800, required=True)
-    qualityInStock = IntField(db_field="quality_in_stock", min_value=0.01, precision=2, required=True)
+    quantityInStock = IntField(db_field="quantity_in_stock", min_value=0.01, precision=2, required=True)
     buyPrice = Decimal128Field(db_field='buy_price', min_value=0.01, precision=2, required=True)
     msrp = Decimal128Field(db_field='msrp', min_value=0.01, precision=2, required=True)
     priceHistory = EmbeddedDocumentListField(PriceHistory, db_field='price_history')
