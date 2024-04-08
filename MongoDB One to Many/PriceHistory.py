@@ -1,7 +1,7 @@
 from mongoengine import *
 from datetime import *
 from decimal import *
-#Test
+
 
 class PriceHistory(EmbeddedDocument):
     price = Decimal128Field(db_field='new_price', min_value=0.01, precision=2, required=True)
