@@ -5,14 +5,13 @@ from decimal import *
 #Test
 
 class Product(Document):
-    productCode = StringField(db_field="product_code", min_Length=0, max_length=15, required=True)
-    productName = StringField(db_field="product_name", min_Length=0, max_length=70, required=True)
-    productDescription = StringField(db_field="product_description", min_Length=0, max_length=800, required=True)
-    quantityInStock = IntField(db_field="quantity_in_stock", min_value=0.01, precision=2, required=True)
+    productCode = StringField(db_field='product_code', min_Length=0, max_length=15, required=True)
+    productName = StringField(db_field='product_name', min_Length=0, max_length=70, required=True)
+    productDescription = StringField(db_field='product_description', min_Length=0, max_length=800, required=True)
+    quantityInStock = IntField(db_field='quantity_in_stock', min_value=0.01, precision=2, required=True)
     buyPrice = Decimal128Field(db_field='buy_price', min_value=0.01, precision=2, required=True)
     msrp = Decimal128Field(db_field='msrp', min_value=0.01, precision=2, required=True)
     priceHistory = EmbeddedDocumentListField(PriceHistory, db_field='price_history')
-
 
     meta = {'collection': 'products',
             'indexes': [
@@ -20,7 +19,7 @@ class Product(Document):
                 {'unique': True, 'fields': ['productName'], 'name': 'products_uk_02'}
             ]}
 
-    def __init__(self, productCode, productName, productDescription, quantityInStock, buyPrice, msrp, *args, **values):
+    def __init__(self, productCode: str, productName: str, productDescription: str, quantityInStock: int, buyPrice: Decimal, msrp: Decimal, *args, **values):
         super().__init__(*args, **values)
         self.productCode = productCode
         self.productName = productName
