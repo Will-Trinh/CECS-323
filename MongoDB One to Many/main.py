@@ -103,16 +103,12 @@ def add_order():
                 print('Your input values violated constraint: ', violated_constraint)
             print('try again')
         else:
+            success = True
             # The first "stats change" is placing the order itself.
             new_order.change_status(StatusChange(
                 prompt_for_enum('Select the status:', StatusChange, 'status'),
                 order_date))
-            try:
-                new_order.save()
-                success = True
-            except Exception as e:
-                print('Errors storing the new order:')
-                Utilities.print_exception(e)
+        new_order.save()
 
 
 def add_order_item():

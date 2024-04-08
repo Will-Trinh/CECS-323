@@ -35,8 +35,8 @@ delete_select = Menu('delete select', 'Which type of object do you want to delet
 
 # options for listing the existing instances
 list_select = Menu('list select', 'Which type of object do you want to list?:', [
-    Option("Orders", "list_order()"),
-    Option("Order Items", "list_order_item()"),
+    Option("Orders", "display_order()"),
+    Option("Order Items", "select_order_item()"),
     Option("Exit", "pass")
 ])
 
