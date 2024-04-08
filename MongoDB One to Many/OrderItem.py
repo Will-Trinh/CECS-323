@@ -1,6 +1,7 @@
 import mongoengine
 from mongoengine import *
 from Order import Order
+from Product import Product
 
 
 class OrderItem(Document):
@@ -11,7 +12,7 @@ class OrderItem(Document):
     # The  parent order that this is a member of.
     order = ReferenceField(Order, required=True, reverse_delete_rule=mongoengine.DENY)
     # This will be replaced by a reference to an instance of the Product class.
-    product = StringField(max_length=80, min_length=4, required=True)
+    product = ReferenceField(Product, required=True, reverse_delete_rule=mongoengine.DENY)
     # There is no hard and fast maximum value for quantity.
     quantity = IntField(required=True, min_value=1)
 
