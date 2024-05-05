@@ -1,16 +1,23 @@
 from mongoengine import *
+import mongoengine
+
 
 class Student(Document):
-
-    customerName = StringField(db_field='customer_name', max_length=80, min_length=5, required=True)
+    lastName = StringField(db_field='last_name', max_length=80, min_length=1, required=True)
+    firstName = StringField(db_field='first_name', max_length=80, min_length=1, required=True)
+    email = StringField(db_field='eMail', max_length=80, min_length=1, required=True)
     
     meta = {'collection': 'students',
             'indexes': [
-                {'unique': True, 'fields': ['customerName', 'orderDate'], 'name': 'orders_pk'}
+                {'unique': True, 'fields': ['lastName', 'firstName'], 'name': 'students_uk_01'},
+                {'unique': True, 'fields': ['email'], 'name': 'students_uk_02'},
             ]}
 
-    def __init__(self):
-        pass
+    def __init__(self, lastName: str, firstName: str, email: str, *args, **values):
+
+        self.lastName = lastName
+        self.firstName = firstName
+        self.email = email
 
     def __str__(self):
-        pass
+        return f"Name: {self.lastName}, {self.firstName} e-mail: {self.email}"
