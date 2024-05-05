@@ -4,7 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d98959a8-bb1e-421e-aa5a-f29e1d13bae7" name="Changes" comment="added delete enrollment" />
+    <list default="true" id="d98959a8-bb1e-421e-aa5a-f29e1d13bae7" name="Changes" comment="finish">
+      <change beforePath="$PROJECT_DIR$/.idea/CECS-323.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/CECS-323.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -50,28 +54,84 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Python.db_connection.executor&quot;: &quot;Run&quot;,
-    &quot;Python.main.executor&quot;: &quot;Run&quot;,
-    &quot;Python.menu_definitions.executor&quot;: &quot;Run&quot;,
-    &quot;Python.test.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;terminal&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Python.PriceHistory.executor": "Run",
+    "Python.Unnamed.executor": "Run",
+    "Python.Utilities.executor": "Run",
+    "Python.db_connection.executor": "Run",
+    "Python.main.executor": "Run",
+    "Python.menu_definitions.executor": "Run",
+    "Python.test.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "C:/Users/Willi/OneDrive/Desktop/CECS 323/MongoDB Schema & Uniqueness",
+    "settings.editor.selected.configurable": "terminal"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Willi\OneDrive\Desktop\CECS 323\MongoDB Schema &amp; Uniqueness" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Willi\OneDrive\Desktop\CECS 323\MongoDB One to Many" />
       <recent name="C:\Users\Willi\PycharmProjects\CECS-323\SQLALchemy Simple One to Many" />
     </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="Unnamed" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
+      <module name="CECS-323" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="SDK_NAME" value="Python 3.12 (CECS 323)" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="PythonConfigurationType" factoryName="Python">
+      <module name="CECS-323" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="SDK_NAME" value="Python 3.12 (CECS 323)" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="true" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-python-sdk-50da183f06c8-d3b881c8e49f-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-233.13135.95" />
+        <option value="bundled-python-sdk-09665e90c3a7-d3b881c8e49f-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-233.15026.15" />
       </set>
     </attachedChunks>
   </component>
@@ -284,7 +344,167 @@
       <option name="project" value="LOCAL" />
       <updated>1710371555520</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="Created schemas and uniqueness folder">
+      <option name="closed" value="true" />
+      <created>1711327245737</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1711327245737</updated>
+    </task>
+    <task id="LOCAL-00027" summary="Added exception.py and create_department_validator">
+      <option name="closed" value="true" />
+      <created>1711335575906</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1711335575906</updated>
+    </task>
+    <task id="LOCAL-00028" summary="Updated create_department_validator">
+      <option name="closed" value="true" />
+      <created>1711336341557</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1711336341557</updated>
+    </task>
+    <task id="LOCAL-00029" summary="Updated add_department">
+      <option name="closed" value="true" />
+      <created>1711337455968</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1711337455968</updated>
+    </task>
+    <task id="LOCAL-00030" summary="Updated add_department">
+      <option name="closed" value="true" />
+      <created>1711337766515</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1711337766515</updated>
+    </task>
+    <task id="LOCAL-00031" summary="Updated main and menu_definitions">
+      <option name="closed" value="true" />
+      <created>1711338979121</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1711338979121</updated>
+    </task>
+    <task id="LOCAL-00032" summary="Updated main and menu_definitions">
+      <option name="closed" value="true" />
+      <created>1711339237532</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1711339237532</updated>
+    </task>
+    <task id="LOCAL-00033" summary="Updated menu_definitions">
+      <option name="closed" value="true" />
+      <created>1711339480424</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1711339480424</updated>
+    </task>
+    <task id="LOCAL-00034" summary="Updated menu_definitions and main">
+      <option name="closed" value="true" />
+      <created>1711341968150</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1711341968150</updated>
+    </task>
+    <task id="LOCAL-00035" summary="Added sample code">
+      <option name="closed" value="true" />
+      <created>1712532018148</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1712532018148</updated>
+    </task>
+    <task id="LOCAL-00036" summary="Created product and pricehistory">
+      <option name="closed" value="true" />
+      <created>1712539680481</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1712539680481</updated>
+    </task>
+    <task id="LOCAL-00037" summary="Created product and pricehistory">
+      <option name="closed" value="true" />
+      <created>1712547177843</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1712547177843</updated>
+    </task>
+    <task id="LOCAL-00038" summary="Updated product and pricehistory">
+      <option name="closed" value="true" />
+      <created>1712547449779</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1712547449779</updated>
+    </task>
+    <task id="LOCAL-00039" summary="Added menu options">
+      <option name="closed" value="true" />
+      <created>1712547986888</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1712547986888</updated>
+    </task>
+    <task id="LOCAL-00040" summary="updated product">
+      <option name="closed" value="true" />
+      <created>1712548629030</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1712548629030</updated>
+    </task>
+    <task id="LOCAL-00041" summary="updated PriceHistory.py">
+      <option name="closed" value="true" />
+      <created>1712549212211</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1712549212211</updated>
+    </task>
+    <task id="LOCAL-00042" summary="updated">
+      <option name="closed" value="true" />
+      <created>1712550470449</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1712550470449</updated>
+    </task>
+    <task id="LOCAL-00043" summary="updated __str__">
+      <option name="closed" value="true" />
+      <created>1712552096564</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1712552096564</updated>
+    </task>
+    <task id="LOCAL-00044" summary="finish">
+      <option name="closed" value="true" />
+      <created>1712555600662</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1712555600662</updated>
+    </task>
+    <task id="LOCAL-00045" summary="finish">
+      <option name="closed" value="true" />
+      <created>1712555637560</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1712555637560</updated>
+    </task>
+    <option name="localTasksCounter" value="46" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -299,12 +519,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="pycharm test" />
-    <MESSAGE value="Added One to Many folder" />
-    <MESSAGE value="Added sample code" />
-    <MESSAGE value="Deleted .idea" />
-    <MESSAGE value="Added Section.py" />
-    <MESSAGE value="Added Section.py Imports" />
     <MESSAGE value="Added class Section" />
     <MESSAGE value="added department attributevs from single table" />
     <MESSAGE value="added department attributes from single table" />
@@ -314,6 +528,22 @@
     <MESSAGE value="added back option to the list, add, and delete menus&#10;&#10;The sample code works by using the last_action function in Menu.py to go back to the last menu the user was, but we can't call this if the last action we did was not accessing a menu, like &quot;back&quot; because the function gets confused when we call a string when it expects a menu. To fix this, I separated the menus in menu_definitions.py.&#10;&#10;Also, added more information to boilerplate so we can test easier" />
     <MESSAGE value="fixed menu im dumb" />
     <MESSAGE value="added delete enrollment" />
-    <option name="LAST_COMMIT_MESSAGE" value="added delete enrollment" />
+    <MESSAGE value="Created schemas and uniqueness folder" />
+    <MESSAGE value="Added exception.py and create_department_validator" />
+    <MESSAGE value="Updated create_department_validator" />
+    <MESSAGE value="Updated add_department" />
+    <MESSAGE value="Updated main and menu_definitions" />
+    <MESSAGE value="Updated menu_definitions" />
+    <MESSAGE value="Updated menu_definitions and main" />
+    <MESSAGE value="Added sample code" />
+    <MESSAGE value="Created product and pricehistory" />
+    <MESSAGE value="Updated product and pricehistory" />
+    <MESSAGE value="Added menu options" />
+    <MESSAGE value="updated product" />
+    <MESSAGE value="updated PriceHistory.py" />
+    <MESSAGE value="updated" />
+    <MESSAGE value="updated __str__" />
+    <MESSAGE value="finish" />
+    <option name="LAST_COMMIT_MESSAGE" value="finish" />
   </component>
 </project>
