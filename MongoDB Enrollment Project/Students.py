@@ -13,7 +13,7 @@ class Student(Document):
             ]}
 
     def __init__(self, lastName: str, firstName: str, email: str, *args, **values):
-
+        super().__init__(*args, **values)
         self.lastName = lastName
         self.firstName = firstName
         self.email = email
