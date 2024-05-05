@@ -1,5 +1,4 @@
 from mongoengine import *
-import mongoengine
 
 
 class Student(Document):
