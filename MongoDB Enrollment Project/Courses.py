@@ -7,7 +7,7 @@ class Course(Document):
     department = ReferenceField(Department, required=True, reverse_delete_rule=mongoengine.DENY)
 
     courseNumber = IntField(db_field='course_number', min_value = 100, max_value = 699, required=True)
-    description = StringField(db_field='description', min_value = 0, max_value = 80, required = True)
+    description = StringField(db_field='description', min_length = 0, max_length = 80, required = True)
     units = IntField(db_field='units', min_value = 1, max_value = 5, required = True)
     # department = EmbeddedDocumentField(Department, db_field='department')
 
@@ -20,8 +20,9 @@ class Course(Document):
                 {'unique': True, 'fields': ['departmentAbbreviation', 'courseName'], 'name': 'courses_uk_02'}
             ]}
     
-    def __init__(self, courseNumber: int, courseName: str, description: str, units: int, *args, **values):
+    def __init__(self, department: Department, courseNumber: int, courseName: str, description: str, units: int, *args, **values):
         super().__init__(*args, **values)
+        self.department = department
         self.courseNumber = courseNumber
         self.courseName = courseName
         self.description = description
