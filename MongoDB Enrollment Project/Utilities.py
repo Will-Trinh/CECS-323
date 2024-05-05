@@ -3,6 +3,7 @@ from pprint import pformat
 
 from pymongo.errors import OperationFailure
 from mongoengine import *
+import certifi
 import io
 
 
@@ -19,9 +20,9 @@ class Utilities:
         while True:
             #password = getpass.getpass(prompt='MongoDB password --> ')
             #cluster = f"mongodb+srv://CECS-323-Spring-2024-User:{password}@cluster0.uhlmij5.mongodb.net/?retryWrites=true&w=majority"
-            cluster = "mongodb+srv://WillTrinh:cluster123@clusterwill.5nijgrb.mongodb.net/?retryWrites=true&w=majority&appName=ClusterWill"
+            cluster = "mongodb+srv://leopan02:6561@cluster0.qfjeorg.mongodb.net/"
             database_name = input('Database name to use --> ')
-            client = connect(db=database_name, host=cluster)
+            client = connect(db=database_name, host=cluster, tlsCAFile=certifi.where())
             try:
                 junk = client.server_info()  # Test the connection
                 return client
