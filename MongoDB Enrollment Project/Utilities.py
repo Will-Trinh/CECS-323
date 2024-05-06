@@ -25,7 +25,7 @@ class Utilities:
             client = connect(db=database_name, host=cluster, tlsCAFile=certifi.where())
             try:
                 junk = client.server_info()  # Test the connection
-                return client
+                return client[database_name]
             except OperationFailure as OE:
                 print(OE)
                 print("Error, invalid password.  Try again.")

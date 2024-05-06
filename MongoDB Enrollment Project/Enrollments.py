@@ -9,9 +9,6 @@ class Enrollment(Document):
     student = ReferenceField(Student, required=True, reverse_delete_rule=mongoengine.DENY)
     section = ReferenceField(Section, required=True, reverse_delete_rule=mongoengine.DENY)
 
-
-
-
     meta = {'collection': 'enrollments',
             'indexes': [
                 {'unique': True, 'fields': ['student', 'section'], 'name': 'enrollments_uk_01'}

@@ -87,11 +87,42 @@ def add_department():
                 print('Your input values violated constraint: ', violated_constraint)
             print('try again')
         else:
-            success = True
-        new_department.save()
+            try:
+                success = True
+                new_department.save()
+            except Exception as e:
+                success = False
+                print(e)
+                print("Sorry try again.")
+            
+    
 
 def add_course():
-    pass
+    """
+    creates a course instance
+    """
+    success: bool = False
+    new_course = None
+    while not success:
+        new_course = Course(
+                            select_general(Department),
+                            int(input('Course number --> ')),
+                            input('Course name --> '),
+                            input('Description --> '),
+                            int(input('units --> ')))
+        violated_constraints = unique_general(new_course)
+        if len(violated_constraints) > 0:
+            for violated_constraint in violated_constraints:
+                print('Your input values violated constraint: ', violated_constraint)
+            print('try again')
+        else:
+            try:
+                success = True
+                new_course.save()
+            except Exception as e:
+                success = False
+                print(e)
+                print("Sorry try again.")
 
 def add_section():
     pass
@@ -110,47 +141,111 @@ def add_enrollment():
 
 #delete functions_________________________
 def delete_department():
-    pass
+    """
+    Delete an existing department
+    """
+    department = select_general(Department)  # prompt the user for an order to delete
+    #will error if there are any children that would be orphaned by the delete, will catch adn print the exception
+    try:
+        department.delete()
+    except Exception as e:
+        print(e)
+
 
 def delete_course():
-    pass
+    """
+    Delete an existing course
+    """
+    course = select_general(Course)  # prompt the user for an order to delete
+    #will error if there are any children that would be orphaned by the delete, will catch adn print the exception
+    try:
+        course.delete()
+    except Exception as e:
+        print(e)
 
 def delete_section():
-    pass
+    """
+    Delete an existing section
+    """
+    section = select_general(Section)  # prompt the user for an order to delete
+    #will error if there are any children that would be orphaned by the delete, will catch adn print the exception
+    try:
+        section.delete()
+    except Exception as e:
+        print(e)
 
 def delete_student():
-    pass
+    """
+    Delete an existing student
+    """
+    student = select_general(Student)  # prompt the user for an order to delete
+    #will error if there are any children that would be orphaned by the delete, will catch adn print the exception
+    try:
+        student.delete()
+    except Exception as e:
+        print(e)
 
 def delete_major():
-    pass
+    """
+    Delete an existing major
+    """
+    major = select_general(Major)  # prompt the user for an order to delete
+    #will error if there are any children that would be orphaned by the delete, will catch adn print the exception
+    try:
+        major.delete()
+    except Exception as e:
+        print(e)
 
 def delete_student_major():
-    pass
+    """
+    Delete an existing student major
+    """
+    studentMajor = select_general(StudentMajor)  # prompt the user for an order to delete
+    #will error if there are any children that would be orphaned by the delete, will catch adn print the exception
+    try:
+        studentMajor.delete()
+    except Exception as e:
+        print(e)
 
 def delete_enrollment():
-    pass
+    """
+    Delete an existing enrollment
+    """
+    enrollment = select_general(Enrollment)  # prompt the user for an order to delete
+    #will error if there are any children that would be orphaned by the delete, will catch adn print the exception
+    try:
+        enrollment.delete()
+    except Exception as e:
+        print(e)
 
 #list functions_________________________
 def list_department():
-    pass
+    for x in db.departments.find(): 
+        print(x)
 
 def list_course():
-    pass
+    for x in db.courses.find(): 
+        print(x)
 
 def list_section():
-    pass
+    for x in db.sections.find(): 
+        print(x)
 
 def list_student():
-    pass
+    for x in db.students.find(): 
+        print(x)
 
 def list_major():
-    pass
+    for x in db.majors.find(): 
+        print(x)
 
 def list_student_major():
-    pass
+    for x in db.student_majors.find(): 
+        print(x)
 
 def list_enrollment():
-    pass
+    for x in db.enrollments.find(): 
+        print(x)
 
 
 if __name__ == '__main__':
