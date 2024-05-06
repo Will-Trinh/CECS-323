@@ -1,16 +1,29 @@
 from mongoengine import *
+import mongoengine
+from Students import Student
+from Sections import Section
+
 
 class Enrollment(Document):
 
-    customerName = StringField(db_field='customer_name', max_length=80, min_length=5, required=True)
+    student = ReferenceField(Student, required=True, reverse_delete_rule=mongoengine.DENY)
+    section = ReferenceField(Section, required=True, reverse_delete_rule=mongoengine.DENY)
+
+
+
 
     meta = {'collection': 'enrollments',
             'indexes': [
-                {'unique': True, 'fields': ['customerName', 'orderDate'], 'name': 'orders_pk'}
+                {'unique': True, 'fields': ['student', 'section'], 'name': 'enrollments_uk_01'}
             ]}
-    
-    def __init__(self):
-        pass
+
+    def __init__(self, section:Section, student:Student, *args, **values):
+        super().__init__(*args, **values)
+        self.section = section
+        self.student = student
+
 
     def __str__(self):
-        pass
+        return (f"Enrollment:"
+                f"\nStudent: {self.student.firstName} {self.student.lastName}"
+                f"\nSection: {self.section}")
