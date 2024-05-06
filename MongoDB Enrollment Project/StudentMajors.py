@@ -11,8 +11,7 @@ class StudentMajor(Document):
     studentId = StringField(db_field='student_id', max_length=80, min_length=1, required=True)
     majorName = StringField(db_field='major_name', max_length=80, min_length=1, required=True)
     declarationDate = DateTimeField(db_field='declarationDate',
-                                    min_value=datetime.datetime.combine(datetime.date.min, datetime.time(0, 0)),
-                                    max_value=datetime.datetime.now(),
+                                    max_value=datetime.now(),
                                     required=True)
     meta = {'collection': 'student_majors',
             'indexes': [

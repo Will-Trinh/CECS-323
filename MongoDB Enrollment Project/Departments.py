@@ -5,16 +5,16 @@ class Department(Document):
     name = StringField(db_field='name', max_length=80, min_length=1, required=True)
     abbreviation = StringField(db_field='abbreviation', max_length=6, min_length=1, required=True)
     chairName = StringField(db_field='chair_name', max_length=80, min_length=1, required=True)
-    building = StringField(db_field='building', required=True)
-    office = IntField(db_field='office', min_value=1, required=True, choices=('ANAC', 'CDC', 'DC', 'ECS', 'EN2', 'EN3', 'EN4', 'EN5', 'ET', 'HSCI', 'NUR', 'VEC'))
+    building = StringField(db_field='building', required=True, choices=('ANAC', 'CDC', 'DC', 'ECS', 'EN2', 'EN3', 'EN4', 'EN5', 'ET', 'HSCI', 'NUR', 'VEC'))
+    office = IntField(db_field='office', min_value=1, required=True)
     description = StringField(db_field='description', max_length=80, min_length=1, required=True)
 
     meta = {'collection': 'departments',
             'indexes': [
                 {'unique': True, 'fields': ['name'], 'name': 'departments_uk_01'},
                 {'unique': True, 'fields': ['abbreviation'], 'name': 'departments_uk_02'},
-                {'unique': True, 'fields': ['chair_name'], 'name': 'departmnets_uk_03'},
-                {'unique': True, 'fields': ['building, office'], 'name': 'departments_uk_04'}
+                {'unique': True, 'fields': ['chairName'], 'name': 'departments_uk_03'},
+                {'unique': True, 'fields': ['building', 'office'], 'name': 'departments_uk_04'}
             ]}
     
     def __init__(self, name: str, abbreviation: str, chairName: str, building: str, office: int, description: str, *args, **values):

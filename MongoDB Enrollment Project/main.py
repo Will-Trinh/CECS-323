@@ -1,24 +1,21 @@
 from ConstraintUtilities import select_general, unique_general, prompt_for_date
 from Utilities import Utilities
-from Order import Order
-from OrderItem import OrderItem
-from StatusChange import StatusChange
 from CommandLogger import CommandLogger, log
 from pymongo import monitoring
 from Menu import Menu
-from Option import Option
-from menu_definitions import menu_main, add_select, list_select, select_select, delete_select, update_select
-from Product import Product
-from PriceHistory import PriceHistory
+from menu_definitions import menu_main, add_select, list_select, select_select, delete_select
 from decimal import Decimal, InvalidOperation
 from mongoengine.errors import OperationError
-
-"""
-This protects Order from deletions in OrderItem of any of the objects reference by Order
-in its order_items list.  We could not include this in Order itself since that would 
-make a cyclic delete_rule between Order and OrderItem.  I've commented this out because
-it makes it impossible to remove OrderItem instances.  But you get the idea how it works."""
-# OrderItem.register_delete_rule(Order, 'orderItems', mongoengine.DENY)
+from Departments import Department
+from Option import Option
+from Courses import Course
+from Sections import Section
+from Students import Student
+from Majors import Major
+from StudentMajors import StudentMajor
+from Enrollments import Enrollment
+from PassFails import PassFail
+from LetterGrades import LetterGrade
 
 def menu_loop(menu: Menu):
     """Little helper routine to just keep cycling in a menu until the user signals that they
@@ -29,7 +26,6 @@ def menu_loop(menu: Menu):
         action = menu.menu_prompt()
         print('next action: ', action)
         exec(action)
-
 
 def add():
     menu_loop(add_select)
@@ -72,7 +68,27 @@ def prompt_for_enum(prompt: str, cls, attribute_name: str):
 
 #add functions____________________________    
 def add_department():
-    pass
+    """
+    creates a department instance
+    """
+    success: bool = False
+    new_department = None
+    while not success:
+        new_department = Department(
+                            input('Name --> '),
+                            input('Abbreviation --> '),
+                            input('Chair name --> '),
+                            input('building --> '),
+                            str(input('office --> ')),
+                            input('Description --> '))
+        violated_constraints = unique_general(new_department)
+        if len(violated_constraints) > 0:
+            for violated_constraint in violated_constraints:
+                print('Your input values violated constraint: ', violated_constraint)
+            print('try again')
+        else:
+            success = True
+        new_department.save()
 
 def add_course():
     pass

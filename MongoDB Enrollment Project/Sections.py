@@ -11,10 +11,9 @@ class Section(Document):
     building = StringField(db_field='building',choices=('ANAC','CDC','DC','ECS','EN2','EN3','EN4','EN5','ET','HSCI','NUR','VEC') ,required=True)
     room = IntField(db_field='room', min_value = 1, max_value = 999, required=True)
     schedule = StringField(db_field='schedule',choices=('MW','TuTh','MWF','F','S'),required=True)
-    start_time = DateTimeField(db_field='start_time', min_value=datetime.datetime.combine(datetime.date.min, datetime.time(8, 0)), max_value=datetime.datetime.combine(datetime.date.min, datetime.time(19, 30)),required=True)
+    start_time = DateTimeField(db_field='start_time', min_value=datetime(1, 1, 1, 8, 0, 0), max_value=datetime(1, 1, 1, 19, 30, 0),required=True)
     instructor = StringField(db_field='instructor',required=True)
     course = ReferenceField(Course, required=True, reverse_delete_rule=mongoengine.DENY)
-    
     meta = {'collection': 'sections',
             'indexes': [
                 {'unique': True, 'fields': ['course', 'section_number','semester','section_year'], 'name': 'sections_uk_01'},
