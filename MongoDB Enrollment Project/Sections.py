@@ -5,6 +5,7 @@ from datetime import datetime
 
 class Section(Document):
 
+    course = ReferenceField(Course, required=True, reverse_delete_rule=mongoengine.DENY)
     section_number = IntField(db_field='section_number', required=True)
     semester = StringField(db_field='semester',choice=('Fall','Spring','Summer I', 'Summer II', 'Summer III', 'Winter'), required=True)
     section_year = IntField(db_field='section_year',required=True)
@@ -13,7 +14,6 @@ class Section(Document):
     schedule = StringField(db_field='schedule',choices=('MW','TuTh','MWF','F','S'),required=True)
     start_time = DateTimeField(db_field='start_time', min_value=datetime(1, 1, 1, 8, 0, 0), max_value=datetime(1, 1, 1, 19, 30, 0),required=True)
     instructor = StringField(db_field='instructor',required=True)
-    course = ReferenceField(Course, required=True, reverse_delete_rule=mongoengine.DENY)
     meta = {'collection': 'sections',
             'indexes': [
                 {'unique': True, 'fields': ['course', 'section_number','semester','section_year'], 'name': 'sections_uk_01'},
@@ -22,7 +22,7 @@ class Section(Document):
             ]}
     
     def __init__(self, course: Course, section_number: int, semester: str, section_year: int, building: str, room: int,
-                schedule: datetime, start_time: datetime, instructor: str, *args, **values):
+                schedule: str, start_time: datetime, instructor: str, *args, **values):
         super().__init__(*args,**values)
         self.course = course
         self.section_number = section_number

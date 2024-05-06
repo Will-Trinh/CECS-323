@@ -16,6 +16,7 @@ from StudentMajors import StudentMajor
 from Enrollments import Enrollment
 from PassFails import PassFail
 from LetterGrades import LetterGrade
+from datetime import datetime
 
 def menu_loop(menu: Menu):
     """Little helper routine to just keep cycling in a menu until the user signals that they
@@ -125,16 +126,114 @@ def add_course():
                 print("Sorry try again.")
 
 def add_section():
-    pass
+    """
+    creates a section instance
+    """
+    success: bool = False
+    new_section = None
+    while not success:
+        hour = int(input('Starting time hour --> '))
+        minute = int(input('Starting time minute --> '))
+        startTime = datetime(1, 1, 1, hour, minute, 0)
+        new_section = Section(
+                            select_general(Course),
+                            int(input('Section number --> ')),
+                            input('Semester --> '),
+                            int(input('Year --> ')),
+                            input('Building --> '),
+                            int(input('Room --> ')),
+                            input('Schedule --> '),
+                            startTime,
+                            input('Instructor --> ')
+                            )
+        violated_constraints = unique_general(new_section)
+        if len(violated_constraints) > 0:
+            for violated_constraint in violated_constraints:
+                print('Your input values violated constraint: ', violated_constraint)
+            print('try again')
+        else:
+            try:
+                success = True
+                new_section.save()
+            except Exception as e:
+                success = False
+                print(e)
+                print("Sorry try again.")
 
 def add_student():
-    pass
+    """
+    creates a student instance
+    """
+    success: bool = False
+    new_student = None
+    while not success:
+        new_student = Student(
+                            input('Last name --> '),
+                            input('First name --> '),
+                            input('Email --> '))
+        violated_constraints = unique_general(new_student)
+        if len(violated_constraints) > 0:
+            for violated_constraint in violated_constraints:
+                print('Your input values violated constraint: ', violated_constraint)
+            print('try again')
+        else:
+            try:
+                success = True
+                new_student.save()
+            except Exception as e:
+                success = False
+                print(e)
+                print("Sorry try again.")
 
 def add_major():
-    pass
+    """
+    creates a major instance
+    """
+    success: bool = False
+    new_major = None
+    while not success:
+        new_major = Major(
+                            select_general(Department),
+                            input('Name --> '),
+                            input('Description --> '))
+        violated_constraints = unique_general(new_major)
+        if len(violated_constraints) > 0:
+            for violated_constraint in violated_constraints:
+                print('Your input values violated constraint: ', violated_constraint)
+            print('try again')
+        else:
+            try:
+                success = True
+                new_major.save()
+            except Exception as e:
+                success = False
+                print(e)
+                print("Sorry try again.")
 
 def add_student_major():
-    pass
+    """
+    creates a Student Major instance
+    """
+    success: bool = False
+    new_student_major = None
+    while not success:
+        new_student_major = StudentMajor(
+                            select_general(Student),
+                            select_general(Major),
+                            prompt_for_date('Date of assignment --> '),)
+        violated_constraints = unique_general(new_student_major)
+        if len(violated_constraints) > 0:
+            for violated_constraint in violated_constraints:
+                print('Your input values violated constraint: ', violated_constraint)
+            print('try again')
+        else:
+            try:
+                success = True
+                new_student_major.save()
+            except Exception as e:
+                success = False
+                print(e)
+                print("Sorry try again.")
 
 def add_enrollment():
     pass
@@ -179,7 +278,7 @@ def delete_student():
     Delete an existing student
     """
     student = select_general(Student)  # prompt the user for an order to delete
-    #will error if there are any children that would be orphaned by the delete, will catch adn print the exception
+    #will error if there are any children that would be orphaned by the delete, will catch and print the exception
     try:
         student.delete()
     except Exception as e:
