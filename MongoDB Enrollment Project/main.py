@@ -46,19 +46,6 @@ def select():
 def delete():
     menu_loop(delete_select)
 
-
-def update():
-    menu_loop(update_select)
-
-
-def select_order() -> Order:
-    return select_general(Order)
-
-
-def select_order_item() -> OrderItem:
-    return select_general(OrderItem)
-
-
 def prompt_for_enum(prompt: str, cls, attribute_name: str):
     """
     MongoEngine attributes can be regulated with an enum.  If they are, the definition of
@@ -81,172 +68,74 @@ def prompt_for_enum(prompt: str, cls, attribute_name: str):
         return Menu('Enum Menu', prompt, enum_values).menu_prompt()
     else:
         raise ValueError(f'This attribute is not an enum: {attribute_name}')
+    
 
+#add functions____________________________    
+def add_department():
+    pass
 
-def add_order():
-    """
-    Create a new Order instance.
-    :return: None
-    """
-    success: bool = False
-    new_order = None
-    while not success:
-        order_date = prompt_for_date('Date and time of the order: ')
-        """This is sort of a hack.  The customer really should come from a Customer class, and the 
-        clerk who made the sale, but I'm trying to keep this simple to concentrate on relationships."""
-        new_order = Order(input('Customer name --> '),
-                          order_date,
-                          input('Clerk who made the sale --> '))
-        violated_constraints = unique_general(new_order)
-        if len(violated_constraints) > 0:
-            for violated_constraint in violated_constraints:
-                print('Your input values violated constraint: ', violated_constraint)
-            print('try again')
-        else:
-            success = True
-            # The first "stats change" is placing the order itself.
-            new_order.change_status(StatusChange(
-                prompt_for_enum('Select the status:', StatusChange, 'status'),
-                order_date))
-        new_order.save()
+def add_course():
+    pass
 
+def add_section():
+    pass
 
-def add_order_item():
-    """
-    Add an item to an existing order.
-    :return: None
-    """
-    success: bool = False
-    new_order_item: OrderItem
-    order: Order
-    while not success:
-        order = select_order()  # Prompt the user for an order to operate on.
-        # Create a new OrderItem instance.
-        new_order_item = OrderItem(order,
-                                   select_product(),
-                                   int(input('Quantity --> ')))
-        # Make sure that this adheres to the existing uniqueness constraints.
-        # I COULD use print_exception after MongoEngine detects any uniqueness constraint violations, but
-        # MongoEngine will only report one uniqueness constraint violation at a time.  I want them all.
-        violated_constraints = unique_general(new_order_item)
-        if len(violated_constraints) > 0:
-            for violated_constraint in violated_constraints:
-                print('Your input values violated constraint: ', violated_constraint)
-            print('Try again')
-        else:
-            try:
-                # we cannot add the OrderItem to the Order until it's been stored in the database.
-                new_order_item.save()
-                order.add_item(new_order_item)  # Add this OrderItem to the Order's MongoDB list of items.
-                order.save()                    # Update the order in the database.
-                success = True                  # Finally ready to call  it good.
-            except Exception as e:
-                print('Exception trying to add the new item:')
-                print(Utilities.print_exception(e))
+def add_student():
+    pass
 
+def add_major():
+    pass
 
-def update_order():
-    """
-    Change the status of an existing order by adding another element to the status vector of the order.
-    :return: None
-    """
-    success: bool = False
-    # "Declare" the order variable, more for cosmetics than anything else.
-    order: Order
-    while not success:
-        order = select_order()  # Find an order to modify.
-        status_change_date = prompt_for_date('Date and time of the status change: ')
-        new_status = prompt_for_enum('Select the status:', StatusChange, 'status')
-        try:
-            order.change_status(StatusChange(new_status, status_change_date))
-            order.save()
-            success = True
-        except ValueError as VE:
-            print('Attempted status change failed because:')
-            print(VE)
+def add_student_major():
+    pass
 
+def add_enrollment():
+    pass
 
-def delete_order():
-    """
-    Delete an existing order from the database.
-    :return: None
-    """
-    order = select_order()  # prompt the user for an order to delete
-    items = order.orderItems  # retrieve the list of items in this order
-    for item in items:
-        """The reference from OrderItem back up to Order has a reverse_delete_rule of DENY, which 
-        is similar to the RESTRICT option on a relational foreign key constraint.  Which means that
-        if I try to delete the order and there are still any OrderItems depending on that order,
-        MongoEngine (not MongoDB) will throw an exception."""
-        item.delete()
-    # Now that all the items on the order are removed, we can safely remove the order itself.
-    order.delete()
+#delete functions_________________________
+def delete_department():
+    pass
 
+def delete_course():
+    pass
 
-def delete_order_item():
-    """
-    Remove just one item from an existing order.
-    :return: None
-    """
-    order = select_order()  # prompt the user for an order to update
-    items = order.orderItems  # retrieve the list of items in this order
-    menu_items: [Option] = []  # list of order items to choose from
-    # Create an ad hoc menu of all of the items presently on the order.  Use __str__ to make a text version of each item
-    for item in items:
-        menu_items.append(Option(item.__str__(), item))
-    # prompt the user for which one of those order items to remove, and remove it.
-    order.remove_item(Menu('Item Menu',
-                           'Choose which order item to remove', menu_items).menu_prompt())
-    # Update the order to no longer include that order item in its MongoDB list of order items.
-    order.save()
+def delete_section():
+    pass
 
-def display_order():
-    print(select_order())
+def delete_student():
+    pass
 
-def add_product():
-    while True:
-        try:
-            product = Product(
-                input("Product Code: -> "),
-                input("Product Name: -> "),
-                input("Product Description: -> "),
-                int(input("Stock Quantity -> ")),
-                round(Decimal(input("Buy Price -> ")),2),
-                round(Decimal(input("MSRP -> ")),2)
-            )
-        except (ValueError, InvalidOperation):
-            print("Input is invalid. Try again.")
-            continue
+def delete_major():
+    pass
 
-        invalid_constraints = unique_general(product)
-        if invalid_constraints:
-            for i in invalid_constraints:
-                print("Input violates constraint: ", i)
-            print("Try again.")
-            continue
-        break
-    product.save()
+def delete_student_major():
+    pass
 
+def delete_enrollment():
+    pass
 
-def delete_product():
-    try:
-        select_product().delete()
-    except OperationError:
-        print("Product exists in orders. Delete them first.")
+#list functions_________________________
+def list_department():
+    pass
 
+def list_course():
+    pass
 
-def select_product():
-    return select_general(Product)
+def list_section():
+    pass
 
-def change_product():
-    while True:
-        product = select_product()
-        try:
-            product.change_price(PriceHistory(round(Decimal(input("Updated Price -> ")),2),prompt_for_date("Date and Time of change: ")))
-            product.save()
-            break
-        except (ValueError, InvalidOperation) as error:
-            print(f"Product update failed. Error: {error}")
+def list_student():
+    pass
+
+def list_major():
+    pass
+
+def list_student_major():
+    pass
+
+def list_enrollment():
+    pass
+
 
 if __name__ == '__main__':
     print('Starting in main.')
