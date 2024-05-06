@@ -13,7 +13,7 @@ class StudentMajor(Document):
                                     required=True)
     meta = {'collection': 'student_majors',
             'indexes': [
-                {'unique': True, 'fields': ['student', 'majorName'], 'name': 'studentMajors_uk_01'}
+                {'unique': True, 'fields': ['student', 'major'], 'name': 'studentMajors_uk_01'}
             ]}
 
     def __init__(self, student: str, major: str, declarationDate: datetime, *args, **values):
