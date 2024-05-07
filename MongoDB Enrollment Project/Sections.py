@@ -6,13 +6,13 @@ from datetime import datetime
 class Section(Document):
 
     course = ReferenceField(Course, required=True, reverse_delete_rule=mongoengine.DENY)
-    section_number = IntField(db_field='section_number', required=True)
+    sectionNumber = IntField(db_field='section_number', required=True)
     semester = StringField(db_field='semester',choice=('Fall','Spring','Summer I', 'Summer II', 'Summer III', 'Winter'), required=True)
-    section_year = IntField(db_field='section_year',required=True)
+    sectionYear = IntField(db_field='section_year',required=True)
     building = StringField(db_field='building',choices=('ANAC','CDC','DC','ECS','EN2','EN3','EN4','EN5','ET','HSCI','NUR','VEC') ,required=True)
     room = IntField(db_field='room', min_value = 1, max_value = 999, required=True)
     schedule = StringField(db_field='schedule',choices=('MW','TuTh','MWF','F','S'),required=True)
-    start_time = DateTimeField(db_field='start_time', min_value=datetime(1, 1, 1, 8, 0, 0), max_value=datetime(1, 1, 1, 19, 30, 0),required=True)
+    startTime = DateTimeField(db_field='start_time', min_value=datetime(1, 1, 1, 8, 0, 0), max_value=datetime(1, 1, 1, 19, 30, 0),required=True)
     instructor = StringField(db_field='instructor',required=True)
     meta = {'collection': 'sections',
             'indexes': [
@@ -21,21 +21,21 @@ class Section(Document):
                 {'unique': True, 'fields': ['semester', 'section_year', 'schedule', 'start_time', 'instructor'], 'name': 'sections_uk_03'}
             ]}
     
-    def __init__(self, course: Course, section_number: int, semester: str, section_year: int, building: str, room: int,
-                schedule: str, start_time: datetime, instructor: str, *args, **values):
+    def __init__(self, course: Course, sectionNumber: int, semester: str, sectionYear: int, building: str, room: int,
+                schedule: str, startTime: datetime, instructor: str, *args, **values):
         super().__init__(*args,**values)
         self.course = course
-        self.section_number = section_number
+        self.sectionNumber = sectionNumber
         self.building = building
         self.instructor = instructor
         self.room = room
         self.schedule = schedule
-        self.start_time = start_time
-        self.section_year = section_year
+        self.startTime = startTime
+        self.sectionYear = sectionYear
         self.semester = semester
 
     def __str__(self):
-        return (f"Course number: {self.courseNumber} Course name: {self.course.name}\n"
+        return (f"Course number: {self.course.courseNumber} Course name: {self.course.name}\n"
                     f"Section number: {self.sectionNumber} Semester: {self.semester} Section year: {self.sectionYear}\n"
                     f"Instructor: {self.instructor} Schedule: {self.schedule} Start time: {self.startTime}\n"
                     f"Building: {self.building} Room: {self.room}")
