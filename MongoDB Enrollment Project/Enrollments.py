@@ -6,8 +6,8 @@ from Sections import Section
 
 class Enrollment(Document):
 
-    student = ReferenceField(Student, required=True, reverse_delete_rule=mongoengine.DENY)
     section = ReferenceField(Section, required=True, reverse_delete_rule=mongoengine.DENY)
+    student = ReferenceField(Student, required=True, reverse_delete_rule=mongoengine.DENY)
     departmentAbbreviation = StringField(db_field='abbreviation', max_length=6, min_length=1, required=True)
     courseNumber = IntField(db_field='course_number', min_value = 100, max_value = 699, required=True)
     sectionYear = IntField(db_field='section_year',required=True)
@@ -25,7 +25,7 @@ class Enrollment(Document):
         self.student = student
         self.departmentAbbreviation = self.section.course.department.abbreviation
         self.courseNumber = self.section.course.courseNumber
-        self.section.sectionYear = self.section.sectionYear
+        self.sectionYear = self.section.sectionYear
         self.semester = self.section.semester
         
 

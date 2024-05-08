@@ -1,11 +1,12 @@
 from mongoengine import *
+import mongoengine
+from Enrollments import Enrollment
 from datetime import *
 
 class PassFail(Document):
 
-    enrollment = ObjectIdField(db_field='enrollment', required=True)
-    applicationDate = DateField(db_field='application_date', min_value= datetime.now, required=True)
-
+    enrollment = ReferenceField(Enrollment, required=True, reverse_delete_rule=CASCADE)
+    applicationDate = DateField(db_field='application_date', max_value= datetime.now, required=True)
 
     meta = {'collection': 'passFails',
             'indexes': [

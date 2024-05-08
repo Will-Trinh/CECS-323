@@ -1,16 +1,23 @@
 from mongoengine import *
+import mongoengine
+from Enrollments import Enrollment
 
 class LetterGrade(Document):
 
-    customerName = StringField(db_field='customer_name', max_length=80, min_length=5, required=True)
+    enrollment = ReferenceField(Enrollment, required=True, reverse_delete_rule=CASCADE)
+    minSatisfactory = StringField(db_field='min_satisfacory',choice=('A', 'B', 'C'), required=True)
     
-    # meta = {'collection': 'letter_grades',
-    #         'indexes': [
-    #             {'unique': True, 'fields': ['customerName', 'orderDate'], 'name': 'orders_pk'}
-    #         ]}
+    meta = {'collection': 'letter_grades',
+            'indexes': [
+                {'unique': True, 'fields': ['enrollment'], 'name': 'LetterGrade_uk_01'}
+            ]}
 
-    def __init__(self):
-        pass
+    def __init__(self, enrollment:Enrollment, minSatisfactory:str, *args, **values):
+        super().__init__(*args, **values)
+        self.enrollment = enrollment
+        self.minSatisfactory = minSatisfactory
 
     def __str__(self):
-        pass
+        return (f"Letter Grade:"
+                f"\nenrollment: {self.enrollment}"
+                f"\nminimum satisfactory grade: {self.minSatisfactory}")

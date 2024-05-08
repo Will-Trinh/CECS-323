@@ -220,7 +220,7 @@ def add_student_major():
         new_student_major = StudentMajor(
                             select_general(Student),
                             select_general(Major),
-                            prompt_for_date('Date of assignment --> '),)
+                            prompt_for_date('Date of assignment --> '))
         violated_constraints = unique_general(new_student_major)
         if len(violated_constraints) > 0:
             for violated_constraint in violated_constraints:
@@ -236,7 +236,65 @@ def add_student_major():
                 print("Sorry try again.")
 
 def add_enrollment():
-    pass
+    """
+    creates an enrollment instance, and a corresponding passfail or lettegrade to attach to it. if either fails it will delete the other and backout
+    """
+    success: bool = False
+    new_enrollment = None
+    while not success:
+        new_enrollment = Enrollment(
+                            select_general(Section),
+                            select_general(Student))
+        violated_constraints = unique_general(new_enrollment)
+        if len(violated_constraints) > 0:
+            for violated_constraint in violated_constraints:
+                print('Your input values violated constraint: ', violated_constraint)
+            print('try again')
+        else:
+            try:
+                success = True
+                new_enrollment.save()
+                while True:
+                    choice = int(input('What kind of enrollment is this?\n1.PassFail\n2.LetterGrade\n--> '))
+                    if choice == 1:
+                        new_pass_fail = PassFail(
+                                            new_enrollment,
+                                            prompt_for_date('Date of application'))
+                        violated_constraints = unique_general(new_pass_fail)
+                        if len(violated_constraints) > 0:
+                            for violated_constraint in violated_constraints:
+                                print('Your input values violated constraint: ', violated_constraint)
+                            print('try again')
+                        else:
+                            try:
+                                new_pass_fail.save()
+                                break
+                            except Exception as e:
+                                print(e)
+                                print("Sorry try again.")  
+                    elif choice == 2:
+                        new_letter_grade = LetterGrade(
+                                            new_enrollment,
+                                            input('Minimum satisfacotry grade --> '))
+                        violated_constraints = unique_general(new_letter_grade)
+                        if len(violated_constraints) > 0:
+                            for violated_constraint in violated_constraints:
+                                print('Your input values violated constraint: ', violated_constraint)
+                            print('try again')
+                        else:
+                            try:
+                                new_letter_grade.save()
+                                break
+                            except Exception as e:
+                                print(e)
+                                print("Sorry try again.")
+                    else:
+                        print('Not a valid option.')
+            except Exception as e:
+                success = False
+                print(e)
+                print("Sorry try again.")
+            
 
 #delete functions_________________________
 def delete_department():

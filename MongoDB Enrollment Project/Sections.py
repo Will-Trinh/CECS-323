@@ -16,9 +16,9 @@ class Section(Document):
     instructor = StringField(db_field='instructor',required=True)
     meta = {'collection': 'sections',
             'indexes': [
-                {'unique': True, 'fields': ['course', 'section_number','semester','section_year'], 'name': 'sections_uk_01'},
-                {'unique': True, 'fields': ['semester', 'section_year','building','room','schedule', 'start_time'], 'name': 'sections_uk_02'},
-                {'unique': True, 'fields': ['semester', 'section_year', 'schedule', 'start_time', 'instructor'], 'name': 'sections_uk_03'}
+                {'unique': True, 'fields': ['course', 'sectionNumber','semester','sectionYear'], 'name': 'sections_uk_01'},
+                {'unique': True, 'fields': ['semester', 'sectionYear','building','room','schedule', 'startTime'], 'name': 'sections_uk_02'},
+                {'unique': True, 'fields': ['semester', 'sectionYear', 'schedule', 'startTime', 'instructor'], 'name': 'sections_uk_03'}
             ]}
     
     def __init__(self, course: Course, sectionNumber: int, semester: str, sectionYear: int, building: str, room: int,
