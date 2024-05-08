@@ -7,7 +7,7 @@ class Section(Document):
 
     course = ReferenceField(Course, required=True, reverse_delete_rule=mongoengine.DENY)
     sectionNumber = IntField(db_field='section_number', required=True)
-    semester = StringField(db_field='semester',choice=('Fall','Spring','Summer I', 'Summer II', 'Summer III', 'Winter'), required=True)
+    semester = StringField(db_field='semester',choices=('Fall','Spring','Summer I', 'Summer II', 'Summer III', 'Winter'), required=True)
     sectionYear = IntField(db_field='section_year',required=True)
     building = StringField(db_field='building',choices=('ANAC','CDC','DC','ECS','EN2','EN3','EN4','EN5','ET','HSCI','NUR','VEC') ,required=True)
     room = IntField(db_field='room', min_value = 1, max_value = 999, required=True)
@@ -35,7 +35,7 @@ class Section(Document):
         self.semester = semester
 
     def __str__(self):
-        return (f"Course number: {self.course.courseNumber} Course name: {self.course.name}\n"
+        return (f"Course number: {self.course.courseNumber} Course name: {self.course.courseName}\n"
                     f"Section number: {self.sectionNumber} Semester: {self.semester} Section year: {self.sectionYear}\n"
                     f"Instructor: {self.instructor} Schedule: {self.schedule} Start time: {self.startTime}\n"
                     f"Building: {self.building} Room: {self.room}")

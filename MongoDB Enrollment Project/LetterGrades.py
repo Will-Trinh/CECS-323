@@ -5,7 +5,7 @@ from Enrollments import Enrollment
 class LetterGrade(Document):
 
     enrollment = ReferenceField(Enrollment, required=True, reverse_delete_rule=CASCADE)
-    minSatisfactory = StringField(db_field='min_satisfacory',choice=('A', 'B', 'C'), required=True)
+    minSatisfactory = StringField(db_field='min_satisfacory',choices=('A', 'B', 'C'), required=True)
     
     meta = {'collection': 'letter_grades',
             'indexes': [

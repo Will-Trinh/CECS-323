@@ -17,6 +17,7 @@ from Enrollments import Enrollment
 from PassFails import PassFail
 from LetterGrades import LetterGrade
 from datetime import datetime
+from pprint import pprint
 
 def menu_loop(menu: Menu):
     """Little helper routine to just keep cycling in a menu until the user signals that they
@@ -377,32 +378,46 @@ def delete_enrollment():
 
 #list functions_________________________
 def list_department():
-    for x in db.departments.find(): 
-        print(x)
+    counter = 0
+    for department in Department.objects():
+        counter += 1
+        print(f'{counter}. {department}')
 
 def list_course():
-    for x in db.courses.find(): 
-        print(x)
+    counter = 0
+    for course in Course.objects():
+        counter += 1
+        print(f'{counter}. {course}')
 
 def list_section():
-    for x in db.sections.find(): 
-        print(x)
+    counter = 0
+    for section in Section.objects():
+        counter += 1
+        print(f'{counter}. {section}')
 
 def list_student():
-    for x in db.students.find(): 
-        print(x)
+    counter = 0
+    for student in Student.objects():
+        counter += 1
+        print(f'{counter}. {student}')
 
 def list_major():
-    for x in db.majors.find(): 
-        print(x)
+    counter = 0
+    for major in Major.objects():
+        counter += 1
+        print(f'{counter}. {major}')
 
 def list_student_major():
-    for x in db.student_majors.find(): 
-        print(x)
+    counter = 0
+    for studentMajor in StudentMajor.objects():
+        counter += 1
+        print(f'{counter}. {studentMajor}')
 
 def list_enrollment():
-    for x in db.enrollments.find(): 
-        print(x)
+    counter = 0
+    for enrollment in Enrollment.objects():
+        counter += 1
+        print(f'{counter}. {enrollment}')
 
 
 if __name__ == '__main__':
